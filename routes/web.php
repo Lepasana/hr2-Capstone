@@ -207,8 +207,6 @@ Route::middleware('auth')
   ->group(function () {
     Route::get('/learning-management', [Email::class, 'index'])->name('learning-management');
     Route::get('/competency-management', [Chat::class, 'index'])->name('competency-management');
-    Route::get('/app/service', [EmployeeController::class, 'index'])->name('app-service');
-    Route::get('/app/kanban', [Kanban::class, 'index'])->name('app-kanban');
     Route::get('/app/ecommerce/dashboard', [EcommerceDashboard::class, 'index'])->name('app-ecommerce-dashboard');
 
     // TRAINING MANAGEMENT
