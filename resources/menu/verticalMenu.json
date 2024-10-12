@@ -1,0 +1,41 @@
+{
+  "menu": [
+    {
+      "name": "Dashboards",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "dashboard",
+      "badge": ["primary", "5"]
+    },
+
+    {
+      "url": "learning-management",
+      "name": "LEARNING MANAGEMENT",
+      "icon": "menu-icon tf-icons ti ti-book",
+      "slug": "learning-management"
+    },
+    {
+      "url": "competency-management",
+      "name": "COMPETENCY MANAGEMENT",
+      "icon": "menu-icon tf-icons ti ti-messages",
+      "slug": "competency-management"
+    },
+    {
+      "url": "app/service",
+      "name": "EMPLOYEE SELF SERVICEs",
+      "icon": "menu-icon tf-icons ti ti-calendar",
+      "slug": "app-service"
+    },
+    {
+      "url": "training-management",
+      "name": "TRAINING MANAGEMENT",
+      "icon": "menu-icon tf-icons ti ti-layout-kanban",
+      "slug": "training-management"
+    },
+    {
+      "url": "succession-planning",
+      "name": "SUCCESSION PLANNING",
+      "icon": "menu-icon tf-icons ti ti-layout-kanban",
+      "slug": "succession-planning"
+    }
+  ]
+}
