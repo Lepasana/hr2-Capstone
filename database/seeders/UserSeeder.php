@@ -18,13 +18,13 @@ class UserSeeder extends Seeder
     $users = [
       [
         'name' => 'Rogem Lepasana',
-        'email' => 'test@gmail.com',
+        'email' => 'rogemlepasana@gmail.com',
         'password' => Hash::make('password'),
         'role' => UserRoleEnum::SUPER_ADMIN->value,
       ],
       [
-        'name' => 'James Philip Gomera',
-        'email' => 'jpgomera19@gmail.com',
+        'name' => 'Test Account',
+        'email' => 'test@gmail.com',
         'password' => Hash::make('password'),
         'role' => UserRoleEnum::SUPER_ADMIN->value,
       ],
