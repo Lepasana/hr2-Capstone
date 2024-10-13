@@ -13,6 +13,7 @@
 @section('page-script')
     {{-- @vite('resources/assets/js/app-invoice-list.js') --}}
 @endsection
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 
 @section('content')
     <h4 class="py-3 mb-4">
@@ -24,7 +25,7 @@
         <div>
             <a href="{{ url('/succession-planning/create') }}" class="btn btn-primary px-4 m-4 text-white">Add Successor</a>
         </div>
-        <div class="card-datatable table-responsive">
+        <div class="card-datatable table-responsive p-2">
             @if (session()->has('success'))
                 <div class="alert alert-success m-3">
                     {{ session('success') }}
@@ -34,7 +35,7 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <table class="invoice-list-table table border-top">
+            <table id="dataTable" class="invoice-list-table table border-top">
                 <thead>
                     <tr>
                         <th class="text-center cell-fit">Employee ID</th>
@@ -49,12 +50,12 @@
                 <tbody>
                     @foreach ($successors as $successor)
                         <tr>
-                            <td>{{ $successor->employee->id }}</td>
-                            <td>{{ $successor->employee->name }}</td>
-                            <td>{{ $successor->current_position }}</td>
-                            <td>{{ $successor->potential_successor }}</td>
-                            <td>{{ $successor->development_needs }}</td>
-                            <td>{{ $successor->readiness_level }}</td>
+                            <td class="text-center">{{ $successor->employee->id }}</td>
+                            <td class="text-start">{{ $successor->employee->name }}</td>
+                            <td class="text-start">{{ $successor->current_position }}</td>
+                            <td class="text-start">{{ $successor->potential_successor }}</td>
+                            <td class="text-start">{{ $successor->development_needs }}</td>
+                            <td class="text-start">{{ $successor->readiness_level }}</td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <div>
@@ -85,3 +86,10 @@
     </div>
 
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        new DataTable('#dataTable'); // Use the correct ID
+    });
+</script>

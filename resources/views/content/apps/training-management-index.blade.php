@@ -1,6 +1,7 @@
 @extends('layouts/layoutMaster')
 
 @section('title', 'Security Service Training Management - Apps')
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 
 @section('content')
     <h4 class="py-3 mb-4">
@@ -13,7 +14,7 @@
                 <a href="{{ url('/training-management/create') }}" class="btn btn-primary px-4 m-4 text-white">Add
                     Training</a>
             </div>
-            <div class="card-datatable table-responsive">
+            <div class="card-datatable table-responsive p-2">
                 @if (session()->has('success'))
                     <div class="alert alert-success m-3">
                         {{ session('success') }}
@@ -23,27 +24,27 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <table class="datatables-trainings table border-top">
+                <table id="dataTable" class="datatables-trainings table border-top">
                     <thead>
                         <tr>
-                            <th>Training ID</th>
-                            <th>Training Name</th>
-                            <th>Employee Name</th>
-                            <th>Training Date</th>
-                            <th>Duration</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th class="text-center cell-fit">Training ID</th>
+                            <th class="text-center cell-fit">Training Name</th>
+                            <th class="text-center cell-fit">Employee Name</th>
+                            <th class="text-center cell-fit">Training Date</th>
+                            <th class="text-center cell-fit">Duration</th>
+                            <th class="text-center cell-fit">Status</th>
+                            <th class="text-center cell-fit">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($trainings as $training)
                             <tr>
-                                <td>{{ $training->id }}</td>
-                                <td>{{ $training->training_name }}</td>
-                                <td>{{ $training->employee->name }}</td>
-                                <td>{{ $training->training_date }}</td>
-                                <td>{{ $training->duration->title }}</td>
-                                <td>{{ $training->status }}</td>
+                                <td class="text-center">{{ $training->id }}</td>
+                                <td class="text-start">{{ $training->training_name }}</td>
+                                <td class="text-start">{{ $training->employee->name }}</td>
+                                <td class="text-start">{{ $training->training_date }}</td>
+                                <td class="text-start">{{ $training->duration->title }}</td>
+                                <td class="text-start">{{ $training->status }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div>
@@ -73,3 +74,10 @@
         </div>
     </div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        new DataTable('#dataTable'); // Use the correct ID
+    });
+</script>

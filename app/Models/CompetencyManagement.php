@@ -11,7 +11,7 @@ class CompetencyManagement extends Model
 
     protected $fillable = [
         'employee_id',
-        'compentency',
+        'competency',
         'skill_level',
         'proficiency',
         'notes',

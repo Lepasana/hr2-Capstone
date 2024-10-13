@@ -23,7 +23,7 @@ class SuccessionPlanningController extends Controller
   {
     $successors = SuccessionPlanning::get();
 
-    return view('content.apps.app-invoice-list', [
+    return view('content.apps.succession-planning-index', [
       'successors' => $successors
     ]);
   }
@@ -35,7 +35,7 @@ class SuccessionPlanningController extends Controller
   {
     $employees = Employee::query()->select(['id', 'name'])->get();
 
-    return view('content.apps.app-invoice-add', [
+    return view('content.apps.succession-planning-create', [
       'employees' => $employees
     ]);
   }
@@ -80,7 +80,7 @@ class SuccessionPlanningController extends Controller
     $employees = Employee::query()->select(['id', 'name'])->get();
     $successor = SuccessionPlanning::findOrFail($id);
 
-    return view('content.apps.app-invoice-edit', [
+    return view('content.apps.succession-planning-edit', [
       'employees' => $employees,
       'successor' => $successor
     ]);
@@ -89,7 +89,7 @@ class SuccessionPlanningController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(SuccessionPlanningRequest $request, string $id)
   {
     $successor = $this->successionPlanning->find($id);
     $successor->employee_id = $request->employee;
