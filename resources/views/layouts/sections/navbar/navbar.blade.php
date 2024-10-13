@@ -89,7 +89,7 @@ $navbarDetached = ($navbarDetached ?? '');
           <!--/ Style Switcher -->
           @endif
 
-        
+
 
           <!-- Notification -->
           <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
@@ -281,9 +281,9 @@ $navbarDetached = ($navbarDetached ?? '');
 
           <!-- User -->
           <li class="nav-item navbar-dropdown dropdown-user dropdown">
-            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-              <div class="avatar avatar-online">
-                <img src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle">
+            <a class="nav-link dropdown-toggle hide-arrow logo d-flex align-items-center w-auto " href="javascript:void(0);" data-bs-toggle="dropdown">
+              <div class="avatar avatar-online logo d-flex align-items-center img-responsive img-small-circle">
+                <img src="{{ Auth::user() ? (Auth::user()->profile_photo_url != null ? Auth::user()->profile_photo_url : asset('assets/img/avatars/bini_kamot.jpg')) : asset('assets/img/avatars/bini_kamot.jpg') }}" alt class="rounded-circle img-fluid img-thumbnail">
               </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -292,7 +292,7 @@ $navbarDetached = ($navbarDetached ?? '');
                   <div class="d-flex">
                     <div class="flex-shrink-0 me-3">
                       <div class="avatar avatar-online">
-                        <img src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle">
+                        <img src="{{ Auth::user() ? (Auth::user()->profile_photo_url != null ? Auth::user()->profile_photo_url : asset('assets/img/avatars/bini_kamot.jpg')) : asset('assets/img/avatars/bini_kamot.jpg') }}" alt class="rounded-circle img-fluid img-thumbnail">
                       </div>
                     </div>
                     <div class="flex-grow-1">
@@ -325,7 +325,7 @@ $navbarDetached = ($navbarDetached ?? '');
                 </a>
               </li>
               @endif
-         
+
               @if (Auth::User() && Laravel\Jetstream\Jetstream::hasTeamFeatures())
               <li>
                 <div class="dropdown-divider"></div>

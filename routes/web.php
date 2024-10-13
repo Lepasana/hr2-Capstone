@@ -65,9 +65,10 @@ use App\Http\Controllers\cards\CardGamifications;
 use App\Http\Controllers\cards\CardStatistics;
 use App\Http\Controllers\charts\ApexCharts;
 use App\Http\Controllers\charts\ChartJs;
+use App\Http\Controllers\CompetencyManagementController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\dashboard\Crm;
 
+use App\Http\Controllers\dashboard\Crm;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\extended_ui\Avatar;
 use App\Http\Controllers\extended_ui\BlockUI;
@@ -163,11 +164,12 @@ use App\Http\Controllers\user_interface\Toasts;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\user_interface\Typography;
 use App\Http\Controllers\wizard_example\Checkout as WizardCheckout;
-use App\Http\Controllers\wizard_example\CreateDeal;
 
+use App\Http\Controllers\wizard_example\CreateDeal;
 use App\Http\Controllers\wizard_example\PropertyListing;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -201,7 +203,6 @@ Route::get('/front-pages/checkout', [Checkout::class, 'index'])->name('front-pag
 Route::get('/front-pages/help-center', [HelpCenter::class, 'index'])->name('front-pages-help-center');
 Route::get('/front-pages/help-center-article', [HelpCenterArticle::class, 'index'])->name('front-pages-help-center-article');
 
-// apps
 // THIS IS THE MAIN ROUTE
 Route::middleware('auth')
   ->group(function () {
@@ -210,6 +211,18 @@ Route::middleware('auth')
     Route::get('/app/service', [EmployeeController::class, 'index'])->name('app-service');
     Route::get('/app/kanban', [Kanban::class, 'index'])->name('app-kanban');
     Route::get('/app/ecommerce/dashboard', [EcommerceDashboard::class, 'index'])->name('app-ecommerce-dashboard');
+
+    // COMPETENCY MANAGEMENT
+    Route::controller(CompetencyManagementController::class)
+      ->group(function () {
+        Route::get('/competency-management', 'index')->name('competency-management');
+        Route::get('/competency-management/create', 'create')->name('competency-management.create');
+        Route::post('/competency-management/store', 'store')->name('competency-management.store');
+        Route::get('/competency-management/{id}/edit', 'edit')->name('competency-management.edit');
+        Route::put('/competency-management/{id}/update', 'update')->name('competency-management.update');
+        Route::delete('/competency-management/{id}/delete', 'destroy')->name('competency-management.delete');
+      });
+
 
     // TRAINING MANAGEMENT
     Route::controller(TrainingManagementController::class)

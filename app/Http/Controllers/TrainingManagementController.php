@@ -100,7 +100,7 @@ class TrainingManagementController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(TrainingManagementRequest $request, string $id)
   {
     $trainingManagement = $this->trainingManagement->findOrFail($id);
     $trainingManagement->training_name = $request->training_name;
