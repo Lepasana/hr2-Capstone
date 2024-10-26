@@ -20,10 +20,10 @@
       "slug": "competency-management"
     },
     {
-      "url": "app/service",
+      "url": "ess",
       "name": "EMPLOYEE SELF SERVICEs",
       "icon": "menu-icon tf-icons ti ti-calendar",
-      "slug": "app-service"
+      "slug": "ess"
     },
     {
       "url": "training-management",

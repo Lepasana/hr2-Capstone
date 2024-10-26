@@ -73,9 +73,12 @@
 
                         <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Readiness Level</label>
-                            <input type="text" name="readiness_level" class="form-control"
-                                value="{{ old('readiness_level') }}" required>
-
+                            <select name="readiness_level" id="readiness_level" class="form-select" required>
+                                <option value="{{ '' ?? old('readiness_level') }}">Select</option>
+                                @foreach ($readiness_levels as $key => $readiness_level)
+                                    <option value="{{ $readiness_level }}">{{ $readiness_level }}</option>
+                                @endforeach
+                            </select>
                             @if ($errors->has('readiness_level'))
                                 <div class="text-danger">
                                     {{ $errors->first('readiness_level') }}
