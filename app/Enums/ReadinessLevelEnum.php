@@ -8,6 +8,7 @@ enum ReadinessLevelEnum: string
 {
     use EnumsWithOptions;
 
-    case ONE_YEAR = 'Upcoming';
-    case READY_NOW = 'Ready Now';
+    case IMMEDIATE = 'Immediate';
+    case NEAR_TERM = 'Near-Term';
+    case LONG_TERM = 'Long-Term';
 }

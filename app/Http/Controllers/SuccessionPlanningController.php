@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SuccessionPlanningRequest;
 use App\Models\Employee;
-use App\Models\SuccessionPlanning;
 use Illuminate\Http\Request;
+use App\Enums\ReadinessLevelEnum;
+use App\Models\SuccessionPlanning;
+use App\Http\Requests\SuccessionPlanningRequest;
 
 class SuccessionPlanningController extends Controller
 {
@@ -34,9 +35,11 @@ class SuccessionPlanningController extends Controller
   public function create()
   {
     $employees = Employee::query()->select(['id', 'name'])->get();
+    $readiness_levels = ReadinessLevelEnum::toOptions();
 
     return view('content.apps.succession-planning-create', [
-      'employees' => $employees
+      'employees' => $employees,
+      'readiness_levels' => $readiness_levels,
     ]);
   }
 
