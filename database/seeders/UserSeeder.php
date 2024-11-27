@@ -28,6 +28,13 @@ class UserSeeder extends Seeder
         'password' => Hash::make('password'),
         'role' => UserRoleEnum::SUPER_ADMIN->value,
       ],
+
+      [
+        'name' => 'Employee',
+        'email' => 'employee@gmail.com',
+        'password' => Hash::make('password'),
+        'role' => UserRoleEnum::EMPLOYEE->value,
+      ],
     ];
 
     foreach ($users as $user) {
