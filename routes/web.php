@@ -179,7 +179,6 @@ use App\Http\Controllers\form_wizard\Numbered as FormWizardNumbered;
 
 // Main Page Route
 Route::get('/', [LoginBasic::class, 'index'])->name('auth-login-basic');
-Route::get('/auth/logi/basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 // Route::get('/home', [Crm::class, 'index'])->name('dashboard-crm');
 // locale
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
@@ -207,7 +206,7 @@ Route::get('/front-pages/help-center', [HelpCenter::class, 'index'])->name('fron
 Route::get('/front-pages/help-center-article', [HelpCenterArticle::class, 'index'])->name('front-pages-help-center-article');
 
 // THIS IS THE MAIN ROUTE
-Route::middleware('auth')
+Route::middleware(['auth', 'auth.admin'])
   ->group(function () {
 
     // LEARNING MANAGEMENT - Creating Exams

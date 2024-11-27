@@ -8,6 +8,6 @@ enum UserRoleEnum: string
 {
     use EnumsWithOptions;
 
-    case SUPER_ADMIN = 'Super Admin';
-    case USER = 'User';
+    case SUPER_ADMIN = 'super_admin';
+    case EMPLOYEE = 'employee';
 }
