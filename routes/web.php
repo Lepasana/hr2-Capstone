@@ -172,10 +172,7 @@ use App\Http\Controllers\apps\EcommerceCustomerDetailsSecurity;
 use App\Http\Controllers\wizard_example\Checkout as WizardCheckout;
 use App\Http\Controllers\apps\EcommerceCustomerDetailsNotifications;
 use App\Http\Controllers\form_wizard\Numbered as FormWizardNumbered;
-
-
-
-
+use App\Http\Controllers\JobQualificationController;
 
 // Main Page Route
 Route::get('/', [LoginBasic::class, 'index'])->name('auth-login-basic');
@@ -260,7 +257,18 @@ Route::middleware(['auth', 'auth.admin'])
       Route::post('/competency-management/store', 'store')->name('competency-management.store');
       Route::get('/competency-management/{id}/edit', 'edit')->name('competency-management.edit');
       Route::put('/competency-management/{id}/update', 'update')->name('competency-management.update');
-      Route::delete('/competency-management/{id}/delete', 'destroy')->name('competency-management.delete');
+      Route::delete('/competency-management/{id}/delete', action: 'destroy')->name('competency-management.delete');
+    });
+
+    // JOB QUALIFICATION
+    Route::controller(JobQualificationController::class)
+      ->group(function () {
+      Route::get('/job-qualification', 'index')->name('job-qualification');
+      Route::get('/job-qualification/create', 'create')->name('job-qualification.create');
+      Route::post('/job-qualification/store', 'store')->name('job-qualification.store');
+      Route::get('/job-qualification/{id}/edit', 'edit')->name('job-qualification.edit');
+      Route::put('/job-qualification/{id}/update', 'update')->name('job-qualification.update');
+      Route::delete('/job-qualification/{id}/delete', 'delete')->name('job-qualification.delete');
     });
 
 
