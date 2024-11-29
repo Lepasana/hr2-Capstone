@@ -8,22 +8,36 @@
     },
 
     {
-      "url": "learning-management",
       "name": "LEARNING MANAGEMENT",
       "icon": "menu-icon tf-icons ti ti-book",
-      "slug": "learning-management"
+      "slug": "learning-management",
+      "submenu": [
+        {
+          "name": "Applicant Score",
+          "url": "#",
+          "icon": "menu-icon tf-icons ti ti-book",
+          "slug": "applicant-score"
+        },
+        {
+          "name": "Create Exams",
+          "url": "/learning-management",
+          "icon": "menu-icon tf-icons ti ti-book",
+          "slug": "learning-management"
+        }
+      ]
     },
     {
-      "url": "competency-management",
       "name": "COMPETENCY MANAGEMENT",
       "icon": "menu-icon tf-icons ti ti-messages",
-      "slug": "competency-management"
-    },
-    {
-      "url": "ess",
-      "name": "EMPLOYEE SELF SERVICEs",
-      "icon": "menu-icon tf-icons ti ti-calendar",
-      "slug": "ess"
+      "slug": "competency-management",
+      "submenu": [
+        {
+          "name": "Compentency for Job Qualifications",
+          "icon": "menu-icon tf-icons ti ti-messages",
+          "slug": "competency-management",
+          "url": "competency-management"
+        }
+      ]
     },
     {
       "url": "training-management",

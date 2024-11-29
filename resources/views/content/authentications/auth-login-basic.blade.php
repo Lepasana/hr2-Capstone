@@ -30,8 +30,9 @@
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-4 mt-2">
-                            <a href="{{ url('/') }}" class="app-brand-link gap-2">
-                                <span class="app-brand-logo demo">@include('_partials.macros', ['height' => 20, 'withbg' => 'fill: #fff;'])</span>
+                            <a href="{{ url('/') }}" class="d-flex justify-content-center align-items-center">
+                                <img src="{{ asset('images/logo/brand_logo.webp') }}" class="w-25"
+                                    alt="">
                                 <span class="app-brand-text demo text-body fw-bold ms-1">SIGN IN</span>
                             </a>
                         </div>
