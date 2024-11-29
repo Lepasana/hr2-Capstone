@@ -32,10 +32,16 @@
       "slug": "competency-management",
       "submenu": [
         {
-          "name": "Compentency for Job Qualifications",
+          "name": "Compentency Management",
           "icon": "menu-icon tf-icons ti ti-messages",
           "slug": "competency-management",
           "url": "competency-management"
+        },
+        {
+          "name": "Compentency for Job Qualifications",
+          "icon": "menu-icon tf-icons ti ti-messages",
+          "slug": "job-qualification",
+          "url": "job-qualification"
         }
       ]
     },

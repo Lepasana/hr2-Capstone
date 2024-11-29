@@ -28,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('ess-portal')
             ->login()
+            ->profile()
             ->colors([
                 'primary' => Color::hex('#7367f0'),
             ])
