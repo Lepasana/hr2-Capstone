@@ -58,7 +58,7 @@
                                         <div>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#modal-{{ $qualification->id }}"
-                                                data-action="{{ route('competency-management.delete', ['id' => $qualification->id]) }}">
+                                                data-action="{{ route('job-qualification.delete', ['id' => $qualification->id]) }}">
                                                 Delete
                                             </button>
                                         </div>
