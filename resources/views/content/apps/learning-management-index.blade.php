@@ -3,6 +3,7 @@
 @section('title', 'Security Service Learning Management - Apps')
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 
+
 @section('content')
     <h4 class="py-3 mb-4">
         <span class="text-muted fw-light">Learning Management List</span>
@@ -16,13 +17,9 @@
             </div>
             <div class="card-datatable table-responsive p-2">
                 @if (session()->has('success'))
-                    <div class="alert alert-success m-3">
-                        {{ session('success') }}
-                    </div>
+                    <x-alert successMessage="{{ session('success') }}" />
                 @elseif(session()->has('error'))
-                    <div class="alert alert-danger m-3">
-                        {{ session('error') }}
-                    </div>
+                    <x-alert errorMessage="{{ session('error') }}" />
                 @endif
 
                 <table id="dataTable" class="datatables-learnings table border-top">

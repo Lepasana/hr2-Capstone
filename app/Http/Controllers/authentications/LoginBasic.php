@@ -24,7 +24,7 @@ class LoginBasic extends Controller
 
     if (Auth::attempt($data)) {
       $request->session()->regenerate();
-      return redirect()->intended(route('learning-management'))->with('success', 'Successfully Login');
+      return redirect()->intended(route('dashboard'))->with('success', 'Successfully Login');
     }
 
     return back()->withErrors([

@@ -17,7 +17,7 @@
 
 @section('content')
     <h4 class="py-3 mb-4">
-  <span class="text-muted fw-light">Succession Planning List</span>
+        <span class="text-muted fw-light">Succession Planning List</span>
     </h4>
 
     <!-- Invoice List Table -->
@@ -27,13 +27,9 @@
         </div>
         <div class="card-datatable table-responsive p-2">
             @if (session()->has('success'))
-                <div class="alert alert-success m-3">
-                    {{ session('success') }}
-                </div>
+                <x-alert successMessage="{{ session('success') }}" />
             @elseif(session()->has('error'))
-                <div class="alert alert-danger m-3">
-                    {{ session('error') }}
-                </div>
+                <x-alert errorMessage="{{ session('error') }}" />
             @endif
             <table id="dataTable" class="invoice-list-table table border-top">
                 <thead>
@@ -74,8 +70,7 @@
                                     {{-- MODAL FOR DELETE CONFIRMATION --}}
                                     <x-confirmation-modal
                                         action="{{ route('succession-planning.delete', ['id' => $successor->id]) }}"
-                                        title="Confirm Deletion" id="{{ $successor->id }}"
-                                    />
+                                        title="Confirm Deletion" id="{{ $successor->id }}" />
                                 </div>
                             </td>
                         </tr>
