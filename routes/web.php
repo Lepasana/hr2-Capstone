@@ -48,11 +48,12 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\apps\InvoicePreview;
 use App\Http\Controllers\apps\LogisticsFleet;
 use App\Http\Controllers\cards\CardAnalytics;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\extended_ui\BlockUI;
 use App\Http\Controllers\front_pages\Landing;
 use App\Http\Controllers\front_pages\Payment;
-use App\Http\Controllers\front_pages\Pricing;
 //use App\Http\Controllers\apps\AcademyCourse;
+use App\Http\Controllers\front_pages\Pricing;
 use App\Http\Controllers\layouts\WithoutMenu;
 use App\Http\Controllers\apps\UserViewAccount;
 use App\Http\Controllers\apps\UserViewBilling;
@@ -66,8 +67,8 @@ use App\Http\Controllers\apps\AcademyDashboard;
 use App\Http\Controllers\apps\AccessPermission;
 use App\Http\Controllers\apps\UserViewSecurity;
 use App\Http\Controllers\form_elements\Editors;
-use App\Http\Controllers\form_elements\Selects;
 
+use App\Http\Controllers\form_elements\Selects;
 use App\Http\Controllers\form_elements\Sliders;
 use App\Http\Controllers\layouts\CollapsedMenu;
 use App\Http\Controllers\layouts\ContentNavbar;
@@ -123,6 +124,7 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\authentications\LoginCover;
 use App\Http\Controllers\form_layouts\StickyActions;
 use App\Http\Controllers\form_validation\Validation;
+use App\Http\Controllers\JobQualificationController;
 use App\Http\Controllers\pages\MiscUnderMaintenance;
 use App\Http\Controllers\tables\DatatableExtensions;
 use App\Http\Controllers\apps\EcommerceManageReviews;
@@ -162,9 +164,9 @@ use App\Http\Controllers\authentications\ResetPasswordBasic;
 use App\Http\Controllers\authentications\ResetPasswordCover;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\apps\EcommerceSettingsNotifications;
+
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\authentications\ForgotPasswordCover;
-
 use App\Http\Controllers\form_wizard\Icons as FormWizardIcons;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 use App\Http\Controllers\apps\EcommerceCustomerDetailsOverview;
@@ -172,128 +174,108 @@ use App\Http\Controllers\apps\EcommerceCustomerDetailsSecurity;
 use App\Http\Controllers\wizard_example\Checkout as WizardCheckout;
 use App\Http\Controllers\apps\EcommerceCustomerDetailsNotifications;
 use App\Http\Controllers\form_wizard\Numbered as FormWizardNumbered;
-use App\Http\Controllers\JobQualificationController;
 
 // Main Page Route
 Route::get('/', [LoginBasic::class, 'index'])->name('auth-login-basic');
-// Route::get('/home', [Crm::class, 'index'])->name('dashboard-crm');
-// locale
-Route::get('lang/{locale}', [LanguageController::class, 'swap']);
-
-// layout
-Route::get('/layouts/collapsed-menu', [CollapsedMenu::class, 'index'])->name('layouts-collapsed-menu');
-Route::get('/layouts/content-navbar', [ContentNavbar::class, 'index'])->name('layouts-content-navbar');
-Route::get('/layouts/content-nav-sidebar', [ContentNavSidebar::class, 'index'])->name('layouts-content-nav-sidebar');
-Route::get('/layouts/navbar-full', [NavbarFull::class, 'index'])->name('layouts-navbar-full');
-Route::get('/layouts/navbar-full-sidebar', [NavbarFullSidebar::class, 'index'])->name('layouts-navbar-full-sidebar');
-Route::get('/layouts/horizontal', [Horizontal::class, 'index'])->name('dashboard-analytics');
-Route::get('/layouts/vertical', [Vertical::class, 'index'])->name('dashboard-analytics');
-Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
-Route::get('/layouts/without-navbar', [WithoutNavbar::class, 'index'])->name('layouts-without-navbar');
-Route::get('/layouts/fluid', [Fluid::class, 'index'])->name('layouts-fluid');
-Route::get('/layouts/container', [Container::class, 'index'])->name('layouts-container');
-Route::get('/layouts/blank', [Blank::class, 'index'])->name('layouts-blank');
-
-// Front Pages
-Route::get('/front-pages/landing', [Landing::class, 'index'])->name('front-pages-landing');
-Route::get('/front-pages/pricing', [Pricing::class, 'index'])->name('front-pages-pricing');
-Route::get('/front-pages/payment', [Payment::class, 'index'])->name('front-pages-payment');
-Route::get('/front-pages/checkout', [Checkout::class, 'index'])->name('front-pages-checkout');
-Route::get('/front-pages/help-center', [HelpCenter::class, 'index'])->name('front-pages-help-center');
-Route::get('/front-pages/help-center-article', [HelpCenterArticle::class, 'index'])->name('front-pages-help-center-article');
 
 // THIS IS THE MAIN ROUTE
 Route::middleware(['auth', 'auth.admin'])
-  ->group(function () {
+	->group(function () {
 
-    // LEARNING MANAGEMENT - Creating Exams
-    Route::controller(LearningManagementController::class)
-      ->group(function () {
-      Route::get('/learning-management', 'index')->name('learning-management');
-      Route::get('/learning-management/create', 'create')->name('learning-management.create');
-      Route::post('/learning-management/store', 'store')->name('learning-management.store');
-      Route::get('/learning-management/{id}/show', 'show')->name('learning-management.show');
-      Route::get('/learning-management/{id}/edit', 'edit')->name('learning-management.edit');
-      Route::put('/learning-management/{id}/update', 'update')->name('learning-management.update');
-      Route::delete('/learning-management/{id}/delete', 'destroy')->name('learning-management.delete');
-    });
+		// DASHBOARD
+		Route::controller(DashboardController::class)
+			->group(function () {
+				Route::get('/dashboard', 'index')->name('dashboard');
+			});
 
-    // LEARNING MANAGEMENT - Creating Questions
-    Route::controller(QuestionController::class)
-      ->group(function () {
-      Route::get('/learning-management/question/{examId}/create', 'create')
-        ->name('learning-management.question.create');
+		// LEARNING MANAGEMENT - Creating Exams
+		Route::controller(LearningManagementController::class)
+			->group(function () {
+				Route::get('/learning-management', 'index')->name('learning-management');
+				Route::get('/learning-management/create', 'create')->name('learning-management.create');
+				Route::post('/learning-management/store', 'store')->name('learning-management.store');
+				Route::get('/learning-management/{id}/show', 'show')->name('learning-management.show');
+				Route::get('/learning-management/{id}/edit', 'edit')->name('learning-management.edit');
+				Route::put('/learning-management/{id}/update', 'update')->name('learning-management.update');
+				Route::delete('/learning-management/{id}/delete', 'destroy')->name('learning-management.delete');
+			});
 
-      Route::post('/learning-management/question/{examId}/store', 'store')
-        ->name('learning-management.question.store');
+		// LEARNING MANAGEMENT - Creating Questions
+		Route::controller(QuestionController::class)
+			->group(function () {
+				Route::get('/learning-management/question/{examId}/create', 'create')
+					->name('learning-management.question.create');
 
-      Route::get('/learning-management/question/{examId}/{questionId}/show', 'show')
-        ->name('learning-management.question.show');
+				Route::post('/learning-management/question/{examId}/store', 'store')
+					->name('learning-management.question.store');
 
-      Route::get('/learning-management/question/{examId}/{questionId}/edit', 'edit')
-        ->name('learning-management.question.edit');
+				Route::get('/learning-management/question/{examId}/{questionId}/show', 'show')
+					->name('learning-management.question.show');
 
-      Route::put('/learning-management/question/{examId}/{questionId}/update', 'update')
-        ->name('learning-management.question.update');
+				Route::get('/learning-management/question/{examId}/{questionId}/edit', 'edit')
+					->name('learning-management.question.edit');
 
-      Route::delete('/learning-management/{id}/question.delete', 'destroy')
-        ->name('learning-management.question.delete');
-    });
+				Route::put('/learning-management/question/{examId}/{questionId}/update', 'update')
+					->name('learning-management.question.update');
 
-
-
-
-    // ESS
-    Route::controller(ESSController::class)
-      ->group(function () {
-      Route::get('/ess', 'index')->name('ess');
-    });
-
-    // COMPETENCY MANAGEMENT
-    Route::controller(CompetencyManagementController::class)
-      ->group(function () {
-      Route::get('/competency-management', 'index')->name('competency-management');
-      Route::get('/competency-management/create', 'create')->name('competency-management.create');
-      Route::post('/competency-management/store', 'store')->name('competency-management.store');
-      Route::get('/competency-management/{id}/edit', 'edit')->name('competency-management.edit');
-      Route::put('/competency-management/{id}/update', 'update')->name('competency-management.update');
-      Route::delete('/competency-management/{id}/delete', action: 'destroy')->name('competency-management.delete');
-    });
-
-    // JOB QUALIFICATION
-    Route::controller(JobQualificationController::class)
-      ->group(function () {
-      Route::get('/job-qualification', 'index')->name('job-qualification');
-      Route::get('/job-qualification/create', 'create')->name('job-qualification.create');
-      Route::post('/job-qualification/store', 'store')->name('job-qualification.store');
-      Route::get('/job-qualification/{id}/edit', 'edit')->name('job-qualification.edit');
-      Route::put('/job-qualification/{id}/update', 'update')->name('job-qualification.update');
-      Route::delete('/job-qualification/{id}/delete', 'delete')->name('job-qualification.delete');
-    });
+				Route::delete('/learning-management/{id}/question.delete', 'destroy')
+					->name('learning-management.question.delete');
+			});
 
 
-    // TRAINING MANAGEMENT
-    Route::controller(TrainingManagementController::class)
-      ->group(function () {
-      Route::get('/training-management', 'index')->name('training-management');
-      Route::get('/training-management/create', 'create')->name('training-management.create');
-      Route::post('/training-management/store', 'store')->name('training-management.store');
-      Route::get('/training-management/{id}/edit', 'edit')->name('training-management.edit');
-      Route::put('/training-management/{id}/update', 'update')->name('training-management.update');
-      Route::delete('/training-management/{id}/delete', 'destroy')->name('training-management.delete');
-    });
 
-    // SUCCESSION PLANNING
-    Route::controller(SuccessionPlanningController::class)
-      ->group(function () {
-      Route::get('/succession-planning', 'index')->name('succession-planning');
-      Route::get('/succession-planning/create', 'create')->name('succession-planning.create');
-      Route::post('/succession-planning/store', 'store')->name('succession-planning.store');
-      Route::get('/succession-planning/{id}/edit', 'edit')->name('succession-planning.edit');
-      Route::put('/succession-planning/{id}/update', 'update')->name('succession-planning.update');
-      Route::delete('/succession-planning/{id}/delete', 'destroy')->name('succession-planning.delete');
-    });
-  });
+
+		// ESS
+		Route::controller(ESSController::class)
+			->group(function () {
+				Route::get('/ess', 'index')->name('ess');
+			});
+
+		// COMPETENCY MANAGEMENT
+		Route::controller(CompetencyManagementController::class)
+			->group(function () {
+				Route::get('/competency-management', 'index')->name('competency-management');
+				Route::get('/competency-management/create', 'create')->name('competency-management.create');
+				Route::post('/competency-management/store', 'store')->name('competency-management.store');
+				Route::get('/competency-management/{id}/edit', 'edit')->name('competency-management.edit');
+				Route::put('/competency-management/{id}/update', 'update')->name('competency-management.update');
+				Route::delete('/competency-management/{id}/delete', action: 'destroy')->name('competency-management.delete');
+			});
+
+		// JOB QUALIFICATION
+		Route::controller(JobQualificationController::class)
+			->group(function () {
+				Route::get('/job-qualification', 'index')->name('job-qualification');
+				Route::get('/job-qualification/create', 'create')->name('job-qualification.create');
+				Route::post('/job-qualification/store', 'store')->name('job-qualification.store');
+				Route::get('/job-qualification/{id}/edit', 'edit')->name('job-qualification.edit');
+				Route::put('/job-qualification/{id}/update', 'update')->name('job-qualification.update');
+				Route::delete('/job-qualification/{id}/delete', 'delete')->name('job-qualification.delete');
+			});
+
+
+		// TRAINING MANAGEMENT
+		Route::controller(TrainingManagementController::class)
+			->group(function () {
+				Route::get('/training-management', 'index')->name('training-management');
+				Route::get('/training-management/create', 'create')->name('training-management.create');
+				Route::post('/training-management/store', 'store')->name('training-management.store');
+				Route::get('/training-management/{id}/edit', 'edit')->name('training-management.edit');
+				Route::put('/training-management/{id}/update', 'update')->name('training-management.update');
+				Route::delete('/training-management/{id}/delete', 'destroy')->name('training-management.delete');
+			});
+
+		// SUCCESSION PLANNING
+		Route::controller(SuccessionPlanningController::class)
+			->group(function () {
+				Route::get('/succession-planning', 'index')->name('succession-planning');
+				Route::get('/succession-planning/create', 'create')->name('succession-planning.create');
+				Route::post('/succession-planning/store', 'store')->name('succession-planning.store');
+				Route::get('/succession-planning/{id}/edit', 'edit')->name('succession-planning.edit');
+				Route::put('/succession-planning/{id}/update', 'update')->name('succession-planning.update');
+				Route::delete('/succession-planning/{id}/delete', 'destroy')->name('succession-planning.delete');
+			});
+	});
 
 
 Route::get('/app/ecommerce/product/list', [EcommerceProductList::class, 'index'])->name('app-ecommerce-product-list');

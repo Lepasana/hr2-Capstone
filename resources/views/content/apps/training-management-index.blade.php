@@ -16,13 +16,9 @@
             </div>
             <div class="card-datatable table-responsive p-2">
                 @if (session()->has('success'))
-                    <div class="alert alert-success m-3">
-                        {{ session('success') }}
-                    </div>
+                    <x-alert successMessage="{{ session('success') }}" />
                 @elseif(session()->has('error'))
-                    <div class="alert alert-danger m-3">
-                        {{ session('error') }}
-                    </div>
+                    <x-alert errorMessage="{{ session('error') }}" />
                 @endif
                 <table id="dataTable" class="datatables-trainings table border-top">
                     <thead>
@@ -54,8 +50,8 @@
 
                                         <div>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#modal-{{ $training ->id }}"
-                                                data-action="{{ route('training-management.delete', ['id' => $training ->id]) }}">
+                                                data-target="#modal-{{ $training->id }}"
+                                                data-action="{{ route('training-management.delete', ['id' => $training->id]) }}">
                                                 Delete
                                             </button>
                                         </div>
@@ -70,14 +66,14 @@
                         @endforeach
                     </tbody>
                 </table>
+                </>
             </div>
         </div>
-    </div>
-@endsection
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-<script>
-    $(document).ready(function() {
-        new DataTable('#dataTable'); // Use the correct ID
-    });
-</script>
+    @endsection
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            new DataTable('#dataTable'); // Use the correct ID
+        });
+    </script>

@@ -1,14 +1,15 @@
 {
   "menu": [
     {
-      "name": "Dashboards",
+      "name": "Dashboard",
+      "url": "dashboard",
       "icon": "menu-icon tf-icons ti ti-smart-home",
       "slug": "dashboard",
       "badge": ["primary", "5"]
     },
 
     {
-      "name": "LEARNING MANAGEMENT",
+      "name": "Learning Management",
       "icon": "menu-icon tf-icons ti ti-book",
       "slug": "learning-management",
       "submenu": [
@@ -27,7 +28,7 @@
       ]
     },
     {
-      "name": "COMPETENCY MANAGEMENT",
+      "name": "Compentency Management",
       "icon": "menu-icon tf-icons ti ti-messages",
       "slug": "competency-management",
       "submenu": [
@@ -47,13 +48,13 @@
     },
     {
       "url": "training-management",
-      "name": "TRAINING MANAGEMENT",
+      "name": "Training Management",
       "icon": "menu-icon tf-icons ti ti-layout-kanban",
       "slug": "training-management"
     },
     {
       "url": "succession-planning",
-      "name": "SUCCESSION PLANNING",
+      "name": "Succession Planning",
       "icon": "menu-icon tf-icons ti ti-layout-kanban",
       "slug": "succession-planning"
     }

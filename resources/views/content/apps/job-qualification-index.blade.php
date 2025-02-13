@@ -25,18 +25,15 @@
             </div>
             <div class="card-datatable table-responsive p-2">
                 @if (session()->has('success'))
-                    <div class="alert alert-success m-3">
-                        {{ session('success') }}
-                    </div>
+                    <x-alert successMessage="{{ session('success') }}" />
                 @elseif(session()->has('error'))
-                    <div class="alert alert-danger m-3">
-                        {{ session('error') }}
-                    </div>
+                    <x-alert errorMessage="{{ session('error') }}" />
                 @endif
 
                 <table id="dataTable" class="datatables-competencies table border-top">
                     <thead>
                         <tr>
+                            <th class="text-center cell-fit">Job Title Request</th>
                             <th class="text-center cell-fit">Content</th>
                             <th class="text-center cell-fit">Date Added</th>
                             <th class="text-center cell-fit">Actions</th>
@@ -45,6 +42,8 @@
                     <tbody>
                         @foreach ($qualifications as $qualification)
                             <tr>
+                                <td class="text-center">
+                                    {{ $qualification->jobRequest?->job_title }}</td>
                                 <td class="text-center d-inline-block text-truncate" style="max-width: 250px;">
                                     {{ $qualification->content }}</td>
                                 <td class="text-center">{{ $qualification->created_at->format('m/d/Y h:i A (T)') }}</td>

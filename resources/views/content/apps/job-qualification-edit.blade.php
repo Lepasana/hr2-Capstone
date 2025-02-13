@@ -15,6 +15,22 @@
                         @csrf
                         @method('PUT')
 
+                        <div class="col-md-6">
+                            <label for="" class="form-label">Job Title</label>
+                            <select name="job_request_id" id="job_request_id" class="form-select" required>
+                                    <option value="{{ $qualification->job_request_id }}">{{ $qualification->jobRequest->job_title }}</option>
+                                @foreach ($jobRequests as $jobRequest)
+                                    <option value="{{ $jobRequest->id }}">{{ $jobRequest->job_title }}</option>
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('job_request_id'))
+                                <div class="text-danger">
+                                    {{ $errors->first('job_request_id') }}
+                                </div>
+                            @endif
+                        </div>
+
                         <div class="col-md-12">
                             <label for="" class="form-label">Content</label>
                             <textarea class="form-control" id="content" rows="5" name="content">{{ $qualification->content }}</textarea>

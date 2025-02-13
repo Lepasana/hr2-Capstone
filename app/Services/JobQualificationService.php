@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Question;
+use App\Models\JobRequest;
 use App\Models\Examination;
 use Illuminate\Http\Request;
 use App\Models\JobQualification;
@@ -10,17 +11,21 @@ use App\Models\JobQualification;
 class JobQualificationService
 {
   public JobQualification $jobQualification;
+  public JobRequest $jobRequest;
 
 
   public function __construct(
     JobQualification $jobQualification,
+    JobRequest $jobRequest
   ) {
     $this->jobQualification = $jobQualification;
+    $this->jobRequest = $jobRequest;
   }
 
   public function store(Request $request)
   {
     $jobQualification = $this->jobQualification;
+    $jobQualification->job_request_id = $request->job_request_id;
     $jobQualification->content = $request->content;
     $jobQualification->save();
 
@@ -40,6 +45,7 @@ class JobQualificationService
   public function update(Request $request, $id)
   {
     $jobQualification = $this->jobQualification->find($id);
+    $jobQualification->job_request_id = $request->job_request_id;
     $jobQualification->content = $request->content;
     $jobQualification->save();
 

@@ -29,13 +29,9 @@
                     </div>
                     <div class="card-datatable table-responsive p-2">
                         @if (session()->has('success'))
-                            <div class="alert alert-success m-3">
-                                {{ session('success') }}
-                            </div>
+                            <x-alert successMessage="{{ session('success') }}" />
                         @elseif(session()->has('error'))
-                            <div class="alert alert-danger m-3">
-                                {{ session('error') }}
-                            </div>
+                            <x-alert errorMessage="{{ session('error') }}" />
                         @endif
 
                         <table id="dataTable2" class="datatables-learnings table border-top">
