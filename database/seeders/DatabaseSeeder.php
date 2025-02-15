@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\DurationSeeder;
 use Database\Seeders\EmployeeSeeder;
+use Database\Seeders\TrainingSeeder;
 use Database\Seeders\JobRequestSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
       EmployeeSeeder::class,
       UserSeeder::class,
       JobRequestSeeder::class,
+      TrainingSeeder::class,
     ]);
 
   }
