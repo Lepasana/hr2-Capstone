@@ -25,6 +25,28 @@
                 <x-card-component title="Number of Competency" :description="$competencyCount" />
             </div>
 
+            <div class="col-md-6 my-5">
+                <div class="card align-center justify-content-center text-center">
+                    <div class="card-body">
+                        {!! $jobRequestChart->container() !!}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 my-5">
+                <div class="card align-center justify-content-center text-center">
+                    <div class="card-body">
+                        {!! $trainingChart->container() !!}
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.6/highcharts.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/echarts/4.0.2/echarts-en.min.js charset=utf-8></script>
+    {!! $jobRequestChart->script() !!}
+    {!! $trainingChart->script() !!}
 @endsection
