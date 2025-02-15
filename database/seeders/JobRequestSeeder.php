@@ -13,6 +13,6 @@ class JobRequestSeeder extends Seeder
      */
     public function run(): void
     {
-        JobRequest::factory()->count(10)->create();
+        JobRequest::factory()->count(100)->create();
     }
 }

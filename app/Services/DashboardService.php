@@ -28,6 +28,7 @@ class DashboardService
             // Format the created_at date to get the year and month (e.g., "2025-02")
             return $jobRequest->created_at->format('Y-m');
         });
+        $monthlyData = $monthlyData->sortKeys();  // Sort the keys (months) in ascending order
 
         // Loop through jobRequests and extract the necessary data
         foreach ($monthlyData as $month => $items) {
@@ -52,6 +53,7 @@ class DashboardService
             // Format the created_at date to get the year and month (e.g., "2025-02")
             return $training->created_at->format('Y-m');
         });
+        $monthlyData = $monthlyData->sortKeys();  // Sort the keys (months) in ascending order
 
         // Loop through trainings and extract the necessary data
         foreach ($monthlyData as $month => $items) {
@@ -85,7 +87,7 @@ class DashboardService
                     [
                         'ticks' => [
                             'beginAtZero' => true,
-                            'max'         => 50,
+                            'max'         => 100,
                             'stepSize'    => 10, // Set the interval between ticks to 50
                             'fontColor'   => 'black',
                         ],

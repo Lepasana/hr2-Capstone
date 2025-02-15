@@ -17,7 +17,8 @@ class JobRequestFactory extends Factory
     public function definition(): array
     {
         return [
-            'job_title' => fake()->jobTitle()
+            'job_title' => fake()->jobTitle(),
+            'created_at' => fake()->dateTimeBetween('2024-11-30' ,'2025-02-30'), // Random date between February 2025 and November 2025
         ];
     }
 }
