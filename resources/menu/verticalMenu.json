@@ -4,8 +4,7 @@
       "name": "Dashboard",
       "url": "dashboard",
       "icon": "menu-icon tf-icons ti ti-smart-home",
-      "slug": "dashboard",
-      "badge": ["primary", "5"]
+      "slug": "dashboard"
     },
 
     {
