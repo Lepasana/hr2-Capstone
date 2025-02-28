@@ -16,6 +16,7 @@ class ApplicantScore extends Model
       'applicant_id',
       'examination_id',
       'score',
+      'duration',
     ];
 
     public function applicant(): BelongsTo

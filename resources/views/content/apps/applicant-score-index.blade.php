@@ -25,7 +25,7 @@
                             <th class="text-center cell-fit">Applicant</th>
                             <th class="text-center cell-fit">Exam Title</th>
                             <th class="text-center cell-fit">Score</th>
-                            {{-- <th class="text-center cell-fit">Action</th> --}}
+                            <th class="text-center cell-fit">Duration</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +35,7 @@
                                 <td class="text-start">{{ $applicantScore->applicant->name }}</td>
                                 <td class="text-start">{{ $applicantScore->examination?->title }}</td>
                                 <td class="text-center">{{ $applicantScore->score }}</td>
+                                <td class="text-center">{{ $applicantScore->duration }}</td>
                                 {{-- <td>
                                     <div class="d-flex gap-2 justify-content-center">
                                         <div>
