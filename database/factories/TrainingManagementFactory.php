@@ -20,7 +20,7 @@ class TrainingManagementFactory extends Factory
     public function definition(): array
     {
         return [
-            'training_name' => fake()->jobTitle(),
+            'training_name' => fake()->jobTitle() . ' Training',
             'employee_id' => Employee::factory()->create()->id,
             'training_date' => fake()->dateTimeBetween('2024-12-15', '2025-01-15'),
             'duration_id' => Duration::factory()->create()->id,

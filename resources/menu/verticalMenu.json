@@ -15,12 +15,12 @@
       "submenu": [
         {
           "name": "Applicant Score",
-          "url": "#",
+          "url": "applicant-score",
           "icon": "menu-icon tf-icons ti ti-book",
           "slug": "applicant-score"
         },
         {
-          "name": "Create Exams",
+          "name": "Examination",
           "url": "/learning-management",
           "icon": "menu-icon tf-icons ti ti-book",
           "slug": "learning-management"

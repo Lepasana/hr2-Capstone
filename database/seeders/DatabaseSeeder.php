@@ -8,7 +8,10 @@ use Database\Seeders\UserSeeder;
 use Database\Seeders\DurationSeeder;
 use Database\Seeders\EmployeeSeeder;
 use Database\Seeders\TrainingSeeder;
+use Database\Seeders\ApplicantSeeder;
 use Database\Seeders\JobRequestSeeder;
+use Database\Seeders\ExaminationSeeder;
+use Database\Seeders\ApplicantScoreSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +26,9 @@ class DatabaseSeeder extends Seeder
       UserSeeder::class,
       JobRequestSeeder::class,
       TrainingSeeder::class,
+      ApplicantSeeder::class,
+      ExaminationSeeder::class,
+      ApplicantScoreSeeder::class
     ]);
 
   }

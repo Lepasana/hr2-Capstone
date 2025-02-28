@@ -99,6 +99,7 @@ use App\Http\Controllers\user_interface\Carousel;
 use App\Http\Controllers\user_interface\Collapse;
 use App\Http\Controllers\user_interface\Progress;
 use App\Http\Controllers\user_interface\Spinners;
+use App\Http\Controllers\ApplicantScoreController;
 use App\Http\Controllers\apps\EcommerceProductAdd;
 use App\Http\Controllers\apps\UserViewConnections;
 use App\Http\Controllers\form_elements\BasicInput;
@@ -163,8 +164,8 @@ use App\Http\Controllers\authentications\RegisterMultiSteps;
 use App\Http\Controllers\authentications\ResetPasswordBasic;
 use App\Http\Controllers\authentications\ResetPasswordCover;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
-use App\Http\Controllers\apps\EcommerceSettingsNotifications;
 
+use App\Http\Controllers\apps\EcommerceSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\authentications\ForgotPasswordCover;
 use App\Http\Controllers\form_wizard\Icons as FormWizardIcons;
@@ -222,8 +223,12 @@ Route::middleware(['auth', 'auth.admin'])
 					->name('learning-management.question.delete');
 			});
 
-
-
+    // LEARNING MANAGEMENT - Applicant Score
+    Route::controller(ApplicantScoreController::class)
+      ->group(function () {
+        Route::get('/applicant-score', 'index')->name('applicant-score');
+				Route::delete('/applicant-score/{id}/delete', 'destroy')->name('applicant-score.delete');
+      });
 
 		// ESS
 		Route::controller(ESSController::class)
@@ -239,7 +244,7 @@ Route::middleware(['auth', 'auth.admin'])
 				Route::post('/competency-management/store', 'store')->name('competency-management.store');
 				Route::get('/competency-management/{id}/edit', 'edit')->name('competency-management.edit');
 				Route::put('/competency-management/{id}/update', 'update')->name('competency-management.update');
-				Route::delete('/competency-management/{id}/delete', action: 'destroy')->name('competency-management.delete');
+				Route::delete('/competency-management/{id}/delete', 'destroy')->name('competency-management.delete');
 			});
 
 		// JOB QUALIFICATION

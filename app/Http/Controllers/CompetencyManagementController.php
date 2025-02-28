@@ -23,7 +23,7 @@ class CompetencyManagementController extends Controller
    */
   public function index()
   {
-    $competencies = CompetencyManagement::get();
+    $competencies = $this->competencyManagement->get();
     $employees = Employee::query()->select(['id', 'name'])->get();
     $skill_levels = SkillLevelEnum::toOptions();
 
