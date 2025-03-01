@@ -49,7 +49,7 @@
                             <td class="text-center">{{ $successor->employee->id }}</td>
                             <td class="text-start">{{ $successor->employee->name }}</td>
                             <td class="text-start">{{ $successor->current_position }}</td>
-                            <td class="text-start">{{ $successor->potential_successor }}</td>
+                            <td class="text-start">{{ $successor->potentialSuccessor->name }}</td>
                             <td class="text-start">{{ $successor->development_needs }}</td>
                             <td class="text-start">{{ $successor->readiness_level }}</td>
                             <td>

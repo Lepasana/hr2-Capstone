@@ -36,12 +36,72 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role' => UserRoleEnum::EMPLOYEE->value,
             ],
+            [
+                'name' => 'John Doe',
+                'email' => 'john.doe@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'Jane Smith',
+                'email' => 'jane.smith@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'Michael Johnson',
+                'email' => 'michael.johnson@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'Emily Davis',
+                'email' => 'emily.davis@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'David Martinez',
+                'email' => 'david.martinez@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'Sarah Brown',
+                'email' => 'sarah.brown@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'Robert Wilson',
+                'email' => 'robert.wilson@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'Laura Anderson',
+                'email' => 'laura.anderson@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'Daniel Thomas',
+                'email' => 'daniel.thomas@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
+            [
+                'name' => 'Olivia Harris',
+                'email' => 'olivia.harris@example.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::EMPLOYEE->value,
+            ],
         ];
 
         foreach ($users as $user) {
             $newUser = User::updateOrCreate(['email' => $user['email']], $user);
 
-            if ($newUser) {
+            if ($newUser && $newUser['role'] == UserRoleEnum::EMPLOYEE->value) {
                 $employee = new Employee;
                 $employee->user_id = $newUser->id;
                 $employee->name = $user['name'];

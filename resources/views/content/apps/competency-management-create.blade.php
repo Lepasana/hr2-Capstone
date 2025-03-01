@@ -33,7 +33,23 @@
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Competency</label>
+                            <label for="" class="form-lab">Job Request Position</label>
+                            <select name="job_request_id" id="job_request_id" class="form-select" required>
+                                <option value="{{ old('job_request_id') }}" selected>Select Position</option>
+                                @foreach ($jobRequests as $jobRequest)
+                                    <option value="{{ $jobRequest->id }}">{{ $jobRequest->job_title }}</option>
+                                @endforeach
+
+                                @if ($errors->has('job_request_id'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('job_request_id') }}
+                                    </div>
+                                @endif
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <label for="" class="form-label">Skill</label>
                             <input type="text" name="competency" class="form-control" value="{{ old('competency') }}"
                                 required>
                             @if ($errors->has('competency'))
@@ -55,17 +71,6 @@
                             @if ($errors->has('skill_level'))
                                 <div class="text-danger">
                                     {{ $errors->first('skill_level') }}
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Proficiency</label>
-                            <input type="text" name="proficiency" id="proficiency" class="form-control" required>
-
-                            @if ($errors->has('proficiency'))
-                                <div class="text-danger">
-                                    {{ $errors->first('proficiency') }}
                                 </div>
                             @endif
                         </div>

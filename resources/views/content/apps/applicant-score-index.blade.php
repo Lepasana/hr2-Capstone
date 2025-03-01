@@ -26,6 +26,7 @@
                             <th class="text-center cell-fit">Exam Title</th>
                             <th class="text-center cell-fit">Score</th>
                             <th class="text-center cell-fit">Duration</th>
+                            <th class="text-center cell-fit">Date Finished</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,7 @@
                                 <td class="text-start">{{ $applicantScore->examination?->title }}</td>
                                 <td class="text-center">{{ $applicantScore->score }}</td>
                                 <td class="text-center">{{ $applicantScore->duration }}</td>
+                                <td class="text-center">{{ $applicantScore->created_at->format('F d, Y') }}</td>
                                 {{-- <td>
                                     <div class="d-flex gap-2 justify-content-center">
                                         <div>

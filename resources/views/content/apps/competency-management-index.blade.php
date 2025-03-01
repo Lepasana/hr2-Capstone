@@ -35,10 +35,9 @@
                         <tr>
                             <th class="text-center cell-fit">Employee ID</th>
                             <th class="text-center cell-fit">Employee Name</th>
-                            <th class="text-center cell-fit">Competency</th>
+                            <th class="text-center cell-fit">Job Position</th>
+                            <th class="text-center cell-fit">skills</th>
                             <th class="text-center cell-fit">Skill Level</th>
-                            <th class="text-center cell-fit">Proficiency</th>
-                            <th class="text-center cell-fit">Notes</th>
                             <th class="text-center cell-fit">Actions</th>
                         </tr>
                     </thead>
@@ -47,10 +46,9 @@
                             <tr>
                                 <td class="text-center">{{ $competency->employee->id }}</td>
                                 <td class="text-center">{{ $competency->employee->name }}</td>
+                                <td class="text-center">{{ $competency->jobRequest->job_title }}</td>
                                 <td class="text-center">{{ $competency->competency }}</td>
                                 <td class="text-center">{{ $competency->skill_level }}</td>
-                                <td class="text-center">{{ $competency->proficiency }}</td>
-                                <td class="text-truncate" style="max-width: 150px;">{{ $competency->notes }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div>

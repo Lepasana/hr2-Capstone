@@ -32,7 +32,7 @@
       "slug": "competency-management",
       "submenu": [
         {
-          "name": "Compentency Management",
+          "name": "Compentency Status",
           "icon": "menu-icon tf-icons ti ti-messages",
           "slug": "competency-management",
           "url": "competency-management"
@@ -53,14 +53,14 @@
     },
     {
       "name": "Succession Planning",
-      "icon": "menu-icon tf-icons ti ti-layout-kanban",
+      "icon": "menu-icon tf-icons ti ti-users",
       "slug": "succession-planning",
       "submenu": [
         {
           "name": "List of Successor",
           "url": "succession-planning",
-          "icon": "menu-icon tf-icons ti ti-book",
-          "slug": "applicant-score"
+          "icon": "menu-icon tf-icons ti ti-user",
+          "slug": "succession-planning"
         },
         {
           "name": "Succession Status",

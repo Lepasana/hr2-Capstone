@@ -33,7 +33,23 @@
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Competency</label>
+                          <label for="" class="form-lab">Job Request Position</label>
+                          <select name="job_request_id" id="job_request_id" class="form-select" required>
+                              <option value="{{ $competency->job_request_id ?? old('job_request_id') }}" selected>{{ $competency->jobRequest->job_title }}</option>
+                              @foreach ($jobRequests as $jobRequest)
+                                  <option value="{{ $jobRequest->id }}">{{ $jobRequest->job_title }}</option>
+                              @endforeach
+
+                              @if ($errors->has('job_request_id'))
+                                  <div class="text-danger">
+                                      {{ $errors->first('job_request_id') }}
+                                  </div>
+                              @endif
+                          </select>
+                      </div>
+
+                        <div class="col-md-12 mt-3">
+                            <label for="" class="form-label">Skill</label>
                             <input type="text" name="competency" class="form-control" value="{{ $competency->competency ?? old('competency') }}"
                                 required>
                             @if ($errors->has('competency'))
@@ -60,19 +76,8 @@
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Proficiency</label>
-                            <input type="text" name="proficiency" id="proficiency" class="form-control" value="{{ $competency->proficiency ?? old('proficiency') }}" required>
-
-                            @if ($errors->has('proficiency'))
-                                <div class="text-danger">
-                                    {{ $errors->first('proficiency') }}
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Notes</label>
-                            <textarea name="notes" id="notes" class="form-control" rows="10" required>{{ $competency->notes }}</textarea>
+                            <textarea name="notes" id="notes" class="form-control" rows="5" required>{{ $competency->notes }}</textarea>
 
                             @if ($errors->has('notes'))
                                 <div class="text-danger">

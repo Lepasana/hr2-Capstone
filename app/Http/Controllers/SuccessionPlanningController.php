@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Enums\ReadinessLevelEnum;
 use App\Models\SuccessionPlanning;
 use App\Http\Requests\SuccessionPlanningRequest;
+use App\Enums\SuccessionPlanning\CurrentPositionEnum;
 
 class SuccessionPlanningController extends Controller
 {
@@ -36,10 +37,12 @@ class SuccessionPlanningController extends Controller
   {
     $employees = Employee::query()->select(['id', 'name'])->get();
     $readiness_levels = ReadinessLevelEnum::toOptions();
+    $currentPositions = CurrentPositionEnum::toOptions();
 
     return view('content.apps.succession-planning-create', [
       'employees' => $employees,
       'readiness_levels' => $readiness_levels,
+      'currentPositions' => $currentPositions
     ]);
   }
 
@@ -82,10 +85,12 @@ class SuccessionPlanningController extends Controller
   {
     $employees = Employee::query()->select(['id', 'name'])->get();
     $successor = SuccessionPlanning::findOrFail($id);
+    $currentPositions = CurrentPositionEnum::toOptions();
 
     return view('content.apps.succession-planning-edit', [
       'employees' => $employees,
-      'successor' => $successor
+      'successor' => $successor,
+      'currentPositions' => $currentPositions
     ]);
   }
 

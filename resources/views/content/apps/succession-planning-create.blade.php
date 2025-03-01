@@ -38,25 +38,36 @@
 
                         <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Current Position</label>
-                            <input type="text" name="current_position" id="current_position" class="form-control"
+                            <select name="current_position" id="current_position" class="form-select"
                                 value="{{ old('current_position') }}" required>
+                                <option value="" selected>Select Position</option>
+                                @foreach ($currentPositions as $currentPosition)
+                                    <option value="{{ $currentPosition }}">{{ $currentPosition }}</option>
+                                @endforeach
 
-                            @if ($errors->has('current_position'))
-                                <div class="text-danger">
-                                    {{ $errors->first('current_position') }}
-                                </div>
-                            @endif
+                                @if ($errors->has('current_position'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('current_position') }}
+                                    </div>
+                                @endif
+                            </select>
                         </div>
 
                         <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Potential Successor</label>
-                            <input type="text" name="potential_successor" class="form-control"
+                            <select name="potential_successor" id="potential_successor" class="form-select"
                                 value="{{ old('potential_successor') }}" required>
-                            @if ($errors->has('potential_successor'))
-                                <div class="text-danger">
-                                    {{ $errors->first('potential_successor') }}
-                                </div>
-                            @endif
+                                <option value="" selected>Select Successor</option>
+                                @foreach ($employees as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                @endforeach
+
+                                @if ($errors->has('potential_successor'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('potential_successor') }}
+                                    </div>
+                                @endif
+                            </select>
                         </div>
 
                         <div class="col-md-12 mt-3">

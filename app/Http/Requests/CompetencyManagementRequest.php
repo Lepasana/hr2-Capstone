@@ -23,6 +23,7 @@ class CompetencyManagementRequest extends FormRequest
     {
         return [
             'employee' => 'required',
+            'job_request_id' => 'required',
             'competency' => 'required|string',
             'skill_level' => 'required|string',
             'proficiency' => 'required|string',

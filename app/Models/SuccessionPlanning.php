@@ -22,4 +22,9 @@ class SuccessionPlanning extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function potentialSuccessor()
+    {
+        return $this->belongsTo(Employee::class, 'potential_successor');
+    }
 }
