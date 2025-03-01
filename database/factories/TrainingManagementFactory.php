@@ -21,9 +21,9 @@ class TrainingManagementFactory extends Factory
     {
         return [
             'training_name' => fake()->jobTitle() . ' Training',
-            'employee_id' => Employee::factory()->create()->id,
+            'employee_id' => Employee::query()->inRandomOrder()->value('id'),
             'training_date' => fake()->dateTimeBetween('2024-12-15', '2025-01-15'),
-            'duration_id' => Duration::factory()->create()->id,
+            'duration_id' => Duration::query()->inRandomOrder()->value('id'),
             'status' => TrainingStatusEnum::UPCOMING->value,
             'created_at' => fake()->dateTimeBetween('2024-11-30' ,'2025-02-30'), // Random date between February 2025 and November 2025
         ];

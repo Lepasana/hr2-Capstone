@@ -9,6 +9,7 @@ use Database\Seeders\DurationSeeder;
 use Database\Seeders\EmployeeSeeder;
 use Database\Seeders\TrainingSeeder;
 use Database\Seeders\ApplicantSeeder;
+use Database\Seeders\TimesheetSeeder;
 use Database\Seeders\JobRequestSeeder;
 use Database\Seeders\ExaminationSeeder;
 use Database\Seeders\ApplicantScoreSeeder;
@@ -21,14 +22,15 @@ class DatabaseSeeder extends Seeder
   public function run(): void
   {
     $this->call([
-      DurationSeeder::class,
-      EmployeeSeeder::class,
       UserSeeder::class,
+      DurationSeeder::class,
+      // EmployeeSeeder::class,
       JobRequestSeeder::class,
       TrainingSeeder::class,
       ApplicantSeeder::class,
       ExaminationSeeder::class,
-      ApplicantScoreSeeder::class
+      ApplicantScoreSeeder::class,
+      TimesheetSeeder::class,
     ]);
 
   }

@@ -52,10 +52,23 @@
       "slug": "training-management"
     },
     {
-      "url": "succession-planning",
       "name": "Succession Planning",
       "icon": "menu-icon tf-icons ti ti-layout-kanban",
-      "slug": "succession-planning"
+      "slug": "succession-planning",
+      "submenu": [
+        {
+          "name": "List of Successor",
+          "url": "succession-planning",
+          "icon": "menu-icon tf-icons ti ti-book",
+          "slug": "applicant-score"
+        },
+        {
+          "name": "Succession Status",
+          "url": "#",
+          "icon": "menu-icon tf-icons ti ti-book",
+          "slug": "learning-management"
+        }
+      ]
     }
   ]
 }

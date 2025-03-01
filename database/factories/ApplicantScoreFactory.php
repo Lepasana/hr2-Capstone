@@ -19,8 +19,8 @@ class ApplicantScoreFactory extends Factory
     public function definition(): array
     {
         return [
-            'applicant_id' => Applicant::factory()->create()->id,
-            'examination_id' => Examination::factory()->create()->id,
+            'applicant_id' => Applicant::query()->inRandomOrder()->value('id'),
+            'examination_id' => Examination::query()->inRandomOrder()->value('id'),
             'score' => fake()->numberBetween(0, 100),
             'duration' => fake()->numberBetween(1, 180) . ' minutes', // Duration in minutes
         ];

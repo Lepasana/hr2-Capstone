@@ -18,7 +18,7 @@ class ExaminationFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory()->create()->id,
+            'user_id' => User::query()->inRandomOrder()->value('id'),
             'title' => fake()->jobTitle() . ' Examination'
         ];
     }
