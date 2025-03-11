@@ -1,6 +1,6 @@
 @extends('layouts.layoutMaster')
 
-@section('title', 'Employee Self Service')
+@section('title', 'Dashboard')
 
 @section('content')
     @if (session()->has('success'))
