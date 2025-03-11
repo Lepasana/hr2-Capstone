@@ -25,6 +25,7 @@
                             <th class="text-center cell-fit">Applicant</th>
                             <th class="text-center cell-fit">Exam Title</th>
                             <th class="text-center cell-fit">Score</th>
+                            <th class="text-center cell-fit">Status</th>
                             <th class="text-center cell-fit">Duration</th>
                             <th class="text-center cell-fit">Date Finished</th>
                         </tr>
@@ -36,6 +37,12 @@
                                 <td class="text-start">{{ $applicantScore->applicant->name }}</td>
                                 <td class="text-start">{{ $applicantScore->examination?->title }}</td>
                                 <td class="text-center">{{ $applicantScore->score }}</td>
+                                <td class="text-center">
+                                    <span
+                                        class="badge rounded bg-{{ $applicantScore->status == 'passed' ? 'success' : 'danger' }}">
+                                        {{ $applicantScore->status }}
+                                    </span>
+                                </td>
                                 <td class="text-center">{{ $applicantScore->duration }}</td>
                                 <td class="text-center">{{ $applicantScore->created_at->format('F d, Y') }}</td>
                                 {{-- <td>
@@ -64,7 +71,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         new DataTable('#dataTable'); // Use the correct ID
     });
 </script>

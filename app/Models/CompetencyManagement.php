@@ -16,6 +16,7 @@ class CompetencyManagement extends Model
         'employee_id',
         'job_request_id',
         'competency',
+        'department',
         'skill_level',
         'proficiency',
         'notes',

@@ -21,7 +21,8 @@ class ApplicantScoreFactory extends Factory
         return [
             'applicant_id' => Applicant::query()->inRandomOrder()->value('id'),
             'examination_id' => Examination::query()->inRandomOrder()->value('id'),
-            'score' => fake()->numberBetween(0, 100),
+            'score' => $score = fake()->numberBetween(0, 100),
+            'status' => $score < 25 ? 'failed' : 'passed',
             'duration' => fake()->numberBetween(1, 180) . ' minutes', // Duration in minutes
         ];
     }

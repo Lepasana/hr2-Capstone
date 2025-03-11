@@ -34,27 +34,35 @@
                     <thead>
                         <tr>
                             <th class="text-center cell-fit">Job Title Request</th>
-                            <th class="text-center cell-fit">Content</th>
                             <th class="text-center cell-fit">Date Added</th>
-                            <th class="text-center cell-fit">Actions</th>
+                            <th class="text-start cell-fit">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($qualifications as $qualification)
                             <tr>
                                 <td class="text-center">
-                                    {{ $qualification->jobRequest?->job_title }}</td>
-                                <td class="text-center d-inline-block text-truncate" style="max-width: 250px;">
-                                    {{ $qualification->content }}</td>
+                                    {{ $qualification->jobRequest?->job_title }}
+                                </td>
                                 <td class="text-center">{{ $qualification->created_at->format('m/d/Y h:i A (T)') }}</td>
                                 <td>
-                                    <div class="d-flex gap-2">
-                                        <div>
+                                    <div class="row w-50">
+                                        <div class="col-6 my-1">
+                                            <button type="button" class="btn btn-info btn-sm"
+                                                onclick="location.href = '{{ route('job-qualification.view', ['id' => $qualification->id]) }}'">Post</button>
+                                        </div>
+
+                                        <div class="col-6 my-1">
+                                            <button type="button" class="btn btn-secondary btn-sm"
+                                                onclick="location.href = '{{ route('job-qualification.view', ['id' => $qualification->id]) }}'">View</button>
+                                        </div>
+
+                                        <div class="col-6 my-1">
                                             <button type="button" class="btn btn-success btn-sm"
                                                 onclick="location.href = '{{ route('job-qualification.edit', ['id' => $qualification->id]) }}'">Edit</button>
                                         </div>
 
-                                        <div>
+                                        <div class="col-6 my-1">
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#modal-{{ $qualification->id }}"
                                                 data-action="{{ route('job-qualification.delete', ['id' => $qualification->id]) }}">
@@ -79,7 +87,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         new DataTable('#dataTable'); // Use the correct ID
     });
 </script>

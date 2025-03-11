@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Enums\SkillLevelEnum;
 use App\Models\CompetencyManagement;
 use App\Http\Requests\CompetencyManagementRequest;
+use App\Enums\CompensationManagement\DepartmentEnum;
 
 class CompetencyManagementController extends Controller
 {
@@ -43,11 +44,13 @@ class CompetencyManagementController extends Controller
         $skill_levels = SkillLevelEnum::toOptions();
         $employees = Employee::query()->select(['id', 'name'])->get();
         $jobRequests = JobRequest::query()->get();
+        $departmentEnums = DepartmentEnum::toOptions();
 
         return view('content.apps.competency-management-create', [
             'skill_levels' => $skill_levels,
             'employees' => $employees,
-            'jobRequests' => $jobRequests
+            'jobRequests' => $jobRequests,
+            'departmentEnums' => $departmentEnums,
         ]);
     }
 
@@ -59,9 +62,8 @@ class CompetencyManagementController extends Controller
         $competencyManagement = $this->competencyManagement;
         $competencyManagement->employee_id = $request->employee;
         $competencyManagement->job_request_id = $request->job_request_id;
-        $competencyManagement->competency = $request->competency;
+        $competencyManagement->department = $request->department;
         $competencyManagement->skill_level = $request->skill_level;
-        $competencyManagement->notes = $request->notes;
         $competencyManagement->save();
 
         if (!$competencyManagement) {
@@ -92,12 +94,14 @@ class CompetencyManagementController extends Controller
         $skill_levels = SkillLevelEnum::toOptions();
         $employees = Employee::query()->select(['id', 'name'])->get();
         $jobRequests = JobRequest::query()->get();
+        $departmentEnums = DepartmentEnum::toOptions();
 
         return view('content.apps.competency-management-edit', [
             'competency' => $competency,
             'skill_levels' => $skill_levels,
             'employees' => $employees,
-            'jobRequests' => $jobRequests
+            'jobRequests' => $jobRequests,
+            'departmentEnums' => $departmentEnums,
         ]);
     }
 
@@ -109,7 +113,7 @@ class CompetencyManagementController extends Controller
         $competencyManagement = $this->competencyManagement->find($id);
         $competencyManagement->employee_id = $request->employee;
         $competencyManagement->job_request_id = $request->job_request_id;
-        $competencyManagement->competency = $request->competency;
+        $competencyManagement->department = $request->department;
         $competencyManagement->skill_level = $request->skill_level;
         $competencyManagement->notes = $request->notes;
         $competencyManagement->save();

@@ -253,6 +253,7 @@ Route::middleware(['auth', 'auth.admin'])
 				Route::get('/job-qualification', 'index')->name('job-qualification');
 				Route::get('/job-qualification/create', 'create')->name('job-qualification.create');
 				Route::post('/job-qualification/store', 'store')->name('job-qualification.store');
+				Route::get('/job-qualification/{id}/view', 'view')->name('job-qualification.view');
 				Route::get('/job-qualification/{id}/edit', 'edit')->name('job-qualification.edit');
 				Route::put('/job-qualification/{id}/update', 'update')->name('job-qualification.update');
 				Route::delete('/job-qualification/{id}/delete', 'delete')->name('job-qualification.delete');
