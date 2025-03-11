@@ -17,19 +17,24 @@ class JobRequestSeeder extends Seeder
         // JobRequest::factory()->count(100)->create();
         $positions = [
             [
-                'job_title' => "Manager"
+                'job_title' => "Manager",
+                'created_at' => now()
             ],
             [
-                'job_title' => "HR Staff"
+                'job_title' => "HR Staff",
+                'created_at' => now()
             ],
             [
-                'job_title' => "Logistic Staff"
+                'job_title' => "Logistic Staff",
+                'created_at' => now()
             ],
             [
-                'job_title' => "Finance Staff"
+                'job_title' => "Finance Staff",
+                'created_at' => now()
             ],
             [
-                'job_title' => "Training and Development Specialist"
+                'job_title' => "Training and Development Specialist",
+                'created_at' => now()
             ],
         ];
 
