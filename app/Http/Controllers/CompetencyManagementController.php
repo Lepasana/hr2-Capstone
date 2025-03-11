@@ -115,7 +115,6 @@ class CompetencyManagementController extends Controller
         $competencyManagement->job_request_id = $request->job_request_id;
         $competencyManagement->department = $request->department;
         $competencyManagement->skill_level = $request->skill_level;
-        $competencyManagement->notes = $request->notes;
         $competencyManagement->save();
 
         if (!$competencyManagement) {

@@ -86,18 +86,6 @@
                             @endif
                         </div>
 
-                        <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Notes</label>
-                            <textarea name="notes" id="notes" class="form-control" rows="5"
-                                required>{{ $competency->notes }}</textarea>
-
-                            @if ($errors->has('notes'))
-                                <div class="text-danger">
-                                    {{ $errors->first('notes') }}
-                                </div>
-                            @endif
-                        </div>
-
                         <div class="mt-5">
                             <button type="button" onclick="location.href = '{{ url('/competency-management') }}'"
                                 class="btn btn-secondary">Back</button>

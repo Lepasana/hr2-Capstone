@@ -46,23 +46,23 @@
                                 </td>
                                 <td class="text-center">{{ $qualification->created_at->format('m/d/Y h:i A (T)') }}</td>
                                 <td>
-                                    <div class="row w-50">
-                                        <div class="col-6 my-1">
+                                    <div class="d-flex gap-2">
+                                        <div>
                                             <button type="button" class="btn btn-info btn-sm"
                                                 onclick="location.href = '{{ route('job-qualification.view', ['id' => $qualification->id]) }}'">Post</button>
                                         </div>
 
-                                        <div class="col-6 my-1">
+                                        <div>
                                             <button type="button" class="btn btn-secondary btn-sm"
                                                 onclick="location.href = '{{ route('job-qualification.view', ['id' => $qualification->id]) }}'">View</button>
                                         </div>
 
-                                        <div class="col-6 my-1">
+                                        <div>
                                             <button type="button" class="btn btn-success btn-sm"
                                                 onclick="location.href = '{{ route('job-qualification.edit', ['id' => $qualification->id]) }}'">Edit</button>
                                         </div>
 
-                                        <div class="col-6 my-1">
+                                        <div>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#modal-{{ $qualification->id }}"
                                                 data-action="{{ route('job-qualification.delete', ['id' => $qualification->id]) }}">
