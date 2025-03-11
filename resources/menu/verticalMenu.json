@@ -38,7 +38,7 @@
           "url": "competency-management"
         },
         {
-          "name": "Compentency for Job Qualifications",
+          "name": "Create Job Qualifications",
           "icon": "menu-icon tf-icons ti ti-messages",
           "slug": "job-qualification",
           "url": "job-qualification"

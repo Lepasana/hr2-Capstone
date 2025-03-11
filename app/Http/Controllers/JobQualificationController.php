@@ -25,6 +25,15 @@ class JobQualificationController extends Controller
         ]);
     }
 
+    public function view(string $id)
+    {
+        $qualification = $this->jobQualificationService->jobQualification->find($id)->with('jobRequest')->first();
+
+        return view('content.apps.job-qualification-view', [
+            'qualification' => $qualification
+        ]);
+    }
+
     public function create()
     {
         $jobRequests = $this->jobQualificationService->jobRequest->get();

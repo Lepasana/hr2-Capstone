@@ -36,7 +36,7 @@
                             <th class="text-center cell-fit">Employee ID</th>
                             <th class="text-center cell-fit">Employee Name</th>
                             <th class="text-center cell-fit">Job Position</th>
-                            <th class="text-center cell-fit">skills</th>
+                            <th class="text-center cell-fit">Department</th>
                             <th class="text-center cell-fit">Skill Level</th>
                             <th class="text-center cell-fit">Actions</th>
                         </tr>
@@ -47,7 +47,7 @@
                                 <td class="text-center">{{ $competency->employee->id }}</td>
                                 <td class="text-center">{{ $competency->employee->name }}</td>
                                 <td class="text-center">{{ $competency->jobRequest->job_title }}</td>
-                                <td class="text-center">{{ $competency->competency }}</td>
+                                <td class="text-center">{{ $competency->department }}</td>
                                 <td class="text-center">{{ $competency->skill_level }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
