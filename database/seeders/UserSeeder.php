@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Employee;
 use App\Enums\UserRoleEnum;
+use App\Models\JobPosition;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,7 +30,18 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role' => UserRoleEnum::SUPER_ADMIN->value,
             ],
-
+            [
+                'name' => 'HR2 Admin',
+                'email' => 'hr2-admin@gmail.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::SUPER_ADMIN->value,
+            ],
+            [
+                'name' => 'HR4 Admin',
+                'email' => 'hr4-admin@gmail.com',
+                'password' => Hash::make('password'),
+                'role' => UserRoleEnum::SUPER_ADMIN->value,
+            ],
             [
                 'name' => 'Employee',
                 'email' => 'employee@gmail.com',
@@ -102,9 +114,18 @@ class UserSeeder extends Seeder
             $newUser = User::updateOrCreate(['email' => $user['email']], $user);
 
             if ($newUser && $newUser['role'] == UserRoleEnum::EMPLOYEE->value) {
+                static $counter = 1;
+
                 $employee = new Employee;
                 $employee->user_id = $newUser->id;
                 $employee->name = $user['name'];
+                $employee->employee_code = 'H' . str_pad($counter++, 3, '0', STR_PAD_LEFT);
+                $employee->gender = fake()->randomElement(['Male', 'Female', 'Other']);
+                $employee->job_position_id = JobPosition::query()->inRandomOrder()->value('id');
+                $employee->department = fake()->randomElement(['HR', 'Logistics', 'Finance']);
+                $employee->employment_type = fake()->randomElement(['Full Time', 'Part Time']);
+                $employee->date_hired = fake()->dateTimeBetween('2022-11-30', '2025-02-30');
+                $employee->status = fake()->randomElement(['Active', 'On-leave', 'Terminated']);
                 $employee->save();
             }
         }

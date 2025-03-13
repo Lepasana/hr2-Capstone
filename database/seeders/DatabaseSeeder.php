@@ -12,7 +12,9 @@ use Database\Seeders\ApplicantSeeder;
 use Database\Seeders\TimesheetSeeder;
 use Database\Seeders\JobRequestSeeder;
 use Database\Seeders\ExaminationSeeder;
+use Database\Seeders\JobPositionSeeder;
 use Database\Seeders\ApplicantScoreSeeder;
+use Database\Seeders\CompensationPlanSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,15 +24,16 @@ class DatabaseSeeder extends Seeder
   public function run(): void
   {
     $this->call([
+      JobPositionSeeder::class,
       UserSeeder::class,
       DurationSeeder::class,
-      // EmployeeSeeder::class,
       JobRequestSeeder::class,
       TrainingSeeder::class,
       ApplicantSeeder::class,
       ExaminationSeeder::class,
       ApplicantScoreSeeder::class,
       TimesheetSeeder::class,
+      CompensationPlanSeeder::class,
     ]);
 
   }
