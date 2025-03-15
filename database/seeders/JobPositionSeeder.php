@@ -17,22 +17,27 @@ class JobPositionSeeder extends Seeder
         $positions = [
             [
                 'title' => "HR Staff",
+                'hourly_rate' => 83.33,
                 'created_at' => now()
             ],
             [
                 'title' => "Security Agency Manager",
+                'hourly_rate' => 187.50,
                 'created_at' => now()
             ],
             [
                 'title' => "Logistic Staff",
+                'hourly_rate' => 75,
                 'created_at' => now()
             ],
             [
                 'title' => "Finance Staff",
+                'hourly_rate' => 104.17,
                 'created_at' => now()
             ],
             [
                 'title' => "Training and Development Specialist",
+                'hourly_rate' => 104.17,
                 'created_at' => now()
             ],
         ];
