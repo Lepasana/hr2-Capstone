@@ -23,9 +23,8 @@ class SuccessionPlanningRequest extends FormRequest
     {
         return [
             'current_position' => 'required|string',
-            'potential_successor' => 'required|string',
-            'development_needs' => 'required|string',
-            'readiness_level' => 'required|string',
+            'department' => 'required|string',
+            'status' => 'nullable|string',
         ];
     }
 }

@@ -24,9 +24,10 @@ class TrainingManagementRequest extends FormRequest
         return [
             'employee' => 'required',
             'training_name' => 'required|string',
-            'training_date' => 'required|string',
+            'training_date' => 'required|date|after_or_equal:today',
             'duration' => 'required',
             'status' => 'required|string',
+            'date_completed' => 'nullable',
         ];
     }
 }

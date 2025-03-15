@@ -21,7 +21,7 @@
                     @elseif(session()->has('error'))
                         <x-alert errorMessage="{{ session('error') }}" />
                     @endif
-                    
+
                     <form action="{{ url('/succession-planning/store') }}" method="POST">
                         @csrf
                         @method('POST')
@@ -81,7 +81,7 @@
                             <select name="department" id="department" class="form-select" value="{{ old('department') }}"
                                 required>
                                 <option value="" selected>
-                                    {{ '' ?? "Select an option" }}</option>
+                                    {{ '' ?? 'Select an option' }}</option>
                                 @foreach ($departmentEnums as $departmentEnum)
                                     <option value="{{ $departmentEnum }}">{{ $departmentEnum }}</option>
                                 @endforeach
@@ -94,8 +94,25 @@
                             </select>
                         </div>
 
+                        <div class="col-md-12 mt-3">
+                            <label for="" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" value="{{ old('status') }}" required>
+                                <option value="" selected>
+                                    {{ '' ?? 'Select an option' }}</option>
+                                @foreach ($statusEnums as $statusEnum)
+                                    <option value="{{ $statusEnum }}">{{ $statusEnum }}</option>
+                                @endforeach
+
+                                @if ($errors->has('status'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('status') }}
+                                    </div>
+                                @endif
+                            </select>
+                        </div>
+
                         <div class="mt-5">
-                            <button type="button" onclick="location.href = '{{ url('/succession-planning') }}'"
+                            <button type="button" onclick="location.href = '{{ url('/succession-planning/status') }}'"
                                 class="btn btn-secondary">Back</button>
 
                             <button type="submit" class="btn btn-primary">Submit</button>

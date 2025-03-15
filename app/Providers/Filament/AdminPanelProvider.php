@@ -7,8 +7,11 @@ use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use App\Filament\Widgets\VisionWidget;
 use App\Http\Middleware\CheckUserRole;
+use App\Filament\Widgets\MissionWidget;
 use Filament\Http\Middleware\Authenticate;
+use App\Filament\Widgets\AnnouncementWidget;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -40,7 +43,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                // Widgets\AccountWidget::class,
+                MissionWidget::class,
+                VisionWidget::class,
+                AnnouncementWidget::class
             ])
             ->middleware([
                 EncryptCookies::class,

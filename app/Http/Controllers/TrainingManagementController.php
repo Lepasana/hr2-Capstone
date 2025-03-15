@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Enums\TrainingStatusEnum;
@@ -7,6 +6,7 @@ use App\Http\Requests\TrainingManagementRequest;
 use App\Models\Duration;
 use App\Models\Employee;
 use App\Models\TrainingManagement;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TrainingManagementController extends Controller
@@ -25,29 +25,46 @@ class TrainingManagementController extends Controller
     public function index(Request $request)
     {
         $trainings = TrainingManagement::query()
+            ->where('status', TrainingStatusEnum::UPCOMING->value)
+            ->orWhere('status', TrainingStatusEnum::ONGOING->value)
+            ->orWhere(function ($query) {
+                $query->where('status', TrainingStatusEnum::COMPLETED->value)
+                    ->whereMonth('date_completed', Carbon::now()->month)
+                    ->whereYear('date_completed', Carbon::now()->year);
+            })
+            ->get();
+
+        // Normal page load
+        return view('content.apps.training-management-index', compact('trainings'));
+
+    }
+
+    public function trainingHistory(Request $request)
+    {
+        $trainings = TrainingManagement::query()
+            ->where('status', TrainingStatusEnum::COMPLETED->value)
             ->when($request->from, function ($query) use ($request) {
                 $from = $request->input('from');
-                $to = $request->input('to');
+                $to   = $request->input('to');
 
                 if ($from && $to) {
-                    $query->whereDate('created_at', '>=', $from)
-                        ->whereDate('created_at', '<=', $to);
-                } elseif ($from && !$to) {
-                    $query->whereDate('created_at', '>=', $from);
-                } elseif ($to && !$from) {
-                    $query->whereDate('created_at', '<=', $to);
+                    $query->whereDate('date_completed', '>=', $from)
+                        ->whereDate('date_completed', '<=', $to);
+                } elseif ($from && ! $to) {
+                    $query->whereDate('date_completed', '>=', $from);
+                } elseif ($to && ! $from) {
+                    $query->whereDate('date_completed', '<=', $to);
                 }
             })
-            ->paginate(10);
+            ->get();
 
         // Handle AJAX Request: Return only table rows
         if ($request->ajax()) {
             return response()->json([
-                'html' => view('content.apps.partials.training-table', compact('trainings'))->render()
+                'html' => view('content.apps.partials.training-table', compact('trainings'))->render(),
             ]);
         } else {
-            // Normal page load
-            return view('content.apps.training-management-index', compact('trainings'));
+            return view('content.apps.training-management-training-history', compact('trainings'));
         }
 
     }
@@ -59,12 +76,12 @@ class TrainingManagementController extends Controller
     {
         $employees = Employee::query()->select(['id', 'name'])->get();
         $durations = Duration::query()->select(['id', 'title'])->get();
-        $status = TrainingStatusEnum::toOptions();
+        $status    = TrainingStatusEnum::toOptions();
 
         return view('content.apps.training-management-create', [
             'employees' => $employees,
             'durations' => $durations,
-            'status' => $status,
+            'status'    => $status,
         ]);
     }
 
@@ -73,15 +90,16 @@ class TrainingManagementController extends Controller
      */
     public function store(TrainingManagementRequest $request)
     {
-        $trainingManagement = $this->trainingManagement;
-        $trainingManagement->training_name = $request->training_name;
-        $trainingManagement->employee_id = $request->employee;
-        $trainingManagement->training_date = $request->training_date;
-        $trainingManagement->duration_id = $request->duration;
-        $trainingManagement->status = $request->status;
+        $trainingManagement                 = $this->trainingManagement;
+        $trainingManagement->training_name  = $request->training_name;
+        $trainingManagement->employee_id    = $request->employee;
+        $trainingManagement->training_date  = $request->training_date;
+        $trainingManagement->duration_id    = $request->duration;
+        $trainingManagement->status         = $request->status;
+        $trainingManagement->date_completed = $request->date_completed;
         $trainingManagement->save();
 
-        if (!$trainingManagement) {
+        if (! $trainingManagement) {
             return redirect()
                 ->route('training-management')
                 ->with('error', 'There was an error adding training.');
@@ -107,14 +125,14 @@ class TrainingManagementController extends Controller
     {
         $employees = Employee::query()->select(['id', 'name'])->get();
         $durations = Duration::query()->select(['id', 'title'])->get();
-        $status = TrainingStatusEnum::toOptions();
-        $training = TrainingManagement::findOrFail($id);
+        $status    = TrainingStatusEnum::toOptions();
+        $training  = TrainingManagement::findOrFail($id);
 
         return view('content.apps.training-management-edit', [
             'employees' => $employees,
             'durations' => $durations,
-            'status' => $status,
-            'training' => $training
+            'status'    => $status,
+            'training'  => $training,
         ]);
     }
 
@@ -123,15 +141,16 @@ class TrainingManagementController extends Controller
      */
     public function update(TrainingManagementRequest $request, string $id)
     {
-        $trainingManagement = $this->trainingManagement->findOrFail($id);
-        $trainingManagement->training_name = $request->training_name;
-        $trainingManagement->employee_id = $request->employee;
-        $trainingManagement->training_date = $request->training_date;
-        $trainingManagement->duration_id = $request->duration;
-        $trainingManagement->status = $request->status;
+        $trainingManagement                 = $this->trainingManagement->findOrFail($id);
+        $trainingManagement->training_name  = $request->training_name;
+        $trainingManagement->employee_id    = $request->employee;
+        $trainingManagement->training_date  = $request->training_date;
+        $trainingManagement->duration_id    = $request->duration;
+        $trainingManagement->status         = $request->status;
+        $trainingManagement->date_completed = $request->date_completed;
         $trainingManagement->save();
 
-        if (!$trainingManagement) {
+        if (! $trainingManagement) {
             return redirect()
                 ->route('training-management')
                 ->with('error', 'There was an error updating training.');

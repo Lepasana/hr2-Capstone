@@ -9,5 +9,6 @@ enum TrainingStatusEnum: string
     use EnumsWithOptions;
 
     case UPCOMING = 'Upcoming';
+    case ONGOING = 'On-Going';
     case COMPLETED = 'Completed';
 }

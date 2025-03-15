@@ -15,8 +15,13 @@ class TrainingManagement extends Model
         'training_name',
         'employee_id',
         'training_date',
+        'date_completed',
         'duration_id',
         'status',
+    ];
+
+    protected $casts = [
+        'date_completed' => 'datetime'
     ];
 
     public function duration()

@@ -1,288 +1,250 @@
 <?php
 
-use App\Http\Controllers\apps\Chat;
-use App\Http\Controllers\pages\Faq;
-use App\Http\Controllers\apps\Email;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\apps\Kanban;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\icons\Tabler;
-use App\Http\Controllers\maps\Leaflet;
-
-
-
-
-use App\Http\Controllers\apps\UserList;
-use App\Http\Controllers\dashboard\Crm;
-use App\Http\Controllers\ESSController;
-use App\Http\Controllers\layouts\Blank;
-use App\Http\Controllers\layouts\Fluid;
-use App\Http\Controllers\charts\ChartJs;
-use App\Http\Controllers\apps\InvoiceAdd;
-use App\Http\Controllers\cards\CardBasic;
-use App\Http\Controllers\pages\MiscError;
-use App\Http\Controllers\pages\UserTeams;
-use App\Http\Controllers\apps\InvoiceEdit;
-use App\Http\Controllers\apps\InvoiceList;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\extended_ui\Misc;
-use App\Http\Controllers\extended_ui\Tour;
-use App\Http\Controllers\layouts\Vertical;
-use App\Http\Controllers\apps\InvoicePrint;
-use App\Http\Controllers\cards\CardActions;
-use App\Http\Controllers\cards\CardAdvance;
-
-
-use App\Http\Controllers\charts\ApexCharts;
-use App\Http\Controllers\icons\FontAwesome;
-use App\Http\Controllers\layouts\Container;
-use App\Http\Controllers\pages\UserProfile;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\extended_ui\Avatar;
-use App\Http\Controllers\layouts\Horizontal;
-use App\Http\Controllers\layouts\NavbarFull;
-
-use App\Http\Controllers\modal\ModalExample;
-use App\Http\Controllers\pages\UserProjects;
-use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\apps\InvoicePreview;
-use App\Http\Controllers\apps\LogisticsFleet;
-use App\Http\Controllers\cards\CardAnalytics;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\extended_ui\BlockUI;
-use App\Http\Controllers\front_pages\Landing;
-use App\Http\Controllers\front_pages\Payment;
-//use App\Http\Controllers\apps\AcademyCourse;
-use App\Http\Controllers\front_pages\Pricing;
-use App\Http\Controllers\layouts\WithoutMenu;
-use App\Http\Controllers\apps\UserViewAccount;
-use App\Http\Controllers\apps\UserViewBilling;
-use App\Http\Controllers\cards\CardStatistics;
-use App\Http\Controllers\extended_ui\Treeview;
-use App\Http\Controllers\form_elements\Extras;
-use App\Http\Controllers\form_elements\Picker;
-use App\Http\Controllers\front_pages\Checkout;
-use App\Http\Controllers\pages\MiscComingSoon;
+use App\Http\Controllers\ApplicantScoreController;
+use App\Http\Controllers\apps\AcademyCourseDetails;
 use App\Http\Controllers\apps\AcademyDashboard;
 use App\Http\Controllers\apps\AccessPermission;
-use App\Http\Controllers\apps\UserViewSecurity;
-use App\Http\Controllers\form_elements\Editors;
-
-use App\Http\Controllers\form_elements\Selects;
-use App\Http\Controllers\form_elements\Sliders;
-use App\Http\Controllers\layouts\CollapsedMenu;
-use App\Http\Controllers\layouts\ContentNavbar;
-use App\Http\Controllers\layouts\WithoutNavbar;
-use App\Http\Controllers\pages\UserConnections;
-use App\Http\Controllers\tables\DatatableBasic;
-use App\Http\Controllers\user_interface\Alerts;
-use App\Http\Controllers\user_interface\Badges;
-use App\Http\Controllers\user_interface\Footer;
-use App\Http\Controllers\user_interface\Modals;
-use App\Http\Controllers\user_interface\Navbar;
-use App\Http\Controllers\user_interface\Toasts;
-use App\Http\Controllers\extended_ui\SweetAlert;
-use App\Http\Controllers\form_elements\Switches;
-use App\Http\Controllers\front_pages\HelpCenter;
-use App\Http\Controllers\user_interface\Buttons;
-use App\Http\Controllers\apps\EcommerceDashboard;
-use App\Http\Controllers\apps\EcommerceOrderList;
-use App\Http\Controllers\apps\EcommerceReferrals;
-use App\Http\Controllers\apps\LogisticsDashboard;
-use App\Http\Controllers\cards\CardGamifications;
-use App\Http\Controllers\extended_ui\DragAndDrop;
-use App\Http\Controllers\extended_ui\MediaPlayer;
-use App\Http\Controllers\extended_ui\StarRatings;
-use App\Http\Controllers\extended_ui\TextDivider;
-use App\Http\Controllers\pages\MiscNotAuthorized;
-use App\Http\Controllers\user_interface\Carousel;
-use App\Http\Controllers\user_interface\Collapse;
-use App\Http\Controllers\user_interface\Progress;
-use App\Http\Controllers\user_interface\Spinners;
-use App\Http\Controllers\ApplicantScoreController;
-use App\Http\Controllers\apps\EcommerceProductAdd;
-use App\Http\Controllers\apps\UserViewConnections;
-use App\Http\Controllers\form_elements\BasicInput;
-use App\Http\Controllers\form_elements\FileUpload;
-use App\Http\Controllers\tables\DatatableAdvanced;
-use App\Http\Controllers\user_interface\Accordion;
-use App\Http\Controllers\user_interface\Dropdowns;
-use App\Http\Controllers\user_interface\Offcanvas;
-use App\Http\Controllers\user_interface\TabsPills;
-use App\Http\Controllers\apps\AcademyCourseDetails;
-use App\Http\Controllers\apps\EcommerceProductList;
-use App\Http\Controllers\extended_ui\TimelineBasic;
-use App\Http\Controllers\form_elements\InputGroups;
-use App\Http\Controllers\form_layouts\VerticalForm;
-use App\Http\Controllers\layouts\ContentNavSidebar;
-use App\Http\Controllers\layouts\NavbarFullSidebar;
-use App\Http\Controllers\user_interface\ListGroups;
-use App\Http\Controllers\user_interface\Typography;
-use App\Http\Controllers\wizard_example\CreateDeal;
-use App\Http\Controllers\apps\EcommerceOrderDetails;
-use App\Http\Controllers\apps\UserViewNotifications;
-use App\Http\Controllers\authentications\LoginBasic;
-use App\Http\Controllers\authentications\LoginCover;
-use App\Http\Controllers\form_layouts\StickyActions;
-use App\Http\Controllers\form_validation\Validation;
-use App\Http\Controllers\JobQualificationController;
-use App\Http\Controllers\pages\MiscUnderMaintenance;
-use App\Http\Controllers\tables\DatatableExtensions;
-use App\Http\Controllers\apps\EcommerceManageReviews;
-use App\Http\Controllers\form_elements\CustomOptions;
-use App\Http\Controllers\form_layouts\HorizontalForm;
-use App\Http\Controllers\language\LanguageController;
-use App\Http\Controllers\tables\Basic as TablesBasic;
-use App\Http\Controllers\extended_ui\PerfectScrollbar;
-use App\Http\Controllers\LearningManagementController;
-use App\Http\Controllers\pages\AccountSettingsAccount;
-use App\Http\Controllers\pages\AccountSettingsBilling;
-use App\Http\Controllers\SuccessionPlanningController;
-use App\Http\Controllers\TrainingManagementController;
-use App\Http\Controllers\apps\EcommerceProductCategory;
-use App\Http\Controllers\apps\EcommerceSettingsDetails;
-use App\Http\Controllers\authentications\RegisterBasic;
-use App\Http\Controllers\authentications\RegisterCover;
-use App\Http\Controllers\authentications\TwoStepsBasic;
-use App\Http\Controllers\authentications\TwoStepsCover;
-use App\Http\Controllers\front_pages\HelpCenterArticle;
-use App\Http\Controllers\pages\AccountSettingsSecurity;
-use App\Http\Controllers\pages\Pricing as PagesPricing;
-use App\Http\Controllers\apps\EcommerceSettingsCheckout;
-use App\Http\Controllers\apps\EcommerceSettingsPayments;
-use App\Http\Controllers\apps\EcommerceSettingsShipping;
-use App\Http\Controllers\CompetencyManagementController;
-use App\Http\Controllers\extended_ui\TimelineFullscreen;
-use App\Http\Controllers\laravel_example\UserManagement;
-use App\Http\Controllers\wizard_example\PropertyListing;
-use App\Http\Controllers\apps\EcommerceSettingsLocations;
-use App\Http\Controllers\user_interface\TooltipsPopovers;
-use App\Http\Controllers\authentications\VerifyEmailBasic;
-use App\Http\Controllers\authentications\VerifyEmailCover;
-use App\Http\Controllers\pages\AccountSettingsConnections;
-use App\Http\Controllers\authentications\RegisterMultiSteps;
-use App\Http\Controllers\authentications\ResetPasswordBasic;
-use App\Http\Controllers\authentications\ResetPasswordCover;
-use App\Http\Controllers\pages\AccountSettingsNotifications;
-
-use App\Http\Controllers\apps\EcommerceSettingsNotifications;
-use App\Http\Controllers\authentications\ForgotPasswordBasic;
-use App\Http\Controllers\authentications\ForgotPasswordCover;
-use App\Http\Controllers\form_wizard\Icons as FormWizardIcons;
-use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
+use App\Http\Controllers\apps\EcommerceCustomerDetailsNotifications;
 use App\Http\Controllers\apps\EcommerceCustomerDetailsOverview;
 use App\Http\Controllers\apps\EcommerceCustomerDetailsSecurity;
-use App\Http\Controllers\wizard_example\Checkout as WizardCheckout;
-use App\Http\Controllers\apps\EcommerceCustomerDetailsNotifications;
+use App\Http\Controllers\apps\EcommerceManageReviews;
+use App\Http\Controllers\apps\EcommerceOrderDetails;
+use App\Http\Controllers\apps\EcommerceOrderList;
+use App\Http\Controllers\apps\EcommerceProductAdd;
+use App\Http\Controllers\apps\EcommerceProductCategory;
+use App\Http\Controllers\apps\EcommerceProductList;
+use App\Http\Controllers\apps\EcommerceReferrals;
+use App\Http\Controllers\apps\EcommerceSettingsCheckout;
+use App\Http\Controllers\apps\EcommerceSettingsDetails;
+use App\Http\Controllers\apps\EcommerceSettingsLocations;
+use App\Http\Controllers\apps\EcommerceSettingsNotifications;
+use App\Http\Controllers\apps\EcommerceSettingsPayments;
+use App\Http\Controllers\apps\EcommerceSettingsShipping;
+use App\Http\Controllers\apps\LogisticsDashboard;
+use App\Http\Controllers\apps\LogisticsFleet;
+use App\Http\Controllers\apps\UserList;
+use App\Http\Controllers\apps\UserViewAccount;
+use App\Http\Controllers\apps\UserViewBilling;
+use App\Http\Controllers\apps\UserViewConnections;
+use App\Http\Controllers\apps\UserViewNotifications;
+use App\Http\Controllers\apps\UserViewSecurity;
+use App\Http\Controllers\authentications\ForgotPasswordBasic;
+use App\Http\Controllers\authentications\ForgotPasswordCover;
+use App\Http\Controllers\authentications\LoginBasic;
+use App\Http\Controllers\authentications\LoginCover;
+use App\Http\Controllers\authentications\RegisterBasic;
+use App\Http\Controllers\authentications\RegisterCover;
+use App\Http\Controllers\authentications\RegisterMultiSteps;
+use App\Http\Controllers\authentications\ResetPasswordBasic;
+//use App\Http\Controllers\apps\AcademyCourse;
+use App\Http\Controllers\authentications\ResetPasswordCover;
+use App\Http\Controllers\authentications\TwoStepsBasic;
+use App\Http\Controllers\authentications\TwoStepsCover;
+use App\Http\Controllers\authentications\VerifyEmailBasic;
+use App\Http\Controllers\authentications\VerifyEmailCover;
+use App\Http\Controllers\cards\CardActions;
+use App\Http\Controllers\cards\CardAdvance;
+use App\Http\Controllers\cards\CardAnalytics;
+use App\Http\Controllers\cards\CardBasic;
+use App\Http\Controllers\cards\CardGamifications;
+use App\Http\Controllers\cards\CardStatistics;
+use App\Http\Controllers\charts\ApexCharts;
+use App\Http\Controllers\charts\ChartJs;
+use App\Http\Controllers\CompetencyManagementController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ESSController;
+use App\Http\Controllers\extended_ui\Avatar;
+use App\Http\Controllers\extended_ui\BlockUI;
+use App\Http\Controllers\extended_ui\DragAndDrop;
+use App\Http\Controllers\extended_ui\MediaPlayer;
+use App\Http\Controllers\extended_ui\Misc;
+use App\Http\Controllers\extended_ui\PerfectScrollbar;
+use App\Http\Controllers\extended_ui\StarRatings;
+use App\Http\Controllers\extended_ui\SweetAlert;
+use App\Http\Controllers\extended_ui\TextDivider;
+use App\Http\Controllers\extended_ui\TimelineBasic;
+use App\Http\Controllers\extended_ui\TimelineFullscreen;
+use App\Http\Controllers\extended_ui\Tour;
+use App\Http\Controllers\extended_ui\Treeview;
+use App\Http\Controllers\form_elements\BasicInput;
+use App\Http\Controllers\form_elements\CustomOptions;
+use App\Http\Controllers\form_elements\Editors;
+use App\Http\Controllers\form_elements\Extras;
+use App\Http\Controllers\form_elements\FileUpload;
+use App\Http\Controllers\form_elements\InputGroups;
+use App\Http\Controllers\form_elements\Picker;
+use App\Http\Controllers\form_elements\Selects;
+use App\Http\Controllers\form_elements\Sliders;
+use App\Http\Controllers\form_elements\Switches;
+use App\Http\Controllers\form_layouts\HorizontalForm;
+use App\Http\Controllers\form_layouts\StickyActions;
+use App\Http\Controllers\form_layouts\VerticalForm;
+use App\Http\Controllers\form_validation\Validation;
+use App\Http\Controllers\form_wizard\Icons as FormWizardIcons;
 use App\Http\Controllers\form_wizard\Numbered as FormWizardNumbered;
+use App\Http\Controllers\icons\FontAwesome;
+use App\Http\Controllers\icons\Tabler;
+use App\Http\Controllers\JobQualificationController;
+use App\Http\Controllers\laravel_example\UserManagement;
+use App\Http\Controllers\LearningManagementController;
+use App\Http\Controllers\maps\Leaflet;
+use App\Http\Controllers\modal\ModalExample;
+use App\Http\Controllers\pages\AccountSettingsAccount;
+use App\Http\Controllers\pages\AccountSettingsBilling;
+use App\Http\Controllers\pages\AccountSettingsConnections;
+use App\Http\Controllers\pages\AccountSettingsNotifications;
+use App\Http\Controllers\pages\AccountSettingsSecurity;
+use App\Http\Controllers\pages\Faq;
+use App\Http\Controllers\pages\MiscComingSoon;
+use App\Http\Controllers\pages\MiscError;
+use App\Http\Controllers\pages\MiscNotAuthorized;
+use App\Http\Controllers\pages\MiscUnderMaintenance;
+use App\Http\Controllers\pages\Pricing as PagesPricing;
+use App\Http\Controllers\pages\UserConnections;
+use App\Http\Controllers\pages\UserProfile;
+use App\Http\Controllers\pages\UserProjects;
+use App\Http\Controllers\pages\UserTeams;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SuccessionPlanningController;
+use App\Http\Controllers\tables\Basic as TablesBasic;
+use App\Http\Controllers\tables\DatatableAdvanced;
+use App\Http\Controllers\tables\DatatableBasic;
+use App\Http\Controllers\tables\DatatableExtensions;
+use App\Http\Controllers\TrainingManagementController;
+use App\Http\Controllers\user_interface\Accordion;
+use App\Http\Controllers\user_interface\Alerts;
+use App\Http\Controllers\user_interface\Badges;
+use App\Http\Controllers\user_interface\Buttons;
+use App\Http\Controllers\user_interface\Carousel;
+use App\Http\Controllers\user_interface\Collapse;
+use App\Http\Controllers\user_interface\Dropdowns;
+use App\Http\Controllers\user_interface\Footer;
+use App\Http\Controllers\user_interface\ListGroups;
+use App\Http\Controllers\user_interface\Modals;
+use App\Http\Controllers\user_interface\Navbar;
+use App\Http\Controllers\user_interface\Offcanvas;
+use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
+use App\Http\Controllers\user_interface\Progress;
+use App\Http\Controllers\user_interface\Spinners;
+use App\Http\Controllers\user_interface\TabsPills;
+use App\Http\Controllers\user_interface\Toasts;
+use App\Http\Controllers\user_interface\TooltipsPopovers;
+use App\Http\Controllers\user_interface\Typography;
+use App\Http\Controllers\wizard_example\Checkout as WizardCheckout;
+use App\Http\Controllers\wizard_example\CreateDeal;
+use App\Http\Controllers\wizard_example\PropertyListing;
+use Illuminate\Support\Facades\Route;
 
 // Main Page Route
 Route::get('/', [LoginBasic::class, 'index'])->name('auth-login-basic');
 
 // THIS IS THE MAIN ROUTE
 Route::middleware(['auth', 'auth.admin'])
-	->group(function () {
+    ->group(function () {
 
-		// DASHBOARD
-		Route::controller(DashboardController::class)
-			->group(function () {
-				Route::get('/dashboard', 'index')->name('dashboard');
-			});
+        // DASHBOARD
+        Route::controller(DashboardController::class)
+            ->group(function () {
+                Route::get('/dashboard', 'index')->name('dashboard');
+            });
 
-		// LEARNING MANAGEMENT - Creating Exams
-		Route::controller(LearningManagementController::class)
-			->group(function () {
-				Route::get('/learning-management', 'index')->name('learning-management');
-				Route::get('/learning-management/create', 'create')->name('learning-management.create');
-				Route::post('/learning-management/store', 'store')->name('learning-management.store');
-				Route::get('/learning-management/{id}/show', 'show')->name('learning-management.show');
-				Route::get('/learning-management/{id}/edit', 'edit')->name('learning-management.edit');
-				Route::put('/learning-management/{id}/update', 'update')->name('learning-management.update');
-				Route::delete('/learning-management/{id}/delete', 'destroy')->name('learning-management.delete');
-			});
+        // LEARNING MANAGEMENT - Creating Exams
+        Route::controller(LearningManagementController::class)
+            ->group(function () {
+                Route::get('/learning-management', 'index')->name('learning-management');
+                Route::get('/learning-management/create', 'create')->name('learning-management.create');
+                Route::post('/learning-management/store', 'store')->name('learning-management.store');
+                Route::get('/learning-management/{id}/show', 'show')->name('learning-management.show');
+                Route::get('/learning-management/{id}/edit', 'edit')->name('learning-management.edit');
+                Route::put('/learning-management/{id}/update', 'update')->name('learning-management.update');
+                Route::delete('/learning-management/{id}/delete', 'destroy')->name('learning-management.delete');
+            });
 
-		// LEARNING MANAGEMENT - Creating Questions
-		Route::controller(QuestionController::class)
-			->group(function () {
-				Route::get('/learning-management/question/{examId}/create', 'create')
-					->name('learning-management.question.create');
+        // LEARNING MANAGEMENT - Creating Questions
+        Route::controller(QuestionController::class)
+            ->group(function () {
+                Route::get('/learning-management/question/{examId}/create', 'create')
+                    ->name('learning-management.question.create');
 
-				Route::post('/learning-management/question/{examId}/store', 'store')
-					->name('learning-management.question.store');
+                Route::post('/learning-management/question/{examId}/store', 'store')
+                    ->name('learning-management.question.store');
 
-				Route::get('/learning-management/question/{examId}/{questionId}/show', 'show')
-					->name('learning-management.question.show');
+                Route::get('/learning-management/question/{examId}/{questionId}/show', 'show')
+                    ->name('learning-management.question.show');
 
-				Route::get('/learning-management/question/{examId}/{questionId}/edit', 'edit')
-					->name('learning-management.question.edit');
+                Route::get('/learning-management/question/{examId}/{questionId}/edit', 'edit')
+                    ->name('learning-management.question.edit');
 
-				Route::put('/learning-management/question/{examId}/{questionId}/update', 'update')
-					->name('learning-management.question.update');
+                Route::put('/learning-management/question/{examId}/{questionId}/update', 'update')
+                    ->name('learning-management.question.update');
 
-				Route::delete('/learning-management/{id}/question.delete', 'destroy')
-					->name('learning-management.question.delete');
-			});
+                Route::delete('/learning-management/{id}/question.delete', 'destroy')
+                    ->name('learning-management.question.delete');
+            });
 
-    // LEARNING MANAGEMENT - Applicant Score
-    Route::controller(ApplicantScoreController::class)
-      ->group(function () {
-        Route::get('/applicant-score', 'index')->name('applicant-score');
-				Route::delete('/applicant-score/{id}/delete', 'destroy')->name('applicant-score.delete');
-      });
+        // LEARNING MANAGEMENT - Applicant Score
+        Route::controller(ApplicantScoreController::class)
+            ->group(function () {
+                Route::get('/applicant-score', 'index')->name('applicant-score');
+                Route::delete('/applicant-score/{id}/delete', 'destroy')->name('applicant-score.delete');
+            });
 
-		// ESS
-		Route::controller(ESSController::class)
-			->group(function () {
-				Route::get('/ess', 'index')->name('ess');
-			});
+        // ESS
+        Route::controller(ESSController::class)
+            ->group(function () {
+                Route::get('/ess', 'index')->name('ess');
+            });
 
-		// COMPETENCY MANAGEMENT
-		Route::controller(CompetencyManagementController::class)
-			->group(function () {
-				Route::get('/competency-management', 'index')->name('competency-management');
-				Route::get('/competency-management/create', 'create')->name('competency-management.create');
-				Route::post('/competency-management/store', 'store')->name('competency-management.store');
-				Route::get('/competency-management/{id}/edit', 'edit')->name('competency-management.edit');
-				Route::put('/competency-management/{id}/update', 'update')->name('competency-management.update');
-				Route::delete('/competency-management/{id}/delete', 'destroy')->name('competency-management.delete');
-			});
+        // COMPETENCY MANAGEMENT
+        Route::controller(CompetencyManagementController::class)
+            ->group(function () {
+                Route::get('/competency-management', 'index')->name('competency-management');
+                Route::get('/competency-management/create', 'create')->name('competency-management.create');
+                Route::post('/competency-management/store', 'store')->name('competency-management.store');
+                Route::get('/competency-management/{id}/edit', 'edit')->name('competency-management.edit');
+                Route::put('/competency-management/{id}/update', 'update')->name('competency-management.update');
+                Route::delete('/competency-management/{id}/delete', 'destroy')->name('competency-management.delete');
+            });
 
-		// JOB QUALIFICATION
-		Route::controller(JobQualificationController::class)
-			->group(function () {
-				Route::get('/job-qualification', 'index')->name('job-qualification');
-				Route::get('/job-qualification/create', 'create')->name('job-qualification.create');
-				Route::post('/job-qualification/store', 'store')->name('job-qualification.store');
-				Route::get('/job-qualification/{id}/view', 'view')->name('job-qualification.view');
-				Route::get('/job-qualification/{id}/edit', 'edit')->name('job-qualification.edit');
-				Route::put('/job-qualification/{id}/update', 'update')->name('job-qualification.update');
-				Route::delete('/job-qualification/{id}/delete', 'delete')->name('job-qualification.delete');
-			});
+        // JOB QUALIFICATION
+        Route::controller(JobQualificationController::class)
+            ->group(function () {
+                Route::get('/job-qualification', 'index')->name('job-qualification');
+                Route::get('/job-qualification/create', 'create')->name('job-qualification.create');
+                Route::post('/job-qualification/store', 'store')->name('job-qualification.store');
+                Route::get('/job-qualification/{id}/view', 'view')->name('job-qualification.view');
+                Route::get('/job-qualification/{id}/edit', 'edit')->name('job-qualification.edit');
+                Route::put('/job-qualification/{id}/update', 'update')->name('job-qualification.update');
+                Route::delete('/job-qualification/{id}/delete', 'delete')->name('job-qualification.delete');
+            });
 
+        // TRAINING MANAGEMENT
+        Route::controller(TrainingManagementController::class)
+            ->group(function () {
+                Route::get('/training-management', 'index')->name('training-management');
+                Route::get('/training-management/training-history', 'trainingHistory')->name('training-management.training-history');
+                Route::get('/training-management/create', 'create')->name('training-management.create');
+                Route::post('/training-management/store', 'store')->name('training-management.store');
+                Route::get('/training-management/{id}/edit', 'edit')->name('training-management.edit');
+                Route::put('/training-management/{id}/update', 'update')->name('training-management.update');
+                Route::delete('/training-management/{id}/delete', 'destroy')->name('training-management.delete');
+            });
 
-		// TRAINING MANAGEMENT
-		Route::controller(TrainingManagementController::class)
-			->group(function () {
-				Route::get('/training-management', 'index')->name('training-management');
-				Route::get('/training-management/create', 'create')->name('training-management.create');
-				Route::post('/training-management/store', 'store')->name('training-management.store');
-				Route::get('/training-management/{id}/edit', 'edit')->name('training-management.edit');
-				Route::put('/training-management/{id}/update', 'update')->name('training-management.update');
-				Route::delete('/training-management/{id}/delete', 'destroy')->name('training-management.delete');
-			});
-
-		// SUCCESSION PLANNING
-		Route::controller(SuccessionPlanningController::class)
-			->group(function () {
-				Route::get('/succession-planning', 'index')->name('succession-planning');
-				Route::get('/succession-planning/create', 'create')->name('succession-planning.create');
-				Route::post('/succession-planning/store', 'store')->name('succession-planning.store');
-				Route::get('/succession-planning/{id}/edit', 'edit')->name('succession-planning.edit');
-				Route::put('/succession-planning/{id}/update', 'update')->name('succession-planning.update');
-				Route::delete('/succession-planning/{id}/delete', 'destroy')->name('succession-planning.delete');
-			});
-	});
-
+        // SUCCESSION PLANNING
+        Route::controller(SuccessionPlanningController::class)
+            ->group(function () {
+                Route::get('/succession-planning', 'index')->name('succession-planning');
+                Route::get('/succession-planning/status', 'status')->name('succession-planning.status');
+                Route::get('/succession-planning/create', 'create')->name('succession-planning.create');
+                Route::get('/succession-planning/status/create', 'createWithStatus')->name('succession-planning-status.create');
+                Route::post('/succession-planning/store', 'store')->name('succession-planning.store');
+                Route::get('/succession-planning/{id}/edit', 'edit')->name('succession-planning.edit');
+                Route::put('/succession-planning/{id}/update', 'update')->name('succession-planning.update');
+                Route::delete('/succession-planning/{id}/delete', 'destroy')->name('succession-planning.delete');
+            });
+    });
 
 Route::get('/app/ecommerce/product/list', [EcommerceProductList::class, 'index'])->name('app-ecommerce-product-list');
 Route::get('/app/ecommerce/product/add', [EcommerceProductAdd::class, 'index'])->name('app-ecommerce-product-add');
@@ -292,11 +254,8 @@ Route::get('/app/ecommerce/product/category', [EcommerceProductCategory::class, 
 Route::get('/app/ecommerce/order/list', [EcommerceOrderList::class, 'index'])->name('app-ecommerce-order-list');
 Route::get('app/ecommerce/order/details', [EcommerceOrderDetails::class, 'index'])->name('app-ecommerce-order-details');
 
-
 Route::get('app/ecommerce/customer/details/overview', [EcommerceCustomerDetailsOverview::class, 'index'])->name('app-ecommerce-customer-details-overview');
 Route::get('app/ecommerce/customer/details/security', [EcommerceCustomerDetailsSecurity::class, 'index'])->name('app-ecommerce-customer-details-security');
-
-
 
 Route::get('app/ecommerce/customer/details/notifications', [EcommerceCustomerDetailsNotifications::class, 'index'])->name('app-ecommerce-customer-details-notifications');
 Route::get('/app/ecommerce/manage/reviews', [EcommerceManageReviews::class, 'index'])->name('app-ecommerce-manage-reviews');
@@ -309,9 +268,7 @@ Route::get('/app/ecommerce/settings/locations', [EcommerceSettingsLocations::cla
 Route::get('/app/ecommerce/settings/notifications', [EcommerceSettingsNotifications::class, 'index'])->name('app-ecommerce-settings-notifications');
 Route::get('/app/academy/dashboard', [AcademyDashboard::class, 'index'])->name('app-academy-dashboard');
 
-
 Route::get('/app/academy/course-details', [AcademyCourseDetails::class, 'index'])->name('app-academy-course-details');
-
 
 Route::get('/app/logistics/dashboard', [LogisticsDashboard::class, 'index'])->name('app-logistics-dashboard');
 Route::get('/app/logistics/fleet', [LogisticsFleet::class, 'index'])->name('app-logistics-fleet');
@@ -347,8 +304,6 @@ Route::get('/pages/misc-not-authorized', [MiscNotAuthorized::class, 'index'])->n
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth.login');
 Route::get('/login', [LoginBasic::class, 'index'])->name('auth.login');
 Route::post('/auth/login', [LoginBasic::class, 'login'])->name('auth-login-basic.login');
-
-
 
 Route::get('/auth/login-cover', [LoginCover::class, 'index'])->name('auth-login-cover');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');

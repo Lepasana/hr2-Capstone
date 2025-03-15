@@ -23,7 +23,7 @@
     <!-- Invoice List Table -->
     <div class="card">
         <div>
-            <a href="{{ url('/succession-planning/create') }}" class="btn btn-primary px-4 m-4 text-white">Add Successor</a>
+            <a href="{{ url('/succession-planning/status/create') }}" class="btn btn-primary px-4 m-4 text-white">Add Successor</a>
         </div>
         <div class="card-datatable table-responsive p-2">
             @if (session()->has('success'))
@@ -39,6 +39,7 @@
                         <th class="text-center cell-fit">Employee Name</th>
                         <th class="text-center cell-fit">Current Position</th>
                         <th class="text-center cell-fit">Department</th>
+                        <th class="text-center cell-fit">Status</th>
                         <th class="cell-fit">Actions</th>
                     </tr>
                 </thead>
@@ -49,6 +50,7 @@
                             <td class="text-start">{{ $successor->employee->name }}</td>
                             <td class="text-start">{{ $successor->current_position }}</td>
                             <td class="text-start">{{ $successor->department }}</td>
+                            <td class="text-start">{{ $successor->status }}</td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <div>

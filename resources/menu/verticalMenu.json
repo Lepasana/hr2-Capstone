@@ -45,11 +45,25 @@
         }
       ]
     },
+
     {
-      "url": "training-management",
       "name": "Training Management",
-      "icon": "menu-icon tf-icons ti ti-layout-kanban",
-      "slug": "training-management"
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "training-management",
+      "submenu": [
+        {
+          "name": "Create Trainings",
+          "url": "training-management",
+          "icon": "menu-icon tf-icons ti ti-user",
+          "slug": "training-management"
+        },
+        {
+          "name": "Training History",
+          "url": "training-management/training-history",
+          "icon": "menu-icon tf-icons ti ti-user",
+          "slug": "training-management-completed"
+        }
+      ]
     },
     {
       "name": "Succession Planning",
@@ -64,9 +78,9 @@
         },
         {
           "name": "Succession Status",
-          "url": "#",
+          "url": "succession-planning/status",
           "icon": "menu-icon tf-icons ti ti-book",
-          "slug": "learning-management"
+          "slug": "succession-planning/status"
         }
       ]
     }

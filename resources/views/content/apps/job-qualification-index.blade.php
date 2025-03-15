@@ -49,7 +49,7 @@
                                     <div class="d-flex gap-2">
                                         <div>
                                             <button type="button" class="btn btn-info btn-sm"
-                                                onclick="location.href = '{{ route('job-qualification.view', ['id' => $qualification->id]) }}'">Post</button>
+                                                onclick="location.href = '{{ route('job-qualification.view', ['id' => $qualification->id]) }}'">Send</button>
                                         </div>
 
                                         <div>

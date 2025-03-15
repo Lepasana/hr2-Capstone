@@ -30,7 +30,8 @@
                         <div class="col-md-12 mt-3">
                             <label for="" class="form-lab">Employee</label>
                             <select name="employee" id="employee" class="form-select" required>
-                                <option value="{{ $training->employee->id ?? old('employee') }}" selected>{{ $training->employee->name }}</option>
+                                <option value="{{ $training->employee->id ?? old('employee') }}" selected>
+                                    {{ $training->employee->name }}</option>
                                 @foreach ($employees as $employee)
                                     <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                 @endforeach
@@ -45,7 +46,7 @@
 
                         <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Training Date</label>
-                            <input type="datetime-local" name="training_date" class="form-control"
+                            <input type="datetime-local" name="training_date" id="training_date" class="form-control"
                                 value="{{ $training->training_date ?? old('training_date') }}" required>
                             @if ($errors->has('training_date'))
                                 <div class="text-danger">
@@ -57,7 +58,8 @@
                         <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Duration</label>
                             <select name="duration" id="duration" class="form-select" required>
-                                <option value="{{ $training->duration->id ?? old('duration') }}" selected>{{ $training->duration->title }}</option>
+                                <option value="{{ $training->duration->id ?? old('duration') }}" selected>
+                                    {{ $training->duration->title }}</option>
                                 @foreach ($durations as $duration)
                                     <option value="{{ $duration->id }}">{{ $duration->title }}</option>
                                 @endforeach
@@ -93,6 +95,17 @@
                             @endif
                         </div>
 
+                        <div class="col-md-12 mt-3">
+                            <label for="" class="form-label">Date Completed</label>
+                            <input type="datetime-local" name="date_completed" id="date_completed" class="form-control"
+                                value="{{ old('date_completed') }}" required>
+                            @if ($errors->has('date_completed'))
+                                <div class="text-danger">
+                                    {{ $errors->first('date_completed') }}
+                                </div>
+                            @endif
+                        </div>
+
                         <div class="mt-5">
                             <button type="button" onclick="location.href = '{{ url('/training-management') }}'"
                                 class="btn btn-secondary">Back</button>
@@ -105,3 +118,10 @@
         </div>
     </div>
 @endsection
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Adjust for timezone
+        document.getElementById('training_date').min = now.toISOString().slice(0, 16);
+    });
+</script>

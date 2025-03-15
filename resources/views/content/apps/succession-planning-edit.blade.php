@@ -23,13 +23,19 @@
         <div class="card">
             <div class="card-datatable table-responsive">
                 <div class="p-5">
+                    @if (session()->has('success'))
+                        <x-alert successMessage="{{ session('success') }}" />
+                    @elseif(session()->has('error'))
+                        <x-alert errorMessage="{{ session('error') }}" />
+                    @endif
+
                     <form action="{{ route('succession-planning.update', ['id' => $successor->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="col-md-12">
                             <label for="" class="form-lab">Employee</label>
                             <select name="employee" id="employee" class="form-select" required>
-                                    <option value="{{ $successor->employee->id }}">{{ $successor->employee->name }}</option>
+                                <option value="{{ $successor->employee->id }}">{{ $successor->employee->name }}</option>
                                 @foreach ($employees as $employee)
                                     <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                 @endforeach
@@ -43,65 +49,60 @@
                         </div>
 
                         <div class="col-md-12 mt-3">
-                          <label for="" class="form-label">Current Position</label>
-                          <select name="current_position" id="current_position" class="form-select"
-                              value="{{ old('current_position') }}" required>
-                              <option value="{{ $successor->current_position }}" selected>{{ $successor->current_position }}</option>
-                              @foreach ($currentPositions as $currentPosition)
-                                  <option value="{{ $currentPosition }}">{{ $currentPosition }}</option>
-                              @endforeach
+                            <label for="" class="form-label">Current Position</label>
+                            <select name="current_position" id="current_position" class="form-select"
+                                value="{{ old('current_position') }}" required>
+                                <option value="{{ $successor->current_position }}" selected>
+                                    {{ $successor->current_position }}</option>
+                                @foreach ($currentPositions as $currentPosition)
+                                    <option value="{{ $currentPosition }}">{{ $currentPosition }}</option>
+                                @endforeach
 
-                              @if ($errors->has('current_position'))
-                                  <div class="text-danger">
-                                      {{ $errors->first('current_position') }}
-                                  </div>
-                              @endif
-                          </select>
-                      </div>
-
-                      <div class="col-md-12 mt-3">
-                        <label for="" class="form-label">Potential Successor</label>
-                        <select name="potential_successor" id="potential_successor" class="form-select"
-                            value="{{ old('potential_successor') }}" required>
-                            <option value="{{ $successor->potential_successor }}" selected>{{ $successor->potentialSuccessor->name }}</option>
-                            @foreach ($employees as $employee)
-                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                            @endforeach
-
-                            @if ($errors->has('potential_successor'))
-                                <div class="text-danger">
-                                    {{ $errors->first('potential_successor') }}
-                                </div>
-                            @endif
-                        </select>
-                    </div>
-
-                        <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Development Needs</label>
-                            <input type="text" name="development_needs" class="form-control"
-                                value="{{ $successor->development_needs ?? old('development_needs') }}" required>
-
-                            @if ($errors->has('development_needs'))
-                                <div class="text-danger">
-                                    {{ $errors->first('development_needs') }}
-                                </div>
-                            @endif
+                                @if ($errors->has('current_position'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('current_position') }}
+                                    </div>
+                                @endif
+                            </select>
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Readiness Level</label>
-                            <input type="text" name="readiness_level" class="form-control"
-                                value="{{ $successor->readiness_level ?? old('readiness_level') }}" required>
+                            <label for="" class="form-label">Department</label>
+                            <select name="department" id="department" class="form-select" value="{{ old('department') }}"
+                                required>
+                                <option value="{{ $successor->department }}" selected>
+                                    {{ $successor->department ?? 'Select an option' }}</option>
+                                @foreach ($departmentEnums as $departmentEnum)
+                                    <option value="{{ $departmentEnum }}">{{ $departmentEnum }}</option>
+                                @endforeach
 
-                            @if ($errors->has('readiness_level'))
-                                <div class="text-danger">
-                                    {{ $errors->first('readiness_level') }}
-                                </div>
-                            @endif
+                                @if ($errors->has('department'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('department') }}
+                                    </div>
+                                @endif
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <label for="" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" value="{{ old('status') }}" required>
+                                <option value="{{ $successor->status }}" selected>
+                                    {{ $successor->status ?? 'Select an option' }}</option>
+                                @foreach ($statusEnums as $statusEnum)
+                                    <option value="{{ $statusEnum }}">{{ $statusEnum }}</option>
+                                @endforeach
+
+                                @if ($errors->has('status'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('status') }}
+                                    </div>
+                                @endif
+                            </select>
                         </div>
 
                         <div class="mt-5">
-                            <button type="button" onclick="location.href = '{{ url('/succession-planning') }}'"
+                            <button type="button" onclick="location.href = '{{ url('/succession-planning/status') }}'"
                                 class="btn btn-secondary">Back</button>
 
                             <button type="submit" class="btn btn-primary">Update</button>

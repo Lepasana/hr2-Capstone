@@ -45,7 +45,7 @@
 
                         <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Training Date</label>
-                            <input type="datetime-local" name="training_date" class="form-control"
+                            <input type="datetime-local" name="training_date" id="training_date" class="form-control"
                                 value="{{ old('training_date') }}" required>
                             @if ($errors->has('training_date'))
                                 <div class="text-danger">
@@ -93,6 +93,17 @@
                             @endif
                         </div>
 
+                        <div class="col-md-12 mt-3">
+                            <label for="" class="form-label">Date Completed</label>
+                            <input type="datetime-local" name="date_completed" id="date_completed" class="form-control"
+                                value="{{ old('date_completed') }}" required>
+                            @if ($errors->has('date_completed'))
+                                <div class="text-danger">
+                                    {{ $errors->first('date_completed') }}
+                                </div>
+                            @endif
+                        </div>
+
                         <div class="mt-5">
                             <button type="button" onclick="location.href = '{{ url('/training-management') }}'"
                                 class="btn btn-secondary">Back</button>
@@ -105,3 +116,11 @@
         </div>
     </div>
 @endsection
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Adjust for timezone
+        document.getElementById('training_date').min = now.toISOString().slice(0, 16);
+    });
+</script>
