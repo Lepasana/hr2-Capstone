@@ -13,6 +13,7 @@ class CompensationPlan extends Model
 
     protected $fillable = [
         'job_position_id',
+        'job_category',
         'extra_field',
     ];
 
