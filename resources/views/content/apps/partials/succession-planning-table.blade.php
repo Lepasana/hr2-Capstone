@@ -13,16 +13,11 @@
                 </div>
 
                 <div>
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                        data-target="#modal-{{ $successor->id }}"
+                    <button type="button" class="btn btn-danger btn-sm delete-button"
                         data-action="{{ route('succession-planning.delete', ['id' => $successor->id]) }}">
                         Delete
                     </button>
                 </div>
-
-                {{-- MODAL FOR DELETE CONFIRMATION --}}
-                <x-confirmation-modal action="{{ route('succession-planning.delete', ['id' => $successor->id]) }}"
-                    title="Confirm Deletion" id="{{ $successor->id }}" />
             </div>
         </td>
     </tr>

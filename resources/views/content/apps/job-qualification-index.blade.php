@@ -63,16 +63,11 @@
                                         </div>
 
                                         <div>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#modal-{{ $qualification->id }}"
+                                            <button type="button" class="btn btn-danger btn-sm delete-button"
                                                 data-action="{{ route('job-qualification.delete', ['id' => $qualification->id]) }}">
                                                 Delete
                                             </button>
                                         </div>
-
-                                        <x-confirmation-modal
-                                            action="{{ route('job-qualification.delete', ['id' => $qualification->id]) }}"
-                                            title="Confirm Deletion" id="{{ $qualification->id }}" />
                                     </div>
                                 </td>
                             </tr>
@@ -82,12 +77,42 @@
             </div>
         </div>
     </div>
-@endsection
 
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-<script>
-    $(document).ready(function () {
-        new DataTable('#dataTable'); // Use the correct ID
-    });
-</script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            new DataTable('#dataTable'); // Use the correct ID
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.delete-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    let actionUrl = this.getAttribute('data-action');
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#6c757d",
+                        confirmButtonText: "Yes, delete it!",
+                        showLoaderOnConfirm: true,
+                        preConfirm: () => {
+                            let form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = actionUrl;
+                            form.innerHTML = `
+                            @csrf
+                            @method('DELETE')
+                        `;
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+@endsection

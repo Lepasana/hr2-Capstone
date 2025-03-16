@@ -63,17 +63,11 @@
                                                 </div>
 
                                                 <div>
-                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                        data-target="#modal-{{ $question->id }}"
+                                                    <button type="button" class="btn btn-danger btn-sm delete-button"
                                                         data-action="{{ route('learning-management.question.delete', ['id' => $question->id]) }}">
                                                         Delete
                                                     </button>
                                                 </div>
-
-                                                {{-- MODAL FOR DELETE CONFIRMATION --}}
-                                                <x-confirmation-modal
-                                                    action="{{ route('learning-management.question.delete', ['id' => $question->id]) }}"
-                                                    title="Confirm Deletion" id="{{ $question->id }}" />
                                             </div>
                                         </td>
                                     </tr>
@@ -91,5 +85,35 @@
 <script>
     $(document).ready(function() {
         new DataTable('#dataTable2'); // Use the correct ID
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function() {
+                let actionUrl = this.getAttribute('data-action');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#6c757d",
+                    confirmButtonText: "Yes, delete it!",
+                    showLoaderOnConfirm: true,
+                    preConfirm: () => {
+                        let form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = actionUrl;
+                        form.innerHTML = `
+                            @csrf
+                            @method('DELETE')
+                        `;
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            });
+        });
     });
 </script>

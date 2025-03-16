@@ -23,7 +23,6 @@ class SuccessionPlanningController extends Controller
      */
     public function index(Request $request)
     {
-        info($request->all());
         $statusEnums = StatusEnum::toOptions();
         $successors  = $this->successionPlanning->query()
             ->when($request->status, function ($query) use ($request) {
