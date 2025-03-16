@@ -21,7 +21,7 @@
                     @elseif(session()->has('error'))
                         <x-alert errorMessage="{{ session('error') }}" />
                     @endif
-                    
+
                     <form action="{{ url('/succession-planning/store') }}" method="POST">
                         @csrf
                         @method('POST')
@@ -60,28 +60,11 @@
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Potential Successor</label>
-                            <select name="potential_successor" id="potential_successor" class="form-select"
-                                value="{{ old('potential_successor') }}" required>
-                                <option value="" selected>Select Successor</option>
-                                @foreach ($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                @endforeach
-
-                                @if ($errors->has('potential_successor'))
-                                    <div class="text-danger">
-                                        {{ $errors->first('potential_successor') }}
-                                    </div>
-                                @endif
-                            </select>
-                        </div>
-
-                        <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Department</label>
                             <select name="department" id="department" class="form-select" value="{{ old('department') }}"
                                 required>
                                 <option value="" selected>
-                                    {{ '' ?? "Select an option" }}</option>
+                                    Select an option</option>
                                 @foreach ($departmentEnums as $departmentEnum)
                                     <option value="{{ $departmentEnum }}">{{ $departmentEnum }}</option>
                                 @endforeach

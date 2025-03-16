@@ -22,16 +22,7 @@
 
     <!-- Invoice List Table -->
     <div class="card">
-        <div>
-            <a href="{{ url('/succession-planning/status/create') }}" class="btn btn-primary px-4 m-4 text-white">Add Successor</a>
-        </div>
         <div class="card-datatable table-responsive p-2">
-            @if (session()->has('success'))
-                <x-alert successMessage="{{ session('success') }}" />
-            @elseif(session()->has('error'))
-                <x-alert errorMessage="{{ session('error') }}" />
-            @endif
-            
             <table id="dataTable" class="invoice-list-table table border-top">
                 <thead>
                     <tr>
@@ -40,7 +31,6 @@
                         <th class="text-center cell-fit">Current Position</th>
                         <th class="text-center cell-fit">Department</th>
                         <th class="text-center cell-fit">Status</th>
-                        <th class="cell-fit">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,27 +41,6 @@
                             <td class="text-start">{{ $successor->current_position }}</td>
                             <td class="text-start">{{ $successor->department }}</td>
                             <td class="text-start">{{ $successor->status }}</td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <div>
-                                        <button type="button" class="btn btn-success btn-sm"
-                                            onclick="location.href = '{{ route('succession-planning.edit', ['id' => $successor->id]) }}'">Edit</button>
-                                    </div>
-
-                                    <div>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#modal-{{ $successor->id }}"
-                                            data-action="{{ route('succession-planning.delete', ['id' => $successor->id]) }}">
-                                            Delete
-                                        </button>
-                                    </div>
-
-                                    {{-- MODAL FOR DELETE CONFIRMATION --}}
-                                    <x-confirmation-modal
-                                        action="{{ route('succession-planning.delete', ['id' => $successor->id]) }}"
-                                        title="Confirm Deletion" id="{{ $successor->id }}" />
-                                </div>
-                            </td>
                         </tr>
                     @endforeach
                 </tbody>

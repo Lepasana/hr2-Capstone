@@ -11,7 +11,7 @@
         <td class="text-start">{{ $training->training_name }}</td>
         <td class="text-start">{{ $training->employee->name }}</td>
         <td class="text-start">{{ $trainingDate }}</td>
-        <td class="text-start">{{ $training->duration->title }}</td>
+        <td class="text-start">{{ $training->duration?->title }}</td>
         <td class="text-start">{{ $training->status }}</td>
         <td class="text-start">{{ $completedDate }}</td>
         <td class="text-start">

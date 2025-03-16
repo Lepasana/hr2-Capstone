@@ -7,6 +7,7 @@ use App\Enums\SuccessionPlanning\StatusEnum;
 use App\Http\Requests\SuccessionPlanningRequest;
 use App\Models\Employee;
 use App\Models\SuccessionPlanning;
+use Illuminate\Http\Request;
 
 class SuccessionPlanningController extends Controller
 {
@@ -20,22 +21,27 @@ class SuccessionPlanningController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $successors = SuccessionPlanning::get();
+        info($request->all());
+        $statusEnums = StatusEnum::toOptions();
+        $successors  = $this->successionPlanning->query()
+            ->when($request->status, function ($query) use ($request) {
+                $status = $request->input('status');
 
-        return view('content.apps.succession-planning-index', [
-            'successors' => $successors,
-        ]);
-    }
+                if ($status) {
+                    $query->where('status', $status);
+                }
+            })
+            ->get();
 
-    public function status()
-    {
-        $successors = SuccessionPlanning::query()->whereNotNull('status')->get();
-
-        return view('content.apps.succession-planning-status', [
-            'successors' => $successors,
-        ]);
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('content.apps.partials.succession-planning-table', compact('successors', 'statusEnums'))->render(),
+            ]);
+        } else {
+            return view('content.apps.succession-planning-index', compact('successors', 'statusEnums'));
+        }
     }
 
     /**
@@ -56,44 +62,29 @@ class SuccessionPlanningController extends Controller
         ]);
     }
 
-    public function createWithStatus()
-    {
-        $employees        = Employee::query()->select(['id', 'name'])->get();
-        $currentPositions = CurrentPositionEnum::toOptions();
-        $departmentEnums  = DepartmentEnum::toOptions();
-        $statusEnums      = StatusEnum::toOptions();
-
-        return view('content.apps.succession-planning-status-create', [
-            'employees'        => $employees,
-            'currentPositions' => $currentPositions,
-            'departmentEnums'  => $departmentEnums,
-            'statusEnums'      => $statusEnums,
-        ]);
-    }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(SuccessionPlanningRequest $request)
     {
-        $successor                      = $this->successionPlanning;
-        $successor->employee_id         = $request->employee;
-        $successor->current_position    = $request->current_position;
-        $successor->potential_successor = $request->potential_successor;
-        $successor->development_needs   = 'n/a';
-        $successor->readiness_level     = 'n/a';
-        $successor->department          = $request->department;
-        $successor->status              = $request->status;
+        $successor                   = $this->successionPlanning;
+        $successor->employee_id      = $request->employee;
+        $successor->current_position = $request->current_position;
+        // $successor->potential_successor = 'n/a';
+        $successor->development_needs = 'n/a';
+        $successor->readiness_level   = 'n/a';
+        $successor->department        = $request->department;
+        // $successor->status              = $request->status;
         $successor->save();
 
         if (! $successor) {
             return redirect()
-                ->back()
+                ->route('succession-planning')
                 ->with('error', 'There was an error adding successor.');
         }
 
         return redirect()
-            ->back()
+            ->route('succession-planning')
             ->with('success', 'Successor added successfully.');
     }
 
@@ -139,12 +130,12 @@ class SuccessionPlanningController extends Controller
 
         if (! $successor) {
             return redirect()
-                ->back()
+                ->route('succession-planning')
                 ->with('error', 'There was an error updating successor.');
         }
 
         return redirect()
-            ->back()
+            ->route('succession-planning')
             ->with('success', 'Successor updated successfully.');
     }
 

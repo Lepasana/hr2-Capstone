@@ -1,7 +1,6 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Duration;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,25 +13,25 @@ class DurationSeeder extends Seeder
     {
         $durations = [
             [
-                'title' => "1 Day"
+                'title' => 1,
             ],
             [
-                'title' => "2 Days"
+                'title' => 2,
             ],
             [
-                'title' => "3 Days"
+                'title' => 3,
             ],
             [
-                'title' => "4 Days"
+                'title' => 4,
             ],
             [
-                'title' => "5 Days"
+                'title' => 5,
             ],
             [
-                'title' => "6 Days"
+                'title' => 6,
             ],
             [
-                'title' => "7 Days"
+                'title' => 7,
             ],
         ];
 

@@ -31,7 +31,30 @@
             @elseif(session()->has('error'))
                 <x-alert errorMessage="{{ session('error') }}" />
             @endif
-            
+
+            {{-- Filter --}}
+            <div class="d-flex justify-content-end w-100">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="menu-icon tf-icons ti ti-filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Filter Succession Planning" />
+                    </button>
+                    <ul class="dropdown-menu p-3 w-100">
+                        <li class="w-100">
+                            <!-- Status Filter -->
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" value="{{ old('status') }}" required>
+                                <option value="{{ old('status') ?? '' }}" selected>
+                                    Select an option</option>
+                                @foreach ($statusEnums as $statusEnum)
+                                    <option value="{{ $statusEnum }}">{{ $statusEnum }}</option>
+                                @endforeach
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             <table id="dataTable" class="invoice-list-table table border-top">
                 <thead>
                     <tr>
@@ -39,39 +62,12 @@
                         <th class="text-center cell-fit">Employee Name</th>
                         <th class="text-center cell-fit">Current Position</th>
                         <th class="text-center cell-fit">Department</th>
+                        <th class="text-center cell-fit">Status</th>
                         <th class="cell-fit">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($successors as $successor)
-                        <tr>
-                            <td class="text-center">{{ $successor->employee->id }}</td>
-                            <td class="text-start">{{ $successor->employee->name }}</td>
-                            <td class="text-start">{{ $successor->current_position }}</td>
-                            <td class="text-start">{{ $successor->department }}</td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <div>
-                                        <button type="button" class="btn btn-success btn-sm"
-                                            onclick="location.href = '{{ route('succession-planning.edit', ['id' => $successor->id]) }}'">Edit</button>
-                                    </div>
-
-                                    <div>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#modal-{{ $successor->id }}"
-                                            data-action="{{ route('succession-planning.delete', ['id' => $successor->id]) }}">
-                                            Delete
-                                        </button>
-                                    </div>
-
-                                    {{-- MODAL FOR DELETE CONFIRMATION --}}
-                                    <x-confirmation-modal
-                                        action="{{ route('succession-planning.delete', ['id' => $successor->id]) }}"
-                                        title="Confirm Deletion" id="{{ $successor->id }}" />
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
+                <tbody id="succession-planning-table-body">
+                    @include('content.apps.partials.succession-planning-table')
                 </tbody>
             </table>
         </div>
@@ -82,6 +78,26 @@
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script>
     $(document).ready(function() {
-        new DataTable('#dataTable'); // Use the correct ID
+        let dataTable = new DataTable('#dataTable');
+
+        function filterReports() {
+            let status = $('#status').val();
+
+            $.ajax({
+                url: "{{ route('succession-planning') }}",
+                method: "GET",
+                data: {
+                    status: status,
+                },
+                success: function(response) {
+                    $('#succession-planning-table-body').html(response.html);
+                }
+            });
+        }
+
+        // Trigger AJAX on filter change
+        $('#status').on('change', function() {
+            filterReports();
+        });
     });
 </script>

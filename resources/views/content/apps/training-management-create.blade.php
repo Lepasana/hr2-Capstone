@@ -79,27 +79,12 @@
                         <div class="col-md-12 mt-3">
                             <label for="" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select" required>
-                                <option value="" selected>Select Status</option>
-
-                                @foreach ($status as $stat)
-                                    <option value="{{ $stat }}">{{ $stat }}</option>
-                                @endforeach
+                                <option value="{{ $status }}" selected>{{ $status }}</option>
                             </select>
 
                             @if ($errors->has('status'))
                                 <div class="text-danger">
                                     {{ $errors->first('status') }}
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Date Completed</label>
-                            <input type="datetime-local" name="date_completed" id="date_completed" class="form-control"
-                                value="{{ old('date_completed') }}" required>
-                            @if ($errors->has('date_completed'))
-                                <div class="text-danger">
-                                    {{ $errors->first('date_completed') }}
                                 </div>
                             @endif
                         </div>

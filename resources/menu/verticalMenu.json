@@ -75,12 +75,6 @@
           "url": "succession-planning",
           "icon": "menu-icon tf-icons ti ti-user",
           "slug": "succession-planning"
-        },
-        {
-          "name": "Succession Status",
-          "url": "succession-planning/status",
-          "icon": "menu-icon tf-icons ti ti-book",
-          "slug": "succession-planning/status"
         }
       ]
     }

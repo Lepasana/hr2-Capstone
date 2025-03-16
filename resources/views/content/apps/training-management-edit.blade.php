@@ -95,17 +95,6 @@
                             @endif
                         </div>
 
-                        <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Date Completed</label>
-                            <input type="datetime-local" name="date_completed" id="date_completed" class="form-control"
-                                value="{{ old('date_completed') }}" required>
-                            @if ($errors->has('date_completed'))
-                                <div class="text-danger">
-                                    {{ $errors->first('date_completed') }}
-                                </div>
-                            @endif
-                        </div>
-
                         <div class="mt-5">
                             <button type="button" onclick="location.href = '{{ url('/training-management') }}'"
                                 class="btn btn-secondary">Back</button>

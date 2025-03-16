@@ -76,7 +76,7 @@ class TrainingManagementController extends Controller
     {
         $employees = Employee::query()->select(['id', 'name'])->get();
         $durations = Duration::query()->select(['id', 'title'])->get();
-        $status    = TrainingStatusEnum::toOptions();
+        $status    = TrainingStatusEnum::UPCOMING->value;
 
         return view('content.apps.training-management-create', [
             'employees' => $employees,
@@ -96,7 +96,6 @@ class TrainingManagementController extends Controller
         $trainingManagement->training_date  = $request->training_date;
         $trainingManagement->duration_id    = $request->duration;
         $trainingManagement->status         = $request->status;
-        $trainingManagement->date_completed = $request->date_completed;
         $trainingManagement->save();
 
         if (! $trainingManagement) {
@@ -147,7 +146,6 @@ class TrainingManagementController extends Controller
         $trainingManagement->training_date  = $request->training_date;
         $trainingManagement->duration_id    = $request->duration;
         $trainingManagement->status         = $request->status;
-        $trainingManagement->date_completed = $request->date_completed;
         $trainingManagement->save();
 
         if (! $trainingManagement) {
