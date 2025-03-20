@@ -77,6 +77,22 @@
                             </select>
                         </div>
 
+                        <div class="col-md-12 mt-3">
+                            <label for="" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" value="{{ old('status') }}" required>
+                                <option value="" selected>Select an option</option>
+                                @foreach ($statusEnums as $statusEnum)
+                                    <option value="{{ $statusEnum }}">{{ $statusEnum }}</option>
+                                @endforeach
+
+                                @if ($errors->has('status'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('status') }}
+                                    </div>
+                                @endif
+                            </select>
+                        </div>
+
                         <div class="mt-5">
                             <button type="button" onclick="location.href = '{{ url('/succession-planning') }}'"
                                 class="btn btn-secondary">Back</button>

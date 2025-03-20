@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
       UserSeeder::class,
       DurationSeeder::class,
       JobRequestSeeder::class,
-      TrainingSeeder::class,
+    //   TrainingSeeder::class,
       ApplicantSeeder::class,
       ExaminationSeeder::class,
       ApplicantScoreSeeder::class,

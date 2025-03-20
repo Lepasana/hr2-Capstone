@@ -66,14 +66,13 @@ class SuccessionPlanningController extends Controller
      */
     public function store(SuccessionPlanningRequest $request)
     {
-        $successor                   = $this->successionPlanning;
-        $successor->employee_id      = $request->employee;
-        $successor->current_position = $request->current_position;
-        // $successor->potential_successor = 'n/a';
+        $successor                    = $this->successionPlanning;
+        $successor->employee_id       = $request->employee;
+        $successor->current_position  = $request->current_position;
         $successor->development_needs = 'n/a';
         $successor->readiness_level   = 'n/a';
         $successor->department        = $request->department;
-        // $successor->status              = $request->status;
+        $successor->status            = $request->status;
         $successor->save();
 
         if (! $successor) {
