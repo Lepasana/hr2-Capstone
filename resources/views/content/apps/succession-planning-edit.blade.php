@@ -102,7 +102,7 @@
                         </div>
 
                         <div class="mt-5">
-                            <button type="button" onclick="location.href = '{{ url('/succession-planning/status') }}'"
+                            <button type="button" onclick="location.href = '{{ url('/succession-planning') }}'"
                                 class="btn btn-secondary">Back</button>
 
                             <button type="submit" class="btn btn-primary">Update</button>
