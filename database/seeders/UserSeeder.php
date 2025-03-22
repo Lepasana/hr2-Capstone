@@ -113,16 +113,16 @@ class UserSeeder extends Seeder
 
             if ($newUser && $newUser['role'] == UserRoleEnum::EMPLOYEE->value) {
                 $jobPosition = JobPosition::query()->inRandomOrder()->first();
-                $prefix = '';
+                $prefix      = '';
 
                 if ($jobPosition) {
                     $prefix = match (strtolower($jobPosition->category)) {
-                        'hr staff'        => 'H',
+                        'hr staff' => 'H',
                         'security agency' => 'S',
-                        'logistic staff'  => 'L',
-                        'finance staff'   => 'F',
-                        'training staff'  => 'T',
-                        default           => 'X', // Default if category is not recognized
+                        'logistic staff' => 'L',
+                        'finance staff' => 'F',
+                        'training staff' => 'T',
+                        default => 'X', // Default if category is not recognized
                     };
 
                     // Count employees with the same prefix to reset numbering per position
@@ -134,6 +134,10 @@ class UserSeeder extends Seeder
                     $employee->job_position_id = $jobPosition->id;
                     $employee->employee_code   = $prefix . str_pad($count, 3, '0', STR_PAD_LEFT);
                     $employee->gender          = fake()->randomElement(['Male', 'Female', 'Other']);
+                    $employee->civil_status    = fake()->randomElement(['Single', 'Married', 'Divorced', 'Separated', 'Widowed']);
+                    $employee->age             = fake()->numberBetween(18, 60);
+                    $employee->email           = $newUser->email;
+                    $employee->present_address = fake()->address();
                     $employee->department      = fake()->randomElement(['HR', 'Logistics', 'Finance']);
                     $employee->employment_type = fake()->randomElement(['Full Time', 'Part Time']);
                     $employee->date_hired      = fake()->dateTimeBetween('2022-11-30', '2025-02-30');
