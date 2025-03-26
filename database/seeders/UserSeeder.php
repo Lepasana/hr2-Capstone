@@ -133,12 +133,12 @@ class UserSeeder extends Seeder
                     $employee->name            = $user['name'];
                     $employee->job_position_id = $jobPosition->id;
                     $employee->employee_code   = $prefix . str_pad($count, 3, '0', STR_PAD_LEFT);
-                    $employee->gender          = fake()->randomElement(['Male', 'Female', 'Other']);
-                    $employee->civil_status    = fake()->randomElement(['Single', 'Married', 'Divorced', 'Separated', 'Widowed']);
+                    $employee->gender          = fake()->randomElement(['Male', 'Female']);
+                    $employee->civil_status    = fake()->randomElement(['Single', 'Married', 'Divorced']);
                     $employee->age             = fake()->numberBetween(18, 60);
                     $employee->email           = $newUser->email;
                     $employee->present_address = fake()->address();
-                    $employee->department      = fake()->randomElement(['HR', 'Logistics', 'Finance']);
+                    $employee->department      = fake()->randomElement(['HR', 'Logistics', 'Finance', 'Training', 'Security']);
                     $employee->employment_type = fake()->randomElement(['Full Time', 'Part Time']);
                     $employee->date_hired      = fake()->dateTimeBetween('2022-11-30', '2025-02-30');
                     $employee->status          = fake()->randomElement(['Active', 'On-leave', 'Terminated']);

@@ -13,6 +13,7 @@ use Database\Seeders\TimesheetSeeder;
 use Database\Seeders\JobRequestSeeder;
 use Database\Seeders\ExaminationSeeder;
 use Database\Seeders\JobPositionSeeder;
+use Database\Seeders\PerformanceSeeder;
 use Database\Seeders\ApplicantScoreSeeder;
 use Database\Seeders\CompensationPlanSeeder;
 
@@ -34,6 +35,7 @@ class DatabaseSeeder extends Seeder
       ApplicantScoreSeeder::class,
       TimesheetSeeder::class,
       CompensationPlanSeeder::class,
+      PerformanceSeeder::class,
     ]);
 
   }

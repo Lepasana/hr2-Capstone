@@ -36,6 +36,10 @@ class JobRequestSeeder extends Seeder
                 'job_title' => "Training and Development Specialist",
                 'created_at' => now()
             ],
+            [
+                'job_title' => "Security",
+                'created_at' => now()
+            ],
         ];
 
         foreach ($positions as $position) {
