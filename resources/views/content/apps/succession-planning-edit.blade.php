@@ -32,12 +32,13 @@
                     <form action="{{ route('succession-planning.update', ['id' => $successor->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="" class="form-lab">Employee</label>
-                            <select name="employee" id="employee" class="form-select" required>
+                            <select name="employee" id="select-employee" class="form-select" required>
                                 <option value="{{ $successor->employee->id }}">{{ $successor->employee->name }}</option>
                                 @foreach ($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                    <option value="{{ $employee->id }}" data-position="{{ $employee->jobPosition->title }}"
+                                        data-department="{{ $employee->department }}">{{ $employee->name }}</option>
                                 @endforeach
 
                                 @if ($errors->has('employee'))
@@ -48,43 +49,19 @@
                             </select>
                         </div>
 
-                        <div class="col-md-12 mt-3">
+                        <div class="col-md-6 mt-3" id="current-position-container">
                             <label for="" class="form-label">Current Position</label>
-                            <select name="current_position" id="current_position" class="form-select"
-                                value="{{ old('current_position') }}" required>
-                                <option value="{{ $successor->current_position }}" selected>
-                                    {{ $successor->current_position }}</option>
-                                @foreach ($currentPositions as $currentPosition)
-                                    <option value="{{ $currentPosition }}">{{ $currentPosition }}</option>
-                                @endforeach
-
-                                @if ($errors->has('current_position'))
-                                    <div class="text-danger">
-                                        {{ $errors->first('current_position') }}
-                                    </div>
-                                @endif
-                            </select>
+                            <input type="text" name="current_position" id="current_position" class="form-control"
+                                value="{{ $successor->current_position }}" readonly />
                         </div>
 
-                        <div class="col-md-12 mt-3">
+                        <div class="col-md-6 mt-3" id="current-department-container">
                             <label for="" class="form-label">Department</label>
-                            <select name="department" id="department" class="form-select" value="{{ old('department') }}"
-                                required>
-                                <option value="{{ $successor->department }}" selected>
-                                    {{ $successor->department ?? 'Select an option' }}</option>
-                                @foreach ($departmentEnums as $departmentEnum)
-                                    <option value="{{ $departmentEnum }}">{{ $departmentEnum }}</option>
-                                @endforeach
-
-                                @if ($errors->has('department'))
-                                    <div class="text-danger">
-                                        {{ $errors->first('department') }}
-                                    </div>
-                                @endif
-                            </select>
+                            <input type="text" name="department" id="department" class="form-control"
+                                value="{{ $successor->department }}" readonly />
                         </div>
 
-                        <div class="col-md-12 mt-3">
+                        <div class="col-md-6 mt-3">
                             <label for="" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select" value="{{ old('status') }}" required>
                                 <option value="{{ $successor->status }}" selected>
@@ -113,8 +90,16 @@
         </div>
     </div>
 
-    <!-- Offcanvas -->
-    @include('_partials/_offcanvas/offcanvas-send-invoice')
-    @include('_partials/_offcanvas/offcanvas-add-payment')
-    <!-- /Offcanvas -->
+    <script>
+        document.getElementById('select-employee').addEventListener('change', function() {
+            let selectedOption = this.options[this.selectedIndex];
+            let position = selectedOption.getAttribute('data-position') || '';
+            let department = selectedOption.getAttribute('data-department') || '';
+            let positionField = document.getElementById('current_position');
+            let departmentField = document.getElementById('department');
+
+            positionField.value = position;
+            departmentField.value = department;
+        });
+    </script>
 @endsection

@@ -18,12 +18,14 @@
 
                         <div class="col-md-12">
                             <label for="" class="form-lab">Employee</label>
-                            <select name="employee" id="employee" class="form-select" required>
+                            <select name="employee" id="select-employee" class="form-select" required>
                                 <option value="{{ $competency->employee->id ?? old('employee') }}" selected>
                                     {{ $competency->employee->name }}
                                 </option>
                                 @foreach ($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                    <option value="{{ $employee->id }}" data-position="{{ $employee->jobPosition->title }}"
+                                        data-position-id="{{ $employee->jobPosition->id }}"
+                                        data-department="{{ $employee->department }}">{{ $employee->name }}</option>
                                 @endforeach
 
                                 @if ($errors->has('employee'))
@@ -34,38 +36,19 @@
                             </select>
                         </div>
 
-                        <div class="col-md-12 mt-3">
+                        <div class="col-md-12 mt-3" id="job-position-container">
                             <label for="" class="form-lab">Job Position</label>
-                            <select name="job_request_id" id="job_request_id" class="form-select" required>
+                            <select name="job_request_id" id="job_position" class="form-select" required>
                                 <option value="{{ $competency->job_request_id ?? old('job_request_id') }}" selected>
-                                    {{ $competency->jobRequest->job_title }}
+                                    {{ $competency->jobPosition->title }}
                                 </option>
-                                @foreach ($jobRequests as $jobRequest)
-                                    <option value="{{ $jobRequest->id }}">{{ $jobRequest->job_title }}</option>
-                                @endforeach
-
-                                @if ($errors->has('job_request_id'))
-                                    <div class="text-danger">
-                                        {{ $errors->first('job_request_id') }}
-                                    </div>
-                                @endif
                             </select>
                         </div>
 
-                        <div class="col-md-12 mt-3">
-                            <label for="" class="form-lab">Department</label>
-                            <select name="department" id="department" class="form-select" required>
-                                <option value="{{ $competency->department ?? old('department') }}" selected>{{ $competency->department }}</option>
-                                @foreach ($departmentEnums as $department)
-                                    <option value="{{ $department }}">{{ $department }}</option>
-                                @endforeach
-
-                                @if ($errors->has('department'))
-                                    <div class="text-danger">
-                                        {{ $errors->first('department') }}
-                                    </div>
-                                @endif
-                            </select>
+                        <div class="col-md-6 mt-3" id="current-department-container">
+                            <label for="" class="form-label">Department</label>
+                            <input type="text" name="department" id="department" class="form-control"
+                                value="{{ $competency->department }}" readonly />
                         </div>
 
                         <div class="col-md-12 mt-3">
@@ -97,4 +80,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('select-employee').addEventListener('change', function() {
+            let selectedOption = this.options[this.selectedIndex];
+            let position = selectedOption.getAttribute('data-position') || '';
+            let positionId = selectedOption.getAttribute('data-position-id') || '';
+            let department = selectedOption.getAttribute('data-department') || '';
+            let positionField = document.getElementById('job_position');
+            let departmentField = document.getElementById('department');
+
+            departmentField.value = department;
+            positionField.innerHTML = '<option value="" selected>Select Position</option>';
+
+            if (position) {
+                let option = document.createElement('option');
+                option.value = positionId;
+                option.textContent = position;
+                option.selected = true;
+                positionField.appendChild(option);
+            }
+        });
+    </script>
 @endsection

@@ -191,6 +191,7 @@ Route::middleware(['auth', 'auth.admin'])
             ->group(function () {
                 Route::get('/applicant-score', 'index')->name('applicant-score');
                 Route::delete('/applicant-score/{id}/delete', 'destroy')->name('applicant-score.delete');
+                Route::post('/applicant-score/bulk-delete', 'bulkDelete')->name('applicant-score.bulk-delete');
             });
 
         // ESS

@@ -18,6 +18,45 @@
                     <x-alert errorMessage="{{ session('error') }}" />
                 @endif
 
+                {{-- Filter --}}
+                <div class="d-flex justify-content-end w-100">
+                    <div class="dropdown">
+                        <span>Filter</span>
+                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="menu-icon tf-icons ti ti-filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Filter Training reports" />
+                        </button>
+                        <ul class="dropdown-menu p-3">
+                            <li>
+                                <!-- From Filter -->
+                                <div class="mb-2">
+                                    <label for="from" class="form-label">From</label>
+                                    <input type="date" name="from" id="from" class="form-control">
+                                </div>
+                            </li>
+                            <li>
+                                <!-- To Filter -->
+                                <div class="mb-2">
+                                    <label for="to" class="form-label">To</label>
+                                    <input type="date" name="to" id="to" class="form-control">
+                                </div>
+                            </li>
+                            <li>
+                                <!-- Status Filter -->
+                                <div class="mb-2">
+                                    <label for="to" class="form-label">Status</label>
+                                    <select name="status" id="status" class="form-select">
+                                        <option value="" selected>Select an option</option>
+                                        @foreach ($trainingStatusEnums as $trainingStatusEnum)
+                                            <option value="{{ $trainingStatusEnum }}">{{ $trainingStatusEnum }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div>
                     <a href="{{ url('/training-management/create') }}" class="btn btn-primary px-4 m-4 text-white">Add
                         Training</a>
@@ -37,40 +76,7 @@
                         </tr>
                     </thead>
                     <tbody id="training-table-body">
-                        @foreach ($trainings as $training)
-                            @php
-                                $trainingDate = Carbon\Carbon::parse($training->training_date)->format('F d, Y');
-
-                                $completedDate = $training->date_completed
-                                    ? Carbon\Carbon::parse($training->date_completed)->format('F d, Y')
-                                    : null;
-                            @endphp
-                            <tr>
-                                <td class="text-center">{{ $training->id }}</td>
-                                <td class="text-start">{{ $training->training_name }}</td>
-                                <td class="text-start">{{ $training->employee->name }}</td>
-                                <td class="text-start">{{ $trainingDate }}</td>
-                                <td class="text-start">
-                                    {{ $training->duration?->title && $training->duration?->title != 1 ? $training->duration?->title . ' Days' : $training->duration?->title . ' Day' }}
-                                </td>
-                                <td class="text-start">{{ $training->status }}</td>
-                                <td class="text-start">{{ $completedDate ?? '' }}</td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <div>
-                                            <button type="button" class="btn btn-success btn-sm"
-                                                onclick="location.href = '{{ route('training-management.edit', ['id' => $training->id]) }}'">Edit</button>
-                                        </div>
-
-
-                                        <button type="button" class="btn btn-danger btn-sm delete-button"
-                                            data-action="{{ route('training-management.delete', ['id' => $training->id]) }}">
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
+                        @include('content.apps.partials.training-table')
                     </tbody>
                 </table>
             </div>
@@ -82,6 +88,34 @@
 <script>
     $(document).ready(function() {
         new DataTable('#dataTable'); // Use the correct ID
+    });
+
+    $(document).ready(function() {
+        let dataTable = new DataTable('#dataTable'); // Initialize DataTable
+
+        function filterReports() {
+            let from = $('#from').val();
+            let to = $('#to').val();
+            let status = $('#status').val();
+
+            $.ajax({
+                url: "{{ route('training-management') }}",
+                method: "GET",
+                data: {
+                    from: from,
+                    to: to,
+                    status: status,
+                },
+                success: function(response) {
+                    $('#training-table-body').html(response.html);
+                }
+            });
+        }
+
+        // Trigger AJAX on filter change
+        $('#from, #to, #status').on('change', function() {
+            filterReports();
+        });
     });
 
     document.addEventListener("DOMContentLoaded", function() {

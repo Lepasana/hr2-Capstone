@@ -35,6 +35,7 @@
             {{-- Filter --}}
             <div class="d-flex justify-content-end w-100">
                 <div class="dropdown">
+                    <span>Filter</span>
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="menu-icon tf-icons ti ti-filter" data-bs-toggle="tooltip" data-bs-placement="top"
                             data-bs-title="Filter Succession Planning" />

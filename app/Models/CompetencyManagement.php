@@ -27,8 +27,8 @@ class CompetencyManagement extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    public function jobRequest(): BelongsTo
+    public function jobPosition(): BelongsTo
     {
-      return $this->belongsTo(JobRequest::class);
+      return $this->belongsTo(JobPosition::class, 'job_request_id');
     }
 }

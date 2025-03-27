@@ -24,24 +24,48 @@ class TrainingManagementController extends Controller
      */
     public function index(Request $request)
     {
-        $trainings = TrainingManagement::query()
-            ->where('status', TrainingStatusEnum::UPCOMING->value)
-            ->orWhere('status', TrainingStatusEnum::ONGOING->value)
-            ->orWhere(function ($query) {
-                $query->where('status', TrainingStatusEnum::COMPLETED->value)
-                    ->whereMonth('date_completed', Carbon::now()->month)
-                    ->whereYear('date_completed', Carbon::now()->year);
+        $trainingStatusEnums = TrainingStatusEnum::toOptions();
+        $trainings           = TrainingManagement::query()
+            ->where(function ($query) {
+                $query->where('status', TrainingStatusEnum::UPCOMING->value)
+                    ->orWhere('status', TrainingStatusEnum::ONGOING->value)
+                    ->orWhere(function ($query) {
+                        $query->where('status', TrainingStatusEnum::COMPLETED->value)
+                            ->whereMonth('date_completed', Carbon::now()->month)
+                            ->whereYear('date_completed', Carbon::now()->year);
+                    });
+            })
+            ->when($request->from || $request->to, function ($query) use ($request) {
+                $from = $request->input('from');
+                $to   = $request->input('to');
+
+                if ($from && $to) {
+                    $query->whereBetween('date_completed', [$from, $to]);
+                } elseif ($from) {
+                    $query->whereDate('date_completed', '>=', $from);
+                } elseif ($to) {
+                    $query->whereDate('date_completed', '<=', $to);
+                }
+            })
+            ->when($request->status, function ($query) use ($request) {
+                $query->where('status', $request->input('status'));
             })
             ->get();
 
-        // Normal page load
-        return view('content.apps.training-management-index', compact('trainings'));
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('content.apps.partials.training-table', compact('trainings', 'trainingStatusEnums'))->render(),
+            ]);
+        } else {
+            return view('content.apps.training-management-index', compact('trainings', 'trainingStatusEnums'));
+        }
 
     }
 
     public function trainingHistory(Request $request)
     {
-        $trainings = TrainingManagement::query()
+        $trainingStatusEnums = TrainingStatusEnum::toOptions();
+        $trainings           = TrainingManagement::query()
             ->where('status', TrainingStatusEnum::COMPLETED->value)
             ->when($request->from, function ($query) use ($request) {
                 $from = $request->input('from');
@@ -56,15 +80,22 @@ class TrainingManagementController extends Controller
                     $query->whereDate('date_completed', '<=', $to);
                 }
             })
+            ->when($request->status, function ($query) use ($request) {
+                $status = $request->input('status');
+
+                if ($status) {
+                    $query->where('status', $status);
+                }
+            })
             ->get();
 
         // Handle AJAX Request: Return only table rows
         if ($request->ajax()) {
             return response()->json([
-                'html' => view('content.apps.partials.training-table', compact('trainings'))->render(),
+                'html' => view('content.apps.partials.training-history-table', compact('trainings', 'trainingStatusEnums'))->render(),
             ]);
         } else {
-            return view('content.apps.training-management-training-history', compact('trainings'));
+            return view('content.apps.training-management-training-history', compact('trainings', 'trainingStatusEnums'));
         }
 
     }
@@ -90,12 +121,12 @@ class TrainingManagementController extends Controller
      */
     public function store(TrainingManagementRequest $request)
     {
-        $trainingManagement                 = $this->trainingManagement;
-        $trainingManagement->training_name  = $request->training_name;
-        $trainingManagement->employee_id    = $request->employee;
-        $trainingManagement->training_date  = $request->training_date;
-        $trainingManagement->duration_id    = $request->duration;
-        $trainingManagement->status         = $request->status;
+        $trainingManagement                = $this->trainingManagement;
+        $trainingManagement->training_name = $request->training_name;
+        $trainingManagement->employee_id   = $request->employee;
+        $trainingManagement->training_date = $request->training_date;
+        $trainingManagement->duration_id   = $request->duration;
+        $trainingManagement->status        = TrainingStatusEnum::UPCOMING->value;
         $trainingManagement->save();
 
         if (! $trainingManagement) {
@@ -140,12 +171,12 @@ class TrainingManagementController extends Controller
      */
     public function update(TrainingManagementRequest $request, string $id)
     {
-        $trainingManagement                 = $this->trainingManagement->findOrFail($id);
-        $trainingManagement->training_name  = $request->training_name;
-        $trainingManagement->employee_id    = $request->employee;
-        $trainingManagement->training_date  = $request->training_date;
-        $trainingManagement->duration_id    = $request->duration;
-        $trainingManagement->status         = $request->status;
+        $trainingManagement                = $this->trainingManagement->findOrFail($id);
+        $trainingManagement->training_name = $request->training_name;
+        $trainingManagement->employee_id   = $request->employee;
+        $trainingManagement->training_date = $request->training_date;
+        $trainingManagement->duration_id   = $request->duration;
+        $trainingManagement->status        = $request->status;
         $trainingManagement->save();
 
         if (! $trainingManagement) {

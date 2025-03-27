@@ -1,14 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Enums\CompensationManagement\DepartmentEnum;
+use App\Enums\SkillLevelEnum;
+use App\Models\CompetencyManagement;
 use App\Models\Employee;
 use App\Models\JobRequest;
 use Illuminate\Http\Request;
-use App\Enums\SkillLevelEnum;
-use App\Models\CompetencyManagement;
-use App\Http\Requests\CompetencyManagementRequest;
-use App\Enums\CompensationManagement\DepartmentEnum;
 
 class CompetencyManagementController extends Controller
 {
@@ -23,17 +21,25 @@ class CompetencyManagementController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $competencies = $this->competencyManagement->get();
-        $employees = Employee::query()->select(['id', 'name'])->get();
-        $skill_levels = SkillLevelEnum::toOptions();
+        $employees       = Employee::query()->select(['id', 'name'])->get();
+        $skill_levels    = SkillLevelEnum::toOptions();
+        $departmentEnums = DepartmentEnum::toOptions();
+        $competencies    = $this->competencyManagement
+            ->with(['jobPosition'])
+            ->when($request->department, function ($query) use ($request) {
+                $query->where('department', $request->input('department'));
+            })
+            ->get();
 
-        return view('content.apps.competency-management-index', [
-            'competencies' => $competencies,
-            'employees' => $employees,
-            'skill_levels' => $skill_levels,
-        ]);
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('content.apps.partials.competency-table', compact('competencies', 'employees', 'skill_levels', 'departmentEnums'))->render(),
+            ]);
+        } else {
+            return view('content.apps.competency-management-index', compact('competencies', 'employees', 'skill_levels', 'departmentEnums'));
+        }
     }
 
     /**
@@ -41,15 +47,19 @@ class CompetencyManagementController extends Controller
      */
     public function create()
     {
-        $skill_levels = SkillLevelEnum::toOptions();
-        $employees = Employee::query()->select(['id', 'name'])->get();
-        $jobRequests = JobRequest::query()->get();
+        $skill_levels        = SkillLevelEnum::toOptions();
+        $excludedEmployeeIds = $this->competencyManagement->pluck('employee_id');
+        $employees           = Employee::query()
+            ->with(['jobPosition'])
+            ->whereNotIn('id', $excludedEmployeeIds)
+            ->get();
+        $jobRequests     = JobRequest::query()->get();
         $departmentEnums = DepartmentEnum::toOptions();
 
         return view('content.apps.competency-management-create', [
-            'skill_levels' => $skill_levels,
-            'employees' => $employees,
-            'jobRequests' => $jobRequests,
+            'skill_levels'    => $skill_levels,
+            'employees'       => $employees,
+            'jobRequests'     => $jobRequests,
             'departmentEnums' => $departmentEnums,
         ]);
     }
@@ -59,14 +69,14 @@ class CompetencyManagementController extends Controller
      */
     public function store(Request $request)
     {
-        $competencyManagement = $this->competencyManagement;
-        $competencyManagement->employee_id = $request->employee;
+        $competencyManagement                 = $this->competencyManagement;
+        $competencyManagement->employee_id    = $request->employee;
         $competencyManagement->job_request_id = $request->job_request_id;
-        $competencyManagement->department = $request->department;
-        $competencyManagement->skill_level = $request->skill_level;
+        $competencyManagement->department     = $request->department;
+        $competencyManagement->skill_level    = $request->skill_level;
         $competencyManagement->save();
 
-        if (!$competencyManagement) {
+        if (! $competencyManagement) {
             return redirect()
                 ->route('competency-management')
                 ->with('error', 'There was an error adding competency.');
@@ -90,17 +100,17 @@ class CompetencyManagementController extends Controller
      */
     public function edit(string $id)
     {
-        $competency = $this->competencyManagement->find($id);
-        $skill_levels = SkillLevelEnum::toOptions();
-        $employees = Employee::query()->select(['id', 'name'])->get();
-        $jobRequests = JobRequest::query()->get();
+        $competency      = $this->competencyManagement->find($id);
+        $skill_levels    = SkillLevelEnum::toOptions();
+        $employees       = Employee::query()->with(['jobPosition'])->get();
+        $jobRequests     = JobRequest::query()->get();
         $departmentEnums = DepartmentEnum::toOptions();
 
         return view('content.apps.competency-management-edit', [
-            'competency' => $competency,
-            'skill_levels' => $skill_levels,
-            'employees' => $employees,
-            'jobRequests' => $jobRequests,
+            'competency'      => $competency,
+            'skill_levels'    => $skill_levels,
+            'employees'       => $employees,
+            'jobRequests'     => $jobRequests,
             'departmentEnums' => $departmentEnums,
         ]);
     }
@@ -110,14 +120,14 @@ class CompetencyManagementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $competencyManagement = $this->competencyManagement->find($id);
-        $competencyManagement->employee_id = $request->employee;
+        $competencyManagement                 = $this->competencyManagement->find($id);
+        $competencyManagement->employee_id    = $request->employee;
         $competencyManagement->job_request_id = $request->job_request_id;
-        $competencyManagement->department = $request->department;
-        $competencyManagement->skill_level = $request->skill_level;
+        $competencyManagement->department     = $request->department;
+        $competencyManagement->skill_level    = $request->skill_level;
         $competencyManagement->save();
 
-        if (!$competencyManagement) {
+        if (! $competencyManagement) {
             return redirect()
                 ->route('competency-management')
                 ->with('error', 'There was an error updating competency.');

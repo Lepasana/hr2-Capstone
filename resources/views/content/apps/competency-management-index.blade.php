@@ -30,6 +30,31 @@
                     <x-alert errorMessage="{{ session('error') }}" />
                 @endif
 
+                {{-- Filter --}}
+                <div class="d-flex justify-content-end w-100">
+                    <div class="dropdown">
+                        <span>Filter</span>
+                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="menu-icon tf-icons ti ti-filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Filter Training reports" />
+                        </button>
+                        <ul class="dropdown-menu p-3">
+                            <li>
+                                <!-- Department Filter -->
+                                <div class="mb-2">
+                                    <label for="to" class="form-label">Department</label>
+                                    <select name="department" id="department" class="form-select">
+                                        <option value="" selected>Select an option</option>
+                                        @foreach ($departmentEnums as $departmentEnum)
+                                            <option value="{{ $departmentEnum }}">{{ $departmentEnum }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
                 <table id="dataTable" class="datatables-competencies table border-top">
                     <thead>
                         <tr>
@@ -41,31 +66,8 @@
                             <th class="text-center cell-fit">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($competencies as $competency)
-                            <tr>
-                                <td class="text-center">{{ $competency->employee->id }}</td>
-                                <td class="text-center">{{ $competency->employee->name }}</td>
-                                <td class="text-center">{{ $competency->jobRequest->job_title }}</td>
-                                <td class="text-center">{{ $competency->department }}</td>
-                                <td class="text-center">{{ $competency->skill_level }}</td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <div>
-                                            <button type="button" class="btn btn-success btn-sm"
-                                                onclick="location.href = '{{ route('competency-management.edit', ['id' => $competency->id]) }}'">Edit</button>
-                                        </div>
-
-                                        <div>
-                                            <button type="button" class="btn btn-danger btn-sm delete-button"
-                                                data-action="{{ route('competency-management.delete', ['id' => $competency->id]) }}">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
+                    <tbody id="competency-table-body">
+                        @include('content.apps.partials.competency-table')
                     </tbody>
                 </table>
             </div>
@@ -76,6 +78,30 @@
     <script>
         $(document).ready(function() {
             new DataTable('#dataTable'); // Use the correct ID
+        });
+
+        $(document).ready(function() {
+            let dataTable = new DataTable('#dataTable'); // Initialize DataTable
+
+            function filterReports() {
+                let department = $('#department').val();
+
+                $.ajax({
+                    url: "{{ route('competency-management') }}",
+                    method: "GET",
+                    data: {
+                        department: department,
+                    },
+                    success: function(response) {
+                        $('#competency-table-body').html(response.html);
+                    }
+                });
+            }
+
+            // Trigger AJAX on filter change
+            $('#department').on('change', function() {
+                filterReports();
+            });
         });
 
         document.addEventListener("DOMContentLoaded", function() {

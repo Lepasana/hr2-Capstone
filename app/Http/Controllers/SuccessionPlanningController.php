@@ -48,7 +48,11 @@ class SuccessionPlanningController extends Controller
      */
     public function create()
     {
-        $employees        = Employee::query()->select(['id', 'name'])->get();
+        $excludedEmployeeIds = $this->successionPlanning->pluck('employee_id');
+        $employees = Employee::query()
+            ->with(['jobPosition'])
+            ->whereNotIn('id', $excludedEmployeeIds)
+            ->get();
         $currentPositions = CurrentPositionEnum::toOptions();
         $departmentEnums  = DepartmentEnum::toOptions();
         $statusEnums      = StatusEnum::toOptions();
@@ -64,7 +68,7 @@ class SuccessionPlanningController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SuccessionPlanningRequest $request)
+    public function store(Request $request)
     {
         $successor                    = $this->successionPlanning;
         $successor->employee_id       = $request->employee;
@@ -99,7 +103,7 @@ class SuccessionPlanningController extends Controller
      */
     public function edit(string $id)
     {
-        $employees        = Employee::query()->select(['id', 'name'])->get();
+        $employees        = Employee::query()->with('jobPosition')->get();
         $successor        = SuccessionPlanning::findOrFail($id);
         $currentPositions = CurrentPositionEnum::toOptions();
         $departmentEnums  = DepartmentEnum::toOptions();

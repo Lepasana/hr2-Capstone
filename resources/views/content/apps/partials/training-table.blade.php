@@ -11,20 +11,24 @@
         <td class="text-start">{{ $training->training_name }}</td>
         <td class="text-start">{{ $training->employee->name }}</td>
         <td class="text-start">{{ $trainingDate }}</td>
-        <td class="text-start">{{ $training->duration?->title }}</td>
-        <td class="text-start">{{ $training->status }}</td>
-        <td class="text-start">{{ $completedDate }}</td>
         <td class="text-start">
-            <div>
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                    data-target="#modal-{{ $training->id }}"
+            {{ $training->duration?->title && $training->duration?->title != 1 ? $training->duration?->title . ' Days' : $training->duration?->title . ' Day' }}
+        </td>
+        <td class="text-start">{{ $training->status }}</td>
+        <td class="text-start">{{ $completedDate ?? '' }}</td>
+        <td>
+            <div class="d-flex gap-2">
+                <div>
+                    <button type="button" class="btn btn-success btn-sm"
+                        onclick="location.href = '{{ route('training-management.edit', ['id' => $training->id]) }}'">Edit</button>
+                </div>
+
+
+                <button type="button" class="btn btn-danger btn-sm delete-button"
                     data-action="{{ route('training-management.delete', ['id' => $training->id]) }}">
                     Delete
                 </button>
             </div>
-
-            <x-confirmation-modal action="{{ route('training-management.delete', ['id' => $training->id]) }}"
-                title="Confirm Deletion" id="{{ $training->id }}" />
         </td>
     </tr>
 @endforeach
