@@ -28,6 +28,7 @@ class TimesheetFactory extends Factory
        $totalHoursWork = $timeIn->diffInHours($timeOut);
         return [
             'employee_id' => Employee::query()->inRandomOrder()->value('id'),
+            'date' => fake()->dateTimeBetween('2024-12-15', '2025-03-31'),
             'time_in' => $timeIn, // random time here H:m:s
             'time_out' => $timeOut, // random time here H:m:s,
             'total_hours_work' => $totalHoursWork, // count the total time

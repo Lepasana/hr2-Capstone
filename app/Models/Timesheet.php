@@ -13,6 +13,7 @@ class Timesheet extends Model
 
     protected $fillable = [
         'employee_id',
+        'date',
         'time_in',
         'time_out',
         'total_hours_work',

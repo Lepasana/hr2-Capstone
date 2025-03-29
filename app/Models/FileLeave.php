@@ -11,9 +11,11 @@ class FileLeave extends Model
 
     protected $fillable = [
         'employee_id',
+        'project_name',
         'leave_type',
         'start_date',
         'end_date',
+        'status',
     ];
 
     protected $casts = [

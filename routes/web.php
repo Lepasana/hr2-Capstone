@@ -76,6 +76,7 @@ use App\Http\Controllers\user_interface\Accordion;
 use App\Http\Controllers\user_interface\Dropdowns;
 use App\Http\Controllers\user_interface\Offcanvas;
 use App\Http\Controllers\user_interface\TabsPills;
+use Illuminate\Notifications\DatabaseNotification;
 use App\Http\Controllers\apps\AcademyCourseDetails;
 use App\Http\Controllers\apps\EcommerceProductList;
 use App\Http\Controllers\extended_ui\TimelineBasic;
@@ -145,6 +146,15 @@ Route::post('/generate-ai-content', [AIController::class, 'generateContent']);
 // THIS IS THE MAIN ROUTE
 Route::middleware(['auth', 'auth.admin'])
     ->group(function () {
+        Route::post('/notifications/{id}/mark-as-read', function ($id) {
+            $notification = DatabaseNotification::find($id);
+            info($notification);
+
+            if ($notification) {
+                $notification->markAsRead();
+            }
+            return response()->json(['success' => true]);
+        })->name('notifications.markAsRead');
 
         // DASHBOARD
         Route::controller(DashboardController::class)

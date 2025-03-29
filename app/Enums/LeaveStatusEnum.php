@@ -10,5 +10,5 @@ enum LeaveStatusEnum: string
 
     case APPROVED = 'Approved';
     case PENDING = 'Pending';
-    case DECLINED = 'Declined';
+    case REJECTED = 'Rejected';
 }
