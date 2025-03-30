@@ -24,6 +24,7 @@ class SuccessionPlanningController extends Controller
     public function index(Request $request)
     {
         $statusEnums = StatusEnum::toOptions();
+        $departmentEnums = DepartmentEnum::toOptions();
         $successors  = $this->successionPlanning->query()
             ->when($request->status, function ($query) use ($request) {
                 $status = $request->input('status');
@@ -32,14 +33,21 @@ class SuccessionPlanningController extends Controller
                     $query->where('status', $status);
                 }
             })
+            ->when($request->department, function ($query) use ($request) {
+                $department = $request->input('department');
+
+                if ($department) {
+                    $query->where('department', $department);
+                }
+            })
             ->get();
 
         if ($request->ajax()) {
             return response()->json([
-                'html' => view('content.apps.partials.succession-planning-table', compact('successors', 'statusEnums'))->render(),
+                'html' => view('content.apps.partials.succession-planning-table', compact('successors', 'statusEnums', 'departmentEnums'))->render(),
             ]);
         } else {
-            return view('content.apps.succession-planning-index', compact('successors', 'statusEnums'));
+            return view('content.apps.succession-planning-index', compact('successors', 'statusEnums', 'departmentEnums'));
         }
     }
 

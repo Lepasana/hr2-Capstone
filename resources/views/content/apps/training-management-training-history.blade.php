@@ -40,18 +40,6 @@
                                     <input type="date" name="to" id="to" class="form-control">
                                 </div>
                             </li>
-                            <li>
-                                <!-- Status Filter -->
-                                <div class="mb-2">
-                                    <label for="to" class="form-label">Status</label>
-                                    <select name="status" id="status" class="form-select">
-                                        <option value="" selected>Select an option</option>
-                                        @foreach ($trainingStatusEnums as $trainingStatusEnum)
-                                            <option value="{{ $trainingStatusEnum }}">{{ $trainingStatusEnum }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -91,7 +79,6 @@
             function filterReports() {
                 let from = $('#from').val();
                 let to = $('#to').val();
-                let status = $('#status').val();
 
                 $.ajax({
                     url: "{{ route('training-management.training-history') }}",
@@ -99,7 +86,6 @@
                     data: {
                         from: from,
                         to: to,
-                        status: status,
                     },
                     success: function(response) {
                         $('#training-table-body').html(response.html);
@@ -108,7 +94,7 @@
             }
 
             // Trigger AJAX on filter change
-            $('#from, #to, #status').on('change', function() {
+            $('#from, #to').on('change', function() {
                 filterReports();
             });
         });

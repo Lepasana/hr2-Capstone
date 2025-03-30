@@ -28,17 +28,15 @@
                         </button>
                         <ul class="dropdown-menu p-3">
                             <li>
-                                <!-- From Filter -->
+                                <!-- Last Month Filter -->
                                 <div class="mb-2">
-                                    <label for="from" class="form-label">From</label>
-                                    <input type="date" name="from" id="from" class="form-control">
-                                </div>
-                            </li>
-                            <li>
-                                <!-- To Filter -->
-                                <div class="mb-2">
-                                    <label for="to" class="form-label">To</label>
-                                    <input type="date" name="to" id="to" class="form-control">
+                                    <label for="date_report" class="form-label">Date Report</label>
+                                    <select name="date_report" id="date_report" class="form-select">
+                                        <option value="" selected>Select an option</option>
+                                        <option value="last_month">Last Month</option>
+                                        <option value="last_two_months">Last 2 months</option>
+                                        <option value="last_three_months">Last 3 months</option>
+                                    </select>
                                 </div>
                             </li>
                             <li>
@@ -94,16 +92,14 @@
         let dataTable = new DataTable('#dataTable'); // Initialize DataTable
 
         function filterReports() {
-            let from = $('#from').val();
-            let to = $('#to').val();
+            let date_report = $('#date_report').val();
             let status = $('#status').val();
 
             $.ajax({
                 url: "{{ route('training-management') }}",
                 method: "GET",
                 data: {
-                    from: from,
-                    to: to,
+                    date_report: date_report,
                     status: status,
                 },
                 success: function(response) {
@@ -113,7 +109,7 @@
         }
 
         // Trigger AJAX on filter change
-        $('#from, #to, #status').on('change', function() {
+        $('#date_report, #status').on('change', function() {
             filterReports();
         });
     });

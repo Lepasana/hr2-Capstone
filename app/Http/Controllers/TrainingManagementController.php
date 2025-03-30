@@ -35,16 +35,21 @@ class TrainingManagementController extends Controller
                             ->whereYear('date_completed', Carbon::now()->year);
                     });
             })
-            ->when($request->from || $request->to, function ($query) use ($request) {
-                $from = $request->input('from');
-                $to   = $request->input('to');
+            ->when($request->date_report, function ($query) use ($request) {
+                $date_report = $request->input('date_report');
 
-                if ($from && $to) {
-                    $query->whereBetween('date_completed', [$from, $to]);
-                } elseif ($from) {
+                if ($date_report == 'last_month') {
+                    $from = now()->subMonth()->startOfMonth();
+                } elseif ($date_report == 'last_two_months') {
+                    $from = now()->subMonths(2)->startOfMonth();
+                } elseif ($date_report == 'last_three_months') {
+                    $from = now()->subMonths(3)->startOfMonth();
+                } else {
+                    $from = null;
+                }
+
+                if ($from) {
                     $query->whereDate('date_completed', '>=', $from);
-                } elseif ($to) {
-                    $query->whereDate('date_completed', '<=', $to);
                 }
             })
             ->when($request->status, function ($query) use ($request) {
@@ -78,13 +83,6 @@ class TrainingManagementController extends Controller
                     $query->whereDate('date_completed', '>=', $from);
                 } elseif ($to && ! $from) {
                     $query->whereDate('date_completed', '<=', $to);
-                }
-            })
-            ->when($request->status, function ($query) use ($request) {
-                $status = $request->input('status');
-
-                if ($status) {
-                    $query->where('status', $status);
                 }
             })
             ->get();

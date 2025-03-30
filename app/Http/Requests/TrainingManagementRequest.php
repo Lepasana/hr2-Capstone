@@ -26,7 +26,6 @@ class TrainingManagementRequest extends FormRequest
             'training_name' => 'required|string',
             'training_date' => 'required|date|after_or_equal:today',
             'duration' => 'required',
-            'status' => 'required|string',
             'date_completed' => 'nullable',
         ];
     }

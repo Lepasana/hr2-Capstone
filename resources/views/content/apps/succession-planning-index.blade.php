@@ -52,6 +52,18 @@
                                 @endforeach
                             </select>
                         </li>
+
+                        <li class="w-100">
+                            <!-- Status Filter -->
+                            <label for="status" class="form-label">Department</label>
+                            <select name="department" id="department" class="form-select" value="{{ old('department') }}" required>
+                                <option value="{{ old('department') ?? '' }}" selected>
+                                    Select an option</option>
+                                @foreach ($departmentEnums as $departmentEnum)
+                                    <option value="{{ $departmentEnum }}">{{ $departmentEnum }}</option>
+                                @endforeach
+                            </select>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -83,12 +95,14 @@
 
         function filterReports() {
             let status = $('#status').val();
+            let department = $('#department').val();
 
             $.ajax({
                 url: "{{ route('succession-planning') }}",
                 method: "GET",
                 data: {
                     status: status,
+                    department: department,
                 },
                 success: function(response) {
                     $('#succession-planning-table-body').html(response.html);
@@ -97,7 +111,7 @@
         }
 
         // Trigger AJAX on filter change
-        $('#status').on('change', function() {
+        $('#status, #department').on('change', function() {
             filterReports();
         });
     });
