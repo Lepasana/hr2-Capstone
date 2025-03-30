@@ -41,68 +41,134 @@ class UserSeeder extends Seeder
                 'role'     => UserRoleEnum::SUPER_ADMIN->value,
             ],
             [
-                'name'     => 'Employee',
-                'email'    => 'employee@gmail.com',
+                'name'     => 'Enrique Ramos',
+                'email'    => 'enrique.ramos@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'John Doe',
-                'email'    => 'john.doe@example.com',
+                'name'     => 'Cecilia Dela Pena',
+                'email'    => 'cecilia.delapena@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'Jane Smith',
-                'email'    => 'jane.smith@example.com',
+                'name'     => 'Mark Villanueva',
+                'email'    => 'mark.villanueva@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'Michael Johnson',
-                'email'    => 'michael.johnson@example.com',
+                'name'     => 'Adrian Mendoza',
+                'email'    => 'adrian.mendoza@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'Emily Davis',
-                'email'    => 'emily.davis@example.com',
+                'name'     => 'Paul Hernandez',
+                'email'    => 'paul.hernandez@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'David Martinez',
-                'email'    => 'david.martinez@example.com',
+                'name'     => 'Angela Pascual',
+                'email'    => 'angela.pascual@email.com	',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'Sarah Brown',
-                'email'    => 'sarah.brown@example.com',
+                'name'     => 'Luis Santos',
+                'email'    => 'luis.santos@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'Robert Wilson',
-                'email'    => 'robert.wilson@example.com',
+                'name'     => 'Veronica Tan',
+                'email'    => 'veronica.tan@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'Laura Anderson',
-                'email'    => 'laura.anderson@example.com',
+                'name'     => 'Melissa Diaz',
+                'email'    => 'melissa.diaz@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'Daniel Thomas',
-                'email'    => 'daniel.thomas@example.com',
+                'name'     => 'Henry Cruz',
+                'email'    => 'henry.cruz@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
+
             [
-                'name'     => 'Olivia Harris',
-                'email'    => 'olivia.harris@example.com',
+                'name'     => 'Arlene Valdez',
+                'email'    => 'arlene.valdez@email.com',
+                'password' => Hash::make('password'),
+                'role'     => UserRoleEnum::EMPLOYEE->value,
+            ],
+
+            [
+                'name'     => 'Roberto Villamor',
+                'email'    => 'roberto.villamor@email.com',
+                'password' => Hash::make('password'),
+                'role'     => UserRoleEnum::EMPLOYEE->value,
+            ],
+
+            [
+                'name'     => 'Susan Bautista',
+                'email'    => 'susan.bautista@email.com',
+                'password' => Hash::make('password'),
+                'role'     => UserRoleEnum::EMPLOYEE->value,
+            ],
+
+            [
+                'name'     => 'Vincent Navarro',
+                'email'    => 'vincent.navarro@email.com',
+                'password' => Hash::make('password'),
+                'role'     => UserRoleEnum::EMPLOYEE->value,
+            ],
+
+            [
+                'name'     => 'Christine Ramos',
+                'email'    => 'christine.ramos@email.com',
+                'password' => Hash::make('password'),
+                'role'     => UserRoleEnum::EMPLOYEE->value,
+            ],
+
+            [
+                'name'     => 'Edgar Bautista',
+                'email'    => 'edgar.bautista@email.com',
+                'password' => Hash::make('password'),
+                'role'     => UserRoleEnum::EMPLOYEE->value,
+            ],
+
+            [
+                'name'     => 'Sheila Cruz',
+                'email'    => 'sheila.cruz@email.com',
+                'password' => Hash::make('password'),
+                'role'     => UserRoleEnum::EMPLOYEE->value,
+            ],
+
+            [
+                'name'     => 'Albert Martinez',
+                'email'    => 'albert.martinez@email.com',
+                'password' => Hash::make('password'),
+                'role'     => UserRoleEnum::EMPLOYEE->value,
+            ],
+
+            [
+                'name'     => 'Angela Castillo',
+                'email'    => 'angela.castillo@email.com',
                 'password' => Hash::make('password'),
                 'role'     => UserRoleEnum::EMPLOYEE->value,
             ],
