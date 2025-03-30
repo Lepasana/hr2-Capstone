@@ -28,8 +28,8 @@
             <p>Scan the QR code below using Google Authenticator:</p>
 
             <div>
-                {!! $qrCodeUrl !!}
-                {{-- <img src="{{ $qrCodeUrl }}" alt="Image"> --}}
+                {{-- {!! $qrCodeUrl !!} --}}
+                <img src="{{ $qrCodeUrl }}" alt="Image">
             </div>
 
             @if (auth()->user()->google2fa_enabled)
