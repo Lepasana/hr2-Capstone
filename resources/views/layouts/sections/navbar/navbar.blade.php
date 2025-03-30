@@ -192,11 +192,18 @@
                 <li>
                     <div class="dropdown-divider"></div>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="dropdown-item"
                         href="{{ Route::has('profile.show') ? route('profile.show') : url('pages/profile-user') }}">
                         <i class="ti ti-user-check me-2 ti-sm"></i>
                         <span class="align-middle">My Profile</span>
+                    </a>
+                </li> --}}
+                <li>
+                    <a class="dropdown-item"
+                        href="{{ route('2fa.setup') }}">
+                        <i class="ti ti-user-check me-2 ti-sm"></i>
+                        <span class="align-middle">Settings</span>
                     </a>
                 </li>
                 @if (Auth::check() && Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -310,7 +317,7 @@
                     if (response.success) {
                         // Remove the unread notification styling
                         $notificationItem.find(".badge-dot").removeClass("unread").addClass("read");
-                        
+
                         // Update the unread notifications badge count
                         let currentCount = parseInt($(".badge-notifications").text(), 10);
                         if (currentCount > 0) {

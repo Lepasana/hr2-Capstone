@@ -158,6 +158,7 @@ Route::middleware(['auth'])
 // THIS IS THE MAIN ROUTE
 Route::middleware(['auth', 'auth.admin', '2fa'])
     ->group(function () {
+        // NOTIFICATIONS
         Route::post('/notifications/{id}/mark-as-read', function ($id) {
             $notification = DatabaseNotification::find($id);
             info($notification);
