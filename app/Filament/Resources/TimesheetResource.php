@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TimePicker;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TimesheetResource\Pages;
@@ -32,6 +33,8 @@ class TimesheetResource extends Resource
     {
         return $form
             ->schema([
+                DatePicker::make('date'),
+
                 TimePicker::make('time_in')
                     ->label('Time In'),
 
@@ -50,6 +53,10 @@ class TimesheetResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('date')
+                    ->date('F d, Y')
+                    ->sortable(),
+
                 TextColumn::make('time_in')
                     ->label('Time In')
                     ->date('H:i A')
