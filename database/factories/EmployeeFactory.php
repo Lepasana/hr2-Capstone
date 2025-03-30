@@ -1,9 +1,8 @@
 <?php
-
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\JobPosition;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,15 +19,18 @@ class EmployeeFactory extends Factory
     {
         static $counter = 1;
         return [
-            'user_id' => User::query()->inRandomOrder()->value('id'),
-            'employee_code' => 'H' . str_pad($counter++, 3, '0', STR_PAD_LEFT),
-            'name' => fake()->name(),
-            'gender' => fake()->randomElement(['Male', 'Female']),
+            'user_id'         => User::query()->inRandomOrder()->value('id'),
+            'employee_code'   => 'H' . str_pad($counter++, 3, '0', STR_PAD_LEFT),
+            'name'            => fake()->name(),
+            'gender'          => fake()->randomElement(['Male', 'Female']),
+            'civil_status'    => fake()->randomElement(['Single', 'Married', 'Divorced']),
+            'age'             => fake()->numberBetween(18, 60),
             'job_position_id' => JobPosition::query()->inRandomOrder()->value('id'),
-            'department' => fake()->randomElement(['HR', 'Logistics', 'Finance', 'Training', 'Security']),
+            'present_address' => fake()->address(),
+            'department'      => fake()->randomElement(['HR', 'Logistics', 'Finance', 'Training', 'Security']),
             'employment_type' => fake()->randomElement(['Full Time', 'Part Time']),
-            'date_hired' => fake()->dateTimeBetween('2022-11-30', '2025-02-30'),
-            'status' => fake()->randomElement(['Active', 'On-leave', 'Terminated']),
+            'date_hired'      => fake()->dateTimeBetween('2022-11-30', '2025-02-30'),
+            'status'          => fake()->randomElement(['Active', 'On-leave', 'Terminated']),
         ];
     }
 }
