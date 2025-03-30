@@ -29,6 +29,7 @@
 
             <div>
                 {!! $qrCodeUrl !!}
+                {{-- <img src="{{ $qrCodeUrl }}" alt="Image"> --}}
             </div>
 
             @if (auth()->user()->google2fa_enabled)
