@@ -1,6 +1,6 @@
 @foreach ($competencies as $competency)
     <tr>
-        <td class="text-center">{{ $competency->employee->id }}</td>
+        <td class="text-center">{{ $competency->employee->employee_code }}</td>
         <td class="text-center">{{ $competency->employee->name }}</td>
         <td class="text-center">{{ $competency->jobPosition->title }}</td>
         <td class="text-center">{{ $competency->department }}</td>

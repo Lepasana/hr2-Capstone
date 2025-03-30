@@ -1,6 +1,6 @@
 @foreach ($successors as $successor)
     <tr>
-        <td class="text-center">{{ $successor->employee->id }}</td>
+        <td class="text-center">{{ $successor->employee->employee_code }}</td>
         <td class="text-start">{{ $successor->employee->name }}</td>
         <td class="text-start">{{ $successor->current_position }}</td>
         <td class="text-start">{{ $successor->department }}</td>
