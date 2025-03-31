@@ -30,17 +30,22 @@
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-4 mt-2">
-                            <a href="{{ url('/') }}" class="d-flex flex-column justify-content-center align-items-center">
-                                <img src="{{ asset('images/logo/icons.jpg') }}" class="w-25"
-                                    alt="">
+                            <a href="{{ url('/') }}"
+                                class="d-flex flex-column justify-content-center align-items-center">
+                                <img src="{{ asset('images/logo/icons.jpg') }}" class="w-25" alt="">
                                 <span class="app-brand-text demo text-body fw-bold ms-1">LOGIN</span>
                             </a>
                         </div>
-                        @if ($errors->any())
+                        @if ($errors->any() && !session('lockout_time'))
                             <div class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
-                                    {{ $error }}
+                                    <span id="login-error">{{ $error }}</span>
                                 @endforeach
+                            </div>
+                        @elseif (session('lockout_time'))
+                            <div class="alert alert-danger">
+                                <span>Too many login attempts. Please try again in <span
+                                        id="countdown">{{ session('lockout_time') }}</span> seconds.</span>
                             </div>
                         @endif
 
@@ -86,15 +91,31 @@
                                 <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                             </div>
                         </form>
-
-
-
-
-
                     </div>
                 </div>
                 <!-- /Register -->
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let countdownElement = document.getElementById("countdown");
+            if (!countdownElement) return;
+
+            let seconds = parseInt(countdownElement.innerText);
+
+            function updateCountdown() {
+                if (seconds <= 0) {
+                    location.reload(); // Reload the page when countdown ends
+                    return;
+                }
+                countdownElement.innerText = seconds;
+                seconds--;
+                setTimeout(updateCountdown, 1000);
+            }
+
+            updateCountdown();
+        });
+    </script>
 @endsection
