@@ -63,6 +63,7 @@
                             <th class="text-center cell-fit">Job Position</th>
                             <th class="text-center cell-fit">Department</th>
                             <th class="text-center cell-fit">Skill Level</th>
+                            <th class="text-center cell-fit">Status</th>
                             <th class="text-center cell-fit">Actions</th>
                         </tr>
                     </thead>

@@ -11,15 +11,14 @@
         <div class="card">
             <div class="card-datatable table-responsive">
                 <div class="p-5">
-                    <form action="{{ url('/competency-management/store') }}" method="POST">
+                    <form action="{{ url('/competency-management/store') }}" method="POST" class="row g-3">
                         @csrf
                         @method('POST')
 
-
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="" class="form-lab">Employee</label>
                             <select name="employee" id="select-employee" class="form-select" required>
-                                <option value="{{ old('employee') }}" selected>Select Employee</option>
+                                <option value="{{ old('employee') }}" selected>Select an option</option>
                                 @foreach ($employees as $employee)
                                     <option value="{{ $employee->id }}"
                                         data-position="{{ $employee->jobPosition->title }}"
@@ -35,10 +34,10 @@
                             </select>
                         </div>
 
-                        <div class="col-md-12 mt-3" id="job-position-container">
+                        <div class="col-md-6 mt-3" id="job-position-container">
                             <label for="" class="form-lab">Job Position</label>
                             <select name="job_request_id" id="job_position" class="form-select" required>
-                                <option value="{{ old('job_request_id') }}" selected>Select Position</option>
+                                <option value="{{ old('job_request_id') }}" selected>Select an option</option>
                                 @foreach ($jobRequests as $jobRequest)
                                     <option value="{{ $jobRequest->id }}">{{ $jobRequest->job_title }}</option>
                                 @endforeach
@@ -57,10 +56,10 @@
                                 readonly />
                         </div>
 
-                        <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Skill Level</label>
+                        <div class="col-md-6 mt-3">
+                            <label for="" class="form-label">Skill</label>
                             <select name="skill_level" id="skill_level" class="form-select" required>
-                                <option value="{{ old('skill_level') }}" selected>Select Skill Level</option>
+                                <option value="{{ old('skill_level') }}" selected>Select an option</option>
                                 @foreach ($skill_levels as $skill_level)
                                     <option value="{{ $skill_level }}">{{ $skill_level }}</option>
                                 @endforeach
@@ -69,6 +68,22 @@
                             @if ($errors->has('skill_level'))
                                 <div class="text-danger">
                                     {{ $errors->first('skill_level') }}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mt-3">
+                            <label for="" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" required>
+                                <option value="{{ old('status') }}" selected>Select an option</option>
+                                @foreach ($competencyStatusEnum as $status)
+                                    <option value="{{ $status }}">{{ $status }}</option>
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('status'))
+                                <div class="text-danger">
+                                    {{ $errors->first('status') }}
                                 </div>
                             @endif
                         </div>

@@ -33,6 +33,75 @@ class DurationSeeder extends Seeder
             [
                 'title' => 7,
             ],
+            [
+                'title' => 8,
+            ],
+            [
+                'title' => 9,
+            ],
+            [
+                'title' => 10,
+            ],
+            [
+                'title' => 11,
+            ],
+            [
+                'title' => 12
+            ],
+            [
+                'title' => 13,
+            ],
+            [
+                'title' => 14,
+            ],
+            [
+                'title' => 15,
+            ],
+            [
+                'title' => 16,
+            ],
+            [
+                'title' => 17,
+            ],
+            [
+                'title' => 18,
+            ],
+            [
+                'title' => 19,
+            ],
+            [
+                'title' => 20,
+            ],
+            [
+                'title' => 21,
+            ],
+            [
+                'title' => 22,
+            ],
+            [
+                'title' => 23,
+            ],
+            [
+                'title' => 24,
+            ],
+            [
+                'title' => 25,
+            ],
+            [
+                'title' => 26,
+            ],
+            [
+                'title' => 27,
+            ],
+            [
+                'title' => 28,
+            ],
+            [
+                'title' => 29,
+            ],
+            [
+                'title' => 30,
+            ],
         ];
 
         foreach ($durations as $duration) {

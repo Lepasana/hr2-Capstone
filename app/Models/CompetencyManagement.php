@@ -18,7 +18,7 @@ class CompetencyManagement extends Model
         'competency',
         'department',
         'skill_level',
-        'proficiency',
+        'status',
         'notes',
     ];
 

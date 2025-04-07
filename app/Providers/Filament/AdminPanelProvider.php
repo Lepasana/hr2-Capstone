@@ -62,7 +62,7 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
-                // CheckUserRole::class
+                CheckUserRole::class
             ]);
     }
 }

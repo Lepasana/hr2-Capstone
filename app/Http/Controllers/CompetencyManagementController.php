@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CompensationManagement\DepartmentEnum;
+use App\Enums\CompetencyStatusEnum;
 use App\Enums\SkillLevelEnum;
 use App\Models\CompetencyManagement;
 use App\Models\Employee;
@@ -53,14 +54,16 @@ class CompetencyManagementController extends Controller
             ->with(['jobPosition'])
             ->whereNotIn('id', $excludedEmployeeIds)
             ->get();
-        $jobRequests     = JobRequest::query()->get();
-        $departmentEnums = DepartmentEnum::toOptions();
+        $jobRequests          = JobRequest::query()->get();
+        $departmentEnums      = DepartmentEnum::toOptions();
+        $competencyStatusEnum = CompetencyStatusEnum::toOptions();
 
         return view('content.apps.competency-management-create', [
-            'skill_levels'    => $skill_levels,
-            'employees'       => $employees,
-            'jobRequests'     => $jobRequests,
-            'departmentEnums' => $departmentEnums,
+            'skill_levels'         => $skill_levels,
+            'employees'            => $employees,
+            'jobRequests'          => $jobRequests,
+            'departmentEnums'      => $departmentEnums,
+            'competencyStatusEnum' => $competencyStatusEnum,
         ]);
     }
 
@@ -74,6 +77,7 @@ class CompetencyManagementController extends Controller
         $competencyManagement->job_request_id = $request->job_request_id;
         $competencyManagement->department     = $request->department;
         $competencyManagement->skill_level    = $request->skill_level;
+        $competencyManagement->status         = $request->status;
         $competencyManagement->save();
 
         if (! $competencyManagement) {
@@ -100,18 +104,20 @@ class CompetencyManagementController extends Controller
      */
     public function edit(string $id)
     {
-        $competency      = $this->competencyManagement->find($id);
-        $skill_levels    = SkillLevelEnum::toOptions();
-        $employees       = Employee::query()->with(['jobPosition'])->get();
-        $jobRequests     = JobRequest::query()->get();
-        $departmentEnums = DepartmentEnum::toOptions();
+        $competency           = $this->competencyManagement->find($id);
+        $skill_levels         = SkillLevelEnum::toOptions();
+        $employees            = Employee::query()->with(['jobPosition'])->get();
+        $jobRequests          = JobRequest::query()->get();
+        $departmentEnums      = DepartmentEnum::toOptions();
+        $competencyStatusEnum = CompetencyStatusEnum::toOptions();
 
         return view('content.apps.competency-management-edit', [
-            'competency'      => $competency,
-            'skill_levels'    => $skill_levels,
-            'employees'       => $employees,
-            'jobRequests'     => $jobRequests,
-            'departmentEnums' => $departmentEnums,
+            'competency'           => $competency,
+            'skill_levels'         => $skill_levels,
+            'employees'            => $employees,
+            'jobRequests'          => $jobRequests,
+            'departmentEnums'      => $departmentEnums,
+            'competencyStatusEnum' => $competencyStatusEnum,
         ]);
     }
 
@@ -125,6 +131,7 @@ class CompetencyManagementController extends Controller
         $competencyManagement->job_request_id = $request->job_request_id;
         $competencyManagement->department     = $request->department;
         $competencyManagement->skill_level    = $request->skill_level;
+        $competencyManagement->status         = $request->status;
         $competencyManagement->save();
 
         if (! $competencyManagement) {

@@ -59,7 +59,7 @@
                             <select name="duration" id="duration" class="form-select" required>
                                 <option value="{{ old('duration') }}" selected>Select Duration</option>
                                 @foreach ($durations as $duration)
-                                    <option value="{{ $duration->id }}">{{ $duration->title }}</option>
+                                    <option value="{{ $duration->id }}">{{ $duration->title }} {{ $duration->title == 1 ? 'Day' : 'Days' }} </option>
                                 @endforeach
 
                                 @if ($errors->has('duration'))

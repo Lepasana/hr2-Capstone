@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Skill Level</label>
+                            <label for="" class="form-label">Skill</label>
                             <select name="skill_level" id="skill_level" class="form-select" required>
                                 <option value="{{ $competency->skill_level ?? old('skill_level') }}" selected>
                                     {{ $competency->skill_level }}
@@ -65,6 +65,24 @@
                             @if ($errors->has('skill_level'))
                                 <div class="text-danger">
                                     {{ $errors->first('skill_level') }}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <label for="" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" required>
+                                <option value="{{ $competency->status ?? old('status') }}" selected>
+                                    {{ $competency->status }}
+                                </option>
+                                @foreach ($competencyStatusEnum as $status)
+                                    <option value="{{ $status }}">{{ $status }}</option>
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('status'))
+                                <div class="text-danger">
+                                    {{ $errors->first('status') }}
                                 </div>
                             @endif
                         </div>
