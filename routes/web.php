@@ -109,6 +109,7 @@ use App\Http\Controllers\pages\UserProjects;
 use App\Http\Controllers\pages\UserTeams;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SuccessionPlanningController;
+use App\Http\Controllers\SuccessionPlanningRequestController;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Http\Controllers\tables\DatatableAdvanced;
 use App\Http\Controllers\tables\DatatableBasic;
@@ -161,7 +162,6 @@ Route::middleware(['auth', 'auth.admin', '2fa'])
         // NOTIFICATIONS
         Route::post('/notifications/{id}/mark-as-read', function ($id) {
             $notification = DatabaseNotification::find($id);
-            info($notification);
 
             if ($notification) {
                 $notification->markAsRead();
@@ -269,6 +269,14 @@ Route::middleware(['auth', 'auth.admin', '2fa'])
                 Route::get('/succession-planning/{id}/edit', 'edit')->name('succession-planning.edit');
                 Route::put('/succession-planning/{id}/update', 'update')->name('succession-planning.update');
                 Route::delete('/succession-planning/{id}/delete', 'destroy')->name('succession-planning.delete');
+            });
+
+        // SUCCESSION PLANNING REQUEST
+        Route::controller(SuccessionPlanningRequestController::class)
+            ->group(function () {
+                Route::get('/succession-planning/request', 'index')->name('succession-planning.request');
+                Route::put('/succession-planning/request/{id}/approve', 'approveRequest')->name('succession-planning.request.approve');
+                Route::put('/succession-planning/request/{id}/reject', 'rejectRequest')->name('succession-planning.request.reject');
             });
     });
 

@@ -75,6 +75,12 @@
           "url": "succession-planning",
           "icon": "menu-icon tf-icons ti ti-user",
           "slug": "succession-planning"
+        },
+        {
+          "name": "Requests",
+          "url": "succession-planning-request",
+          "icon": "menu-icon tf-icons ti ti-user",
+          "slug": "succession-planning-request"
         }
       ]
     }

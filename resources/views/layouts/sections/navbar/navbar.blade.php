@@ -101,8 +101,9 @@
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
                 data-bs-auto-close="outside" aria-expanded="false">
                 <i class="ti ti-bell ti-md"></i>
-                @if($notifications->whereNull('read_at')->count() > 0)
-                    <span class="badge bg-danger rounded-pill badge-notifications">{{ $notifications->whereNull('read_at')->count() }}</span>
+                @if (Auth::user()->notifications->whereNull('read_at')->count() > 0)
+                    <span
+                        class="badge bg-danger rounded-pill badge-notifications">{{ Auth::user()->notifications->whereNull('read_at')->count() }}</span>
                 @endif
             </a>
             <ul class="dropdown-menu dropdown-menu-end py-0">
@@ -116,8 +117,8 @@
                 </li>
                 <li class="dropdown-notifications-list scrollable-container">
                     <ul class="list-group list-group-flush">
-                        @if ($notifications->isNotEmpty())
-                            @foreach ($notifications as $notification)
+                        @if (Auth::user()->notifications->isNotEmpty())
+                            @foreach (Auth::user()->notifications as $notification)
                                 <li class="list-group-item list-group-item-action dropdown-notifications-item notification-item"
                                     data-id="{{ $notification->id }}">
                                     <div class="d-flex">
@@ -130,19 +131,28 @@
 
                                         <div class="flex-grow-1">
                                             <h6 class="mb-1">{{ $notification['data']['title'] }}</h6>
+                                            <p>{{ $notification['data']['message'] ?? '' }}</p>
                                             <small
                                                 class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+
+                                            @if ($notification->type == 'App\Notifications\SuccessionPlanningRequestNotification')
+                                                <div>
+                                                    <button class="btn btn-xs btn-success" type="button" onclick="location.href = '{{ route('succession-planning.request') }}'">View</button>
+                                                </div>
+                                            @endif
                                         </div>
 
-                                        <div class="flex-shrink-0 dropdown-notifications-actions">
-                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                    class="badge badge-dot"></span></a>
-                                        </div>
+                                        @if ($notification->read_at == null)
+                                            <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
+                                                        class="badge badge-dot"></span></a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </li>
                             @endforeach
                         @else
-                            <p>No notifications yet.</p>
+                            <p class="text-center">No notifications yet.</p>
                         @endif
                     </ul>
                 </li>
@@ -200,8 +210,7 @@
                     </a>
                 </li> --}}
                 <li>
-                    <a class="dropdown-item"
-                        href="{{ route('2fa.setup') }}">
+                    <a class="dropdown-item" href="{{ route('2fa.setup') }}">
                         <i class="ti ti-user-check me-2 ti-sm"></i>
                         <span class="align-middle">Settings</span>
                     </a>
@@ -302,8 +311,8 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script>
-    $(document).ready(function () {
-        $(".notification-item").click(function () {
+    $(document).ready(function() {
+        $(".notification-item").click(function() {
             let notificationId = $(this).data("id");
             let $notificationItem = $(this);
 
@@ -313,10 +322,11 @@
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                 },
-                success: function (response) {
+                success: function(response) {
                     if (response.success) {
                         // Remove the unread notification styling
-                        $notificationItem.find(".badge-dot").removeClass("unread").addClass("read");
+                        $notificationItem.find(".badge-dot").removeClass("unread").addClass(
+                            "read");
 
                         // Update the unread notifications badge count
                         let currentCount = parseInt($(".badge-notifications").text(), 10);
@@ -324,10 +334,11 @@
                             $(".badge-notifications").text(currentCount - 1);
                         }
                     } else {
-                        console.error("Error marking notification as read:", response.message);
+                        console.error("Error marking notification as read:", response
+                            .message);
                     }
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     console.error("AJAX Error:", xhr.responseText);
                 }
             });

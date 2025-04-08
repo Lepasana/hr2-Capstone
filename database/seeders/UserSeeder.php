@@ -20,19 +20,19 @@ class UserSeeder extends Seeder
                 'name'     => 'Rogem Lepasana',
                 'email'    => 'rogemlepasana@gmail.com',
                 'password' => Hash::make('password'),
-                'role'     => UserRoleEnum::SUPER_ADMIN->value,
+                'role'     => UserRoleEnum::HR2_ADMIN->value,
             ],
             [
                 'name'     => 'Test Account',
                 'email'    => 'test@gmail.com',
                 'password' => Hash::make('password'),
-                'role'     => UserRoleEnum::SUPER_ADMIN->value,
+                'role'     => UserRoleEnum::HR2_ADMIN->value,
             ],
             [
                 'name'     => 'HR2 Admin',
                 'email'    => 'hr2-admin@gmail.com',
                 'password' => Hash::make('password'),
-                'role'     => UserRoleEnum::SUPER_ADMIN->value,
+                'role'     => UserRoleEnum::HR2_ADMIN->value,
             ],
             [
                 'name'     => 'HR4 Admin',

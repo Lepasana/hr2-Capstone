@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Http\Middleware;
 
-use Closure;
 use App\Enums\UserRoleEnum;
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +16,15 @@ class CheckAdminRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-      if (Auth::check() && Auth::user() && Auth::user()->role == UserRoleEnum::SUPER_ADMIN->value) {
-        return $next($request);
-      }
+        if (
+            Auth::check() &&
+            Auth::user() &&
+            Auth::user()->role == UserRoleEnum::SUPER_ADMIN->value ||
+            Auth::user()->role == UserRoleEnum::HR2_ADMIN->value
+        ) {
+            return $next($request);
+        }
 
-      return redirect()->back()->withErrors(['error' => "You must be an admin to access the Admin Panel."]);
+        return redirect()->back()->withErrors(['error' => "You must be an HR2 Admin or Super Admin to access the Admin Panel."]);
     }
 }
