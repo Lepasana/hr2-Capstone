@@ -78,7 +78,7 @@
         },
         {
           "name": "Requests",
-          "url": "succession-planning-request",
+          "url": "succession-planning/request",
           "icon": "menu-icon tf-icons ti ti-user",
           "slug": "succession-planning-request"
         }
