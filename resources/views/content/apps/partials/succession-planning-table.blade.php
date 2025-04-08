@@ -9,7 +9,8 @@
             <div class="d-flex gap-2">
                 <div>
                     <button type="button" class="btn btn-success btn-sm"
-                        onclick="location.href = '{{ route('succession-planning.edit', ['id' => $successor->id]) }}'">Edit</button>
+                        onclick="location.href = '{{ route('succession-planning.edit', ['id' => $successor->id]) }}'">
+                        Edit</button>
                 </div>
 
                 <div>
@@ -17,6 +18,7 @@
                         data-action="{{ route('succession-planning.delete', ['id' => $successor->id]) }}">
                         Delete
                     </button>
+
                 </div>
             </div>
         </td>
