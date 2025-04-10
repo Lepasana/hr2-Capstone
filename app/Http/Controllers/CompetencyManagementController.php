@@ -6,6 +6,7 @@ use App\Enums\CompetencyStatusEnum;
 use App\Enums\SkillLevelEnum;
 use App\Models\CompetencyManagement;
 use App\Models\Employee;
+use App\Models\JobPosition;
 use App\Models\JobRequest;
 use Illuminate\Http\Request;
 
@@ -27,19 +28,25 @@ class CompetencyManagementController extends Controller
         $employees       = Employee::query()->select(['id', 'name'])->get();
         $skill_levels    = SkillLevelEnum::toOptions();
         $departmentEnums = DepartmentEnum::toOptions();
+        $jobPositions    = JobPosition::query()->get();
         $competencies    = $this->competencyManagement
             ->with(['jobPosition'])
             ->when($request->department, function ($query) use ($request) {
                 $query->where('department', $request->input('department'));
             })
+            ->when($request->jobPosition, function ($query) use ($request) {
+                $query->whereHas('jobPosition', function ($q) use ($request) {
+                    $q->where('id', $request->input('jobPosition'));
+                });
+            })
             ->get();
 
         if ($request->ajax()) {
             return response()->json([
-                'html' => view('content.apps.partials.competency-table', compact('competencies', 'employees', 'skill_levels', 'departmentEnums'))->render(),
+                'html' => view('content.apps.partials.competency-table', compact('competencies', 'employees', 'skill_levels', 'departmentEnums', 'jobPositions'))->render(),
             ]);
         } else {
-            return view('content.apps.competency-management-index', compact('competencies', 'employees', 'skill_levels', 'departmentEnums'));
+            return view('content.apps.competency-management-index', compact('competencies', 'employees', 'skill_levels', 'departmentEnums', 'jobPositions'));
         }
     }
 

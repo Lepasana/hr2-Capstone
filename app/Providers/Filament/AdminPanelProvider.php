@@ -6,6 +6,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
 use App\Filament\Widgets\VisionWidget;
 use App\Http\Middleware\CheckUserRole;
@@ -32,6 +33,10 @@ class AdminPanelProvider extends PanelProvider
             ->path('ess-portal')
             ->login()
             ->profile()
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label(fn () => auth()->user()->employee->jobPosition->title ?? 'N/A')
+            ])
             ->colors([
                 'primary' => Color::hex('#7367f0'),
             ])
@@ -60,6 +65,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->databaseNotifications()
+            ->sidebarFullyCollapsibleOnDesktop()
             ->authMiddleware([
                 Authenticate::class,
                 CheckUserRole::class

@@ -4,7 +4,7 @@
         <td class="text-center">{{ $competency->employee->name }}</td>
         <td class="text-center">{{ $competency->jobPosition->title }}</td>
         <td class="text-center">{{ $competency->department }}</td>
-        <td class="text-center">{{ $competency->skill_level }}</td>
+        <td class="text-center"></td>
         <td class="text-center">{{ $competency->status }}</td>
         <td>
             <div class="d-flex gap-2">

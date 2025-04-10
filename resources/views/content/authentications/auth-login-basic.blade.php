@@ -62,9 +62,9 @@
 
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Password</label>
-                                    <a href="{{ url('auth/forgot-password-basic') }}">
+                                    {{-- <a href="{{ url('auth/forgot-password-basic') }}">
                                         <small>Forgot Password?</small>
-                                    </a>
+                                    </a> --}}
                                 </div>
 
                                 <div class="input-group input-group-merge">
@@ -76,7 +76,7 @@
 
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <div class="form-check">
 
                                     <input class="form-check-input" type="checkbox" id="remember-me">
@@ -85,7 +85,7 @@
                                     </label>
                                 </div>
 
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>

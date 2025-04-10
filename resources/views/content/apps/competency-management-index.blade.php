@@ -51,6 +51,19 @@
                                     </select>
                                 </div>
                             </li>
+
+                            <li>
+                                <!-- Job Position Filter -->
+                                <div class="mb-2">
+                                    <label for="jobPosition" class="form-label">Job Position</label>
+                                    <select name="jobPosition" id="jobPosition" class="form-select">
+                                        <option value="" selected>Select an option</option>
+                                        @foreach ($jobPositions as $jobPosition)
+                                            <option value="{{ $jobPosition->id }}">{{ $jobPosition->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -62,7 +75,7 @@
                             <th class="text-center cell-fit">Employee Name</th>
                             <th class="text-center cell-fit">Job Position</th>
                             <th class="text-center cell-fit">Department</th>
-                            <th class="text-center cell-fit">Skill Level</th>
+                            <th class="text-center cell-fit">Skill</th>
                             <th class="text-center cell-fit">Status</th>
                             <th class="text-center cell-fit">Actions</th>
                         </tr>
@@ -86,12 +99,14 @@
 
             function filterReports() {
                 let department = $('#department').val();
+                let jobPosition = $('#jobPosition').val();
 
                 $.ajax({
                     url: "{{ route('competency-management') }}",
                     method: "GET",
                     data: {
                         department: department,
+                        jobPosition: jobPosition,
                     },
                     success: function(response) {
                         $('#competency-table-body').html(response.html);
@@ -100,7 +115,7 @@
             }
 
             // Trigger AJAX on filter change
-            $('#department').on('change', function() {
+            $('#department, #jobPosition').on('change', function() {
                 filterReports();
             });
         });
