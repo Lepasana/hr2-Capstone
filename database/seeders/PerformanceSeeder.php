@@ -13,6 +13,6 @@ class PerformanceSeeder extends Seeder
      */
     public function run(): void
     {
-        Performance::factory()->count(10)->create();
+        Performance::factory()->count(25)->create();
     }
 }
