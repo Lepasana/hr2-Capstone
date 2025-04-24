@@ -16,24 +16,33 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 
 @section('content')
-    <div class="container">
-        <h2>Two-Factor Authentication</h2>
-        <p>Enter the 6-digit code from your authentication app.</p>
+    <div class="container-xxl">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner py-4">
+                <!-- Login -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Two-Factor Authentication</h2>
+                        <p>Enter the 6-digit code from your authentication app.</p>
 
-        {{ session('2fa_authenticated') }}
-        <form method="POST" action="{{ route('2fa.verify') }}">
-            @method('POST')
-            @csrf
-            <div class="mb-3">
-                <label for="code" class="form-label">Authentication Code</label>
-                <input type="text" id="code" name="code" class="form-control" required autofocus>
+                        {{ session('2fa_authenticated') }}
+                        <form method="POST" action="{{ route('2fa.verify') }}">
+                            @method('POST')
+                            @csrf
+                            <div class="mb-3">
+                                <label for="code" class="form-label">Authentication Code</label>
+                                <input type="text" id="code" name="code" class="form-control" required autofocus>
+                            </div>
+
+                            @if (session('error'))
+                                <div class="alert alert-danger">{{ session('error') }}</div>
+                            @endif
+
+                            <button type="submit" class="btn btn-primary">Verify</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            @if (session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
-
-            <button type="submit" class="btn btn-primary">Verify</button>
-        </form>
+        </div>
     </div>
 @endsection

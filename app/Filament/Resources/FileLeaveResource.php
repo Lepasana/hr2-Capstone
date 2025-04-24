@@ -1,18 +1,21 @@
 <?php
 namespace App\Filament\Resources;
 
-use App\Enums\LeaveStatusEnum;
-use App\Enums\LeaveTypeEnum;
-use App\Filament\Resources\FileLeaveResource\Pages;
+use Filament\Tables;
+use Filament\Forms\Form;
 use App\Models\FileLeave;
-use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Table;
+use App\Enums\LeaveTypeEnum;
+use App\Enums\LeaveStatusEnum;
+use Filament\Resources\Resource;
+use App\Enums\EmployeeGenderEnum;
+use Filament\Forms\Components\Field;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use Filament\Forms\Components\DatePicker;
+use App\Filament\Resources\FileLeaveResource\Pages;
 
 class FileLeaveResource extends Resource
 {
@@ -34,7 +37,24 @@ class FileLeaveResource extends Resource
 
                 Select::make('leave_type')
                     ->label('Leave Type')
-                    ->options(LeaveTypeEnum::toOptions())
+                    ->options(function (callable $get) {
+                        $gender = Auth::user()->employee->gender; // Assuming 'gender' field exists in the form
+
+                        return collect(LeaveTypeEnum::cases())
+                            ->filter(function ($case) use ($gender) {
+                                if ($gender === EmployeeGenderEnum::MALE->value) {
+                                    return $case !== LeaveTypeEnum::MATERNITY_LEAVE;
+                                }
+
+                                if ($gender === EmployeeGenderEnum::FEMALE->value) {
+                                    return $case !== LeaveTypeEnum::PATERNITY_LEAVE;
+                                }
+
+                                return true;
+                            })
+                            ->mapWithKeys(fn($case) => [$case->value => $case->value])
+                            ->toArray();
+                    })
                     ->required(),
 
                 DatePicker::make('start_date')
@@ -43,7 +63,8 @@ class FileLeaveResource extends Resource
 
                 DatePicker::make('end_date')
                     ->label('End Date')
-                    ->required(),
+                    ->required()
+                    ->afterOrEqual('start_date'),
 
                 Hidden::make('status')
                     ->default(LeaveStatusEnum::PENDING->value),

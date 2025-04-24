@@ -17,7 +17,7 @@ class TwoFactorController extends Controller
     // Show QR Code for Setup
     public function setup()
     {
-        $user = Auth::user();
+        $user      = Auth::user();
         $google2fa = (new \PragmaRX\Google2FAQRCode\Google2FA());
 
         if (! $user->google2fa_secret) {
@@ -58,7 +58,9 @@ class TwoFactorController extends Controller
 
     public function showVerifyForm()
     {
-        return view('auth.2fa');
+        $pageConfigs = ['myLayout' => 'blank'];
+
+        return view('auth.2fa', ['pageConfigs' => $pageConfigs]);
     }
 
     // Verify 2FA Code
@@ -66,9 +68,9 @@ class TwoFactorController extends Controller
     {
         $request->validate(['code' => 'required|string']);
 
-        $user    = Auth::user();
+        $user = Auth::user();
 
-        if (!$user->google2fa_secret) {
+        if (! $user->google2fa_secret) {
             return back()->with(['errors' => '2FA is not set up.']);
         }
 
