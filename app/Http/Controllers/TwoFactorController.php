@@ -75,10 +75,10 @@ class TwoFactorController extends Controller
         }
 
         $isValid = $this->google2fa->verifyKey($user->google2fa_secret, $request->code);
-        // dd($this->google2fa->getCurrentOtp($user->google2fa_secret));
 
         if ($isValid) {
             session(['2fa_authenticated' => true]);
+
             return redirect()->route('dashboard');
         }
 

@@ -28,8 +28,8 @@
             <p>Scan the QR code below using Google Authenticator:</p>
 
             <div>
-                {{-- {!! $qrCodeUrl !!} --}}
-                <img src="{{ $qrCodeUrl }}" alt="Image">
+                {!! $qrCodeUrl !!}
+                {{-- <img src="{{ $qrCodeUrl }}" alt="Image"> --}}
             </div>
 
             @if (auth()->user()->google2fa_enabled)
@@ -39,14 +39,42 @@
                     <button type="submit" class="btn btn-success">Disable 2FA</button>
                 </form>
             @else
-                <form action="{{ route('2fa.enable') }}" method="POST">
-                    @method('POST')
-                    @csrf
-                    <button type="submit" class="btn btn-success">Enable 2FA</button>
-                </form>
+                <!-- Trigger Button -->
+                <button type="button" class="btn btn-success w-25" data-bs-toggle="modal"
+                    data-bs-target="#confirmEnable2faModal">
+                    Enable 2FA
+                </button>
             @endif
 
         </div>
-    </div>
 
-@endsection
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="confirmEnable2faModal" tabindex="-1" aria-labelledby="confirmEnable2faModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmEnable2faModalLabel">Confirm 2FA Activation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('2fa.enable') }}" method="POST">
+                        @method('POST')
+                        @csrf
+                        <div class="modal-body">
+                            Are you sure you want to enable Two-Factor Authentication?
+                            <br>
+                            <strong>Please make sure to scan and save the QR code using Google Authenticator before
+                                proceeding.</strong>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                            <!-- This button submits the form -->
+                            <button type="submit" class="btn btn-success" id="confirmEnableBtn">Yes, Enable</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    @endsection

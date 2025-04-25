@@ -1,23 +1,26 @@
 <?php
-
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ScheduleResource\Pages;
-use App\Filament\Resources\ScheduleResource\RelationManagers;
 use App\Models\Schedule;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ScheduleResource extends Resource
 {
     protected static ?string $model = Schedule::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('employee_id', auth()->user()->employee->id);
+    }
 
     public static function form(Form $form): Form
     {
@@ -31,13 +34,37 @@ class ScheduleResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('date')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('time_from')
+                    ->time('h:i A')
+                    ->searchable(),
+
+                TextColumn::make('time_to')
+                    ->time('h:i A')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('shift_type')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('status')
+                    ->sortable()
+                    ->searchable()
+                    ->badge()
+                    ->colors([
+                        'success' => 'scheduled',
+                        'gray'    => null, // fallback
+                    ]),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -66,9 +93,9 @@ class ScheduleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSchedules::route('/'),
+            'index'  => Pages\ListSchedules::route('/'),
             'create' => Pages\CreateSchedule::route('/create'),
-            'edit' => Pages\EditSchedule::route('/{record}/edit'),
+            'edit'   => Pages\EditSchedule::route('/{record}/edit'),
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Filament\Resources;
 
+use Carbon\Carbon;
 use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\FileLeave;
@@ -59,12 +60,36 @@ class FileLeaveResource extends Resource
 
                 DatePicker::make('start_date')
                     ->label('Start Date')
-                    ->required(),
+                    ->required()
+                    ->native(false)
+                    ->disabledDates(function () {
+                        $today = Carbon::today();
+                        $dates = [];
+
+                        // Block all dates before today (last 365 days, you can go further if needed)
+                        for ($i = 1; $i <= 365; $i++) {
+                            $dates[] = $today->copy()->subDays($i)->toDateString();
+                        }
+
+                        return $dates;
+                    }),
 
                 DatePicker::make('end_date')
                     ->label('End Date')
                     ->required()
-                    ->afterOrEqual('start_date'),
+                    ->afterOrEqual('start_date')
+                    ->native(false)
+                    ->disabledDates(function () {
+                        $today = Carbon::today();
+                        $dates = [];
+
+                        // Block all dates before today (last 365 days, you can go further if needed)
+                        for ($i = 1; $i <= 365; $i++) {
+                            $dates[] = $today->copy()->subDays($i)->toDateString();
+                        }
+
+                        return $dates;
+                    }),
 
                 Hidden::make('status')
                     ->default(LeaveStatusEnum::PENDING->value),
