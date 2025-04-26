@@ -9,7 +9,7 @@
         };
     @endphp
     <tr>
-        <td class="text-center">{{ $request->user->name }}</td>
+        <td class="text-center">{{ $request?->user?->name }}</td>
         <td class="text-start">
             <span class="badge rounded {{ $status }}">
                 {{ $request->status }}
