@@ -1,17 +1,19 @@
 <?php
-
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MemoResource\Pages;
-use App\Filament\Resources\MemoResource\RelationManagers;
 use App\Models\Memo;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class MemoResource extends Resource
 {
@@ -19,11 +21,39 @@ class MemoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('employee_id', auth()->user()->employee->id);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Hidden::make('employee_id')
+                    ->default(Auth::user()->employee->id),
+
+                TextInput::make('from')
+                    ->required()
+                    ->rules('required'),
+
+                TextInput::make('to')
+                    ->required()
+                    ->rules('required'),
+
+                TextInput::make('subject')
+                    ->required()
+                    ->rules('required'),
+
+                DatePicker::make('date')
+                    ->required()
+                    ->rules('required'),
+
+                RichEditor::make('content')
+                    ->required()
+                    ->rules('required'),
+
             ]);
     }
 
@@ -31,13 +61,27 @@ class MemoResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('from')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('to')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('subject')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('date')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -66,9 +110,10 @@ class MemoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMemos::route('/'),
+            'index'  => Pages\ListMemos::route('/'),
             'create' => Pages\CreateMemo::route('/create'),
-            'edit' => Pages\EditMemo::route('/{record}/edit'),
+            'edit'   => Pages\EditMemo::route('/{record}/edit'),
+            'view'   => Pages\ViewMemo::route('/{record}/view'),
         ];
     }
 }
