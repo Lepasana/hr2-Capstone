@@ -69,7 +69,7 @@
                                 <input type="checkbox" id="selectAll" class="form-check-input" />
                             </th>
                             <th class="text-center cell-fit">ID</th>
-                            <th class="text-center cell-fit">Applicant</th>
+                            <th class="text-center cell-fit">Applicant / Employee</th>
                             <th class="text-center cell-fit">Exam Title</th>
                             <th class="text-center cell-fit">Score</th>
                             <th class="text-center cell-fit">Status</th>

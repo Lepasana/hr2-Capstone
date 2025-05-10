@@ -20,7 +20,7 @@ class SuccessionPlanningRequestController extends Controller
     public function index()
     {
         $successionRequests = $this->successionPlanningRequest->query()
-            ->with('user')
+            ->with(['user', 'jobPosition'])
             ->get();
 
         return view('content.apps.succession-planning-request-index', [
@@ -42,6 +42,7 @@ class SuccessionPlanningRequestController extends Controller
         $successions = $this->successionPlanning->query()
             ->where('status', StatusEnum::READY_NOW->value)
             ->where('request_status', RequestStatusEnum::REQUESTED->value)
+            ->where('current_position', $successionRequest->jobPosition->title)
             ->get();
 
         foreach ($successions as $succession) {

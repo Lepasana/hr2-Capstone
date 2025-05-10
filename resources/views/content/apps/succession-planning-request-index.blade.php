@@ -33,6 +33,7 @@
                 <thead>
                     <tr>
                         <th class="text-center cell-fit">Employee Name</th>
+                        <th class="text-center cell-fit">Job Position</th>
                         <th class="text-center cell-fit">Status</th>
                         <th class="cell-fit">Actions</th>
                     </tr>
