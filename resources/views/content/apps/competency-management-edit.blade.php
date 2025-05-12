@@ -25,7 +25,9 @@
                                 @foreach ($employees as $employee)
                                     <option value="{{ $employee->id }}" data-position="{{ $employee->jobPosition->title }}"
                                         data-position-id="{{ $employee->jobPosition->id }}"
-                                        data-department="{{ $employee->department }}">{{ $employee->name }}</option>
+                                        data-department="{{ $employee->department }}"
+                                        data-skills="{{ collect($employee->skills)->map(fn($skill) => $skill['title'])->join(', ') }}">
+                                        >{{ $employee->name }}</option>
                                 @endforeach
 
                                 @if ($errors->has('employee'))
@@ -51,16 +53,9 @@
                                 value="{{ $competency->department }}" readonly />
                         </div>
 
-                        <div class="col-md-12 mt-3">
-                            <label for="" class="form-label">Skill</label>
-                            <select name="skill_level" id="skill_level" class="form-select" required>
-                                <option value="{{ $competency->skill_level ?? old('skill_level') }}" selected>
-                                    {{ $competency->skill_level }}
-                                </option>
-                                @foreach ($skill_levels as $skill_level)
-                                    <option value="{{ $skill_level }}">{{ $skill_level }}</option>
-                                @endforeach
-                            </select>
+                        <div class="col-md-6 mt-3">
+                            <label for="" class="form-label">Skills</label>
+                            <textarea name="skill" id="skill" class="form-control" required readonly></textarea>
 
                             @if ($errors->has('skill_level'))
                                 <div class="text-danger">
@@ -105,8 +100,10 @@
             let position = selectedOption.getAttribute('data-position') || '';
             let positionId = selectedOption.getAttribute('data-position-id') || '';
             let department = selectedOption.getAttribute('data-department') || '';
+            let skills = selectedOption.getAttribute('data-skills') || '';
             let positionField = document.getElementById('job_position');
             let departmentField = document.getElementById('department');
+            let skillField = document.getElementById('skill');
 
             departmentField.value = department;
             positionField.innerHTML = '<option value="" selected>Select Position</option>';
@@ -118,6 +115,8 @@
                 option.selected = true;
                 positionField.appendChild(option);
             }
+
+            skillField.value = skills;
         });
     </script>
 @endsection

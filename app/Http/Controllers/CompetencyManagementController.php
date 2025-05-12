@@ -83,7 +83,6 @@ class CompetencyManagementController extends Controller
         $competencyManagement->employee_id    = $request->employee;
         $competencyManagement->job_request_id = $request->job_request_id;
         $competencyManagement->department     = $request->department;
-        $competencyManagement->skill_level    = $request->skill_level;
         $competencyManagement->status         = $request->status;
         $competencyManagement->save();
 
@@ -137,7 +136,6 @@ class CompetencyManagementController extends Controller
         $competencyManagement->employee_id    = $request->employee;
         $competencyManagement->job_request_id = $request->job_request_id;
         $competencyManagement->department     = $request->department;
-        $competencyManagement->skill_level    = $request->skill_level;
         $competencyManagement->status         = $request->status;
         $competencyManagement->save();
 

@@ -20,10 +20,12 @@
                             <select name="employee" id="select-employee" class="form-select" required>
                                 <option value="{{ old('employee') }}" selected>Select an option</option>
                                 @foreach ($employees as $employee)
-                                    <option value="{{ $employee->id }}"
-                                        data-position="{{ $employee->jobPosition->title }}"
+                                    <option value="{{ $employee->id }}" data-position="{{ $employee->jobPosition->title }}"
                                         data-position-id="{{ $employee->jobPosition->id }}"
-                                        data-department="{{ $employee->department }}">{{ $employee->name }}</option>
+                                        data-department="{{ $employee->department }}"
+                                        data-skills="{{ collect($employee->skills)->map(fn($skill) => $skill['title'])->join(', ') }}">
+                                        {{ $employee->name }}
+                                    </option>
                                 @endforeach
 
                                 @if ($errors->has('employee'))
@@ -52,18 +54,12 @@
 
                         <div class="col-md-6 mt-3" id="current-department-container">
                             <label for="" class="form-label">Department</label>
-                            <input type="text" name="department" id="department" class="form-control" value=""
-                                readonly />
+                            <input type="text" name="department" id="department" class="form-control" value="" readonly />
                         </div>
 
                         <div class="col-md-6 mt-3">
-                            <label for="" class="form-label">Skill</label>
-                            <select name="skill_level" id="skill_level" class="form-select" required>
-                                <option value="{{ old('skill_level') }}" selected>Select an option</option>
-                                @foreach ($skill_levels as $skill_level)
-                                    <option value="{{ $skill_level }}">{{ $skill_level }}</option>
-                                @endforeach
-                            </select>
+                            <label for="" class="form-label">Skills</label>
+                            <textarea name="skill" id="skill" class="form-control" required readonly></textarea>
 
                             @if ($errors->has('skill_level'))
                                 <div class="text-danger">
@@ -101,13 +97,15 @@
     </div>
 
     <script>
-        document.getElementById('select-employee').addEventListener('change', function() {
+        document.getElementById('select-employee').addEventListener('change', function () {
             let selectedOption = this.options[this.selectedIndex];
             let position = selectedOption.getAttribute('data-position') || '';
             let positionId = selectedOption.getAttribute('data-position-id') || '';
             let department = selectedOption.getAttribute('data-department') || '';
+            let skills = selectedOption.getAttribute('data-skills') || '';
             let positionField = document.getElementById('job_position');
             let departmentField = document.getElementById('department');
+            let skillField = document.getElementById('skill');
 
             departmentField.value = department;
             positionField.innerHTML = '<option value="" selected>Select Position</option>';
@@ -119,6 +117,8 @@
                 option.selected = true;
                 positionField.appendChild(option);
             }
+
+            skillField.value = skills;
         });
     </script>
 @endsection
