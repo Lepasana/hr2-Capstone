@@ -211,29 +211,22 @@ class UserSeeder extends Seeder
 
                     // Count employees with the same prefix to reset numbering per position
                     $count            = Employee::where('employee_code', 'like', "$prefix%")->count() + 1;
-                    $existingEmployee = Employee::where('email', $newUser->email)->first();
-
-                    if ($existingEmployee) {
-                        $employee = $existingEmployee;
-                    } else {
-                        $employee = new Employee;
-                    }
-
-                    $employee->user_id         = $newUser->id;
-                    $employee->name            = $user['name'];
-                    $employee->job_position_id = $jobPosition->id;
-                    $employee->employee_code   = $prefix . str_pad($count, 3, '0', STR_PAD_LEFT);
-                    $employee->gender          = fake()->randomElement(['Male', 'Female']);
-                    $employee->civil_status    = fake()->randomElement(['Single', 'Married', 'Divorced']);
-                    $employee->age             = fake()->numberBetween(18, 60);
-                    $employee->email           = $newUser->email;
-                    $employee->present_address = fake()->address();
-                    $employee->department      = fake()->randomElement(['HR', 'Logistics', 'Finance', 'Training', 'Security']);
-                    $employee->employment_type = fake()->randomElement(['Full Time', 'Part Time']);
-                    $employee->date_hired      = fake()->dateTimeBetween('2022-11-30', '2025-02-30');
-                    $employee->status          = fake()->randomElement(['Active', 'On-leave', 'Terminated']);
-                    $employee->skills          = collect(fake()->randomElements($skillsList, rand(3, 5)))->values()->all();
-                    $employee->save();
+                    $newUser = Employee::updateOrCreate(['email' => $newUser->email], [
+                        'user_id'         => $newUser->id,
+                        'name'            => $user['name'],
+                        'job_position_id' => $jobPosition->id,
+                        'employee_code'   => $prefix . str_pad($count, 3, '0', STR_PAD_LEFT),
+                        'gender'          => fake()->randomElement(['Male', 'Female']),
+                        'civil_status'    => fake()->randomElement(['Single', 'Married', 'Divorced']),
+                        'age'             => fake()->numberBetween(18, 60),
+                        'email'           => $newUser->email,
+                        'present_address' => fake()->address(),
+                        'department'      => fake()->randomElement(['HR', 'Logistics', 'Finance', 'Training', 'Security']),
+                        'employment_type' => fake()->randomElement(['Full Time', 'Part Time']),
+                        'date_hired'      => fake()->dateTimeBetween('2022-11-30', '2025-02-30'),
+                        'status'          => fake()->randomElement(['Active', 'On-leave', 'Terminated']),
+                        'skills'          => collect(fake()->randomElements($skillsList, rand(3, 5)))->values()->all(),
+                    ]);
                 }
             }
         }
