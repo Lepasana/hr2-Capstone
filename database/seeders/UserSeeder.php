@@ -191,10 +191,30 @@ class UserSeeder extends Seeder
                         default => 'X', // Default if category is not recognized
                     };
 
-                    // Count employees with the same prefix to reset numbering per position
-                    $count = Employee::where('employee_code', 'like', "$prefix%")->count() + 1;
+                    $skillsList = [
+                        ['title' => 'Communication'],
+                        ['title' => 'Teamwork'],
+                        ['title' => 'Problem-solving'],
+                        ['title' => 'Time Management'],
+                        ['title' => 'Adaptability'],
+                        ['title' => 'Critical Thinking'],
+                        ['title' => 'Leadership'],
+                        ['title' => 'Creativity'],
+                        ['title' => 'Work Ethic'],
+                        ['title' => 'Emotional Intelligence'],
+                        ['title' => 'Conflict Resolution'],
+                        ['title' => 'Decision Making'],
+                        ['title' => 'Stress Management'],
+                        ['title' => 'Collaboration'],
+                        ['title' => 'Attention to Detail'],
+                    ];
 
-                    $employee                  = new Employee;
+                    // Count employees with the same prefix to reset numbering per position
+                    $count            = Employee::where('employee_code', 'like', "$prefix%")->count() + 1;
+                    $existingEmployee = Employee::where('email', $newUser->email)->first();
+
+                    $existingEmployee ? $employee = $existingEmployee : $employee = new Employee;
+
                     $employee->user_id         = $newUser->id;
                     $employee->name            = $user['name'];
                     $employee->job_position_id = $jobPosition->id;
@@ -208,6 +228,7 @@ class UserSeeder extends Seeder
                     $employee->employment_type = fake()->randomElement(['Full Time', 'Part Time']);
                     $employee->date_hired      = fake()->dateTimeBetween('2022-11-30', '2025-02-30');
                     $employee->status          = fake()->randomElement(['Active', 'On-leave', 'Terminated']);
+                    $employee->skills          = collect(fake()->randomElements($skillsList, rand(3, 5)))->values()->all();
                     $employee->save();
                 }
             }

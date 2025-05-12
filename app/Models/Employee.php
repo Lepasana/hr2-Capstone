@@ -28,6 +28,11 @@ class Employee extends Model
         'employment_type',
         'date_hired',
         'status',
+        'skills',
+    ];
+
+    protected $casts = [
+        'skills' => 'array',
     ];
 
     public function trainings()
