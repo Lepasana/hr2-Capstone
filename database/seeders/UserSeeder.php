@@ -213,7 +213,11 @@ class UserSeeder extends Seeder
                     $count            = Employee::where('employee_code', 'like', "$prefix%")->count() + 1;
                     $existingEmployee = Employee::where('email', $newUser->email)->first();
 
-                    $employee = $existingEmployee ?? new Employee;
+                    if ($existingEmployee) {
+                        $employee = $existingEmployee;
+                    } else {
+                        $employee = new Employee;
+                    }
 
                     $employee->user_id         = $newUser->id;
                     $employee->name            = $user['name'];
