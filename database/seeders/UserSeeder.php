@@ -226,7 +226,7 @@ class UserSeeder extends Seeder
                         'employment_type' => fake()->randomElement(['Full Time', 'Part Time']),
                         'date_hired'      => fake()->dateTimeBetween('2022-11-30', '2025-02-30'),
                         'status'          => fake()->randomElement(['Active', 'On-leave', 'Terminated']),
-                        'skills'          => collect(fake()->randomElements($skillsList, rand(3, 5)))->values()->all(),
+                        'skills'          => json_encode(collect(fake()->randomElements($skillsList, rand(3, 5)))->values()->all()),
                     ]);
                 }
             }
