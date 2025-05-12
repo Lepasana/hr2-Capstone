@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\JobPosition;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -210,8 +211,8 @@ class UserSeeder extends Seeder
                     ];
 
                     // Count employees with the same prefix to reset numbering per position
-                    $count            = Employee::where('employee_code', 'like', "$prefix%")->count() + 1;
-                    $newUser = Employee::updateOrCreate(['email' => $newUser->email], [
+                    $count   = Employee::where('employee_code', 'like', "$prefix%")->count() + 1;
+                    $newUser = DB::table('employees')->updateOrInsert(['email' => $newUser->email], [
                         'user_id'         => $newUser->id,
                         'name'            => $user['name'],
                         'job_position_id' => $jobPosition->id,
