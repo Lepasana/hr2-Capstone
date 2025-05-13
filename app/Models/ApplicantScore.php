@@ -14,6 +14,7 @@ class ApplicantScore extends Model
 
     protected $fillable = [
       'applicant_id',
+      'employee_id',
       'examination_id',
       'score',
       'status',
@@ -28,5 +29,10 @@ class ApplicantScore extends Model
     public function examination(): BelongsTo
     {
       return $this->belongsTo(Examination::class);
+    }
+
+    public function employee(): BelongsTo
+    {
+      return $this->belongsTo(Employee::class);
     }
 }

@@ -54,4 +54,9 @@ class Employee extends Model
     {
         return $this->hasMany(Compensation::class);
     }
+
+    public function applicantScores(): HasMany
+    {
+        return $this->hasMany(ApplicantScore::class);
+    }
 }
