@@ -3,6 +3,7 @@
         <td class="text-center">{{ $successor->employee->employee_code }}</td>
         <td class="text-start">{{ $successor->employee->name }}</td>
         <td class="text-start">{{ $successor->current_position }}</td>
+        <td class="text-start">{{ $successor->promoted_to }}</td>
         <td class="text-start">{{ $successor->department }}</td>
         <td class="text-start">{{ $successor->status }}</td>
         <td>

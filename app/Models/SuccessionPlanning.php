@@ -13,6 +13,7 @@ class SuccessionPlanning extends Model
     protected $fillable = [
         'employee_id',
         'current_position',
+        'promoted_to',
         'potential_successor',
         'development_needs',
         'readiness_level',

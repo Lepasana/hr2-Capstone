@@ -74,6 +74,7 @@
                         <th class="text-center cell-fit">Employee ID</th>
                         <th class="text-center cell-fit">Employee Name</th>
                         <th class="text-center cell-fit">Current Position</th>
+                        <th class="text-center cell-fit">Promote To</th>
                         <th class="text-center cell-fit">Department</th>
                         <th class="text-center cell-fit">Status</th>
                         <th class="cell-fit">Actions</th>

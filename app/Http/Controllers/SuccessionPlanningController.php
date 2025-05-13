@@ -1,13 +1,15 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Enums\CompensationManagement\DepartmentEnum;
-use App\Enums\SuccessionPlanning\CurrentPositionEnum;
+use App\Models\Employee;
+use App\Models\JobPosition;
+use Illuminate\Http\Request;
+use App\Models\SuccessionPlanning;
+use Illuminate\Http\RedirectResponse;
 use App\Enums\SuccessionPlanning\StatusEnum;
 use App\Http\Requests\SuccessionPlanningRequest;
-use App\Models\Employee;
-use App\Models\SuccessionPlanning;
-use Illuminate\Http\Request;
+use App\Enums\CompensationManagement\DepartmentEnum;
+use App\Enums\SuccessionPlanning\CurrentPositionEnum;
 
 class SuccessionPlanningController extends Controller
 {
@@ -23,9 +25,9 @@ class SuccessionPlanningController extends Controller
      */
     public function index(Request $request)
     {
-        $statusEnums = StatusEnum::toOptions();
+        $statusEnums     = StatusEnum::toOptions();
         $departmentEnums = DepartmentEnum::toOptions();
-        $successors  = $this->successionPlanning->query()
+        $successors      = $this->successionPlanning->query()
             ->when($request->status, function ($query) use ($request) {
                 $status = $request->input('status');
 
@@ -57,19 +59,21 @@ class SuccessionPlanningController extends Controller
     public function create()
     {
         $excludedEmployeeIds = $this->successionPlanning->pluck('employee_id');
-        $employees = Employee::query()
+        $employees           = Employee::query()
             ->with(['jobPosition'])
             ->whereNotIn('id', $excludedEmployeeIds)
             ->get();
         $currentPositions = CurrentPositionEnum::toOptions();
         $departmentEnums  = DepartmentEnum::toOptions();
         $statusEnums      = StatusEnum::toOptions();
+        $jobPositions     = JobPosition::query()->get();
 
         return view('content.apps.succession-planning-create', [
             'employees'        => $employees,
             'currentPositions' => $currentPositions,
             'departmentEnums'  => $departmentEnums,
             'statusEnums'      => $statusEnums,
+            'jobPositions'     => $jobPositions,
         ]);
     }
 
@@ -81,6 +85,7 @@ class SuccessionPlanningController extends Controller
         $successor                    = $this->successionPlanning;
         $successor->employee_id       = $request->employee;
         $successor->current_position  = $request->current_position;
+        $successor->promoted_to       = $request->promoted_to;
         $successor->development_needs = 'n/a';
         $successor->readiness_level   = 'n/a';
         $successor->department        = $request->department;
@@ -116,6 +121,7 @@ class SuccessionPlanningController extends Controller
         $currentPositions = CurrentPositionEnum::toOptions();
         $departmentEnums  = DepartmentEnum::toOptions();
         $statusEnums      = StatusEnum::toOptions();
+        $jobPositions     = JobPosition::query()->get();
 
         return view('content.apps.succession-planning-edit', [
             'employees'        => $employees,
@@ -123,13 +129,14 @@ class SuccessionPlanningController extends Controller
             'currentPositions' => $currentPositions,
             'departmentEnums'  => $departmentEnums,
             'statusEnums'      => $statusEnums,
+            'jobPositions'     => $jobPositions,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(SuccessionPlanningRequest $request, string $id)
+    public function update(SuccessionPlanningRequest $request, string $id): RedirectResponse
     {
         $successor                   = $this->successionPlanning->find($id);
         $successor->employee_id      = $request->employee;

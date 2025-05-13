@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Enums\RequestStatusEnum;
 use App\Models\SuccessionPlanning;
+use Illuminate\Http\RedirectResponse;
 use App\Models\SuccessionPlanningRequest;
 use App\Enums\SuccessionPlanning\StatusEnum;
 use App\Notifications\SuccessionPlanningRequestNotification;
@@ -28,7 +29,7 @@ class SuccessionPlanningRequestController extends Controller
         ]);
     }
 
-    public function approveRequest(string $id)
+    public function approveRequest(string $id): RedirectResponse
     {
         $successionRequest = $this->successionPlanningRequest->find($id);
 
@@ -42,7 +43,7 @@ class SuccessionPlanningRequestController extends Controller
         $successions = $this->successionPlanning->query()
             ->where('status', StatusEnum::READY_NOW->value)
             ->where('request_status', RequestStatusEnum::REQUESTED->value)
-            ->where('current_position', $successionRequest->jobPosition->title)
+            ->where('promoted_to', $successionRequest->jobPosition->title)
             ->get();
 
         foreach ($successions as $succession) {

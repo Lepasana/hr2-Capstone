@@ -58,6 +58,22 @@
                         </div>
 
                         <div class="col-md-6 mt-3">
+                            <label for="" class="form-label">Promote To:</label>
+                            <select name="promoted_to" id="promoted_to" class="form-select" value="{{ old('promoted_to') }}" required>
+                                <option value="" selected>Select an option</option>
+                                @foreach ($jobPositions as $jobPosition)
+                                    <option value="{{ $jobPosition->title }}">{{ $jobPosition->title }}</option>
+                                @endforeach
+
+                                @if ($errors->has('promoted_to'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('promoted_to') }}
+                                    </div>
+                                @endif
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mt-3">
                             <label for="" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select" value="{{ old('status') }}" required>
                                 <option value="" selected>Select an option</option>
