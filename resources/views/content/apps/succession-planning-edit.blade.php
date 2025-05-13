@@ -42,8 +42,8 @@
                                             data-position="{{ $employee->jobPosition->title }}"
                                             data-department="{{ $employee->department }}"
                                             data-skills="{{ collect($employee->skills)->map(fn($skill) => $skill['title'])->join(', ') }}"
-                                            data-score="{{ $employee->applicantScores->first()->score }}"
-                                            data-status="{{ $employee->applicantScores->first()->status }}"
+                                            data-score="{{ $employee->applicantScores->first()?->score }}"
+                                            data-status="{{ $employee->applicantScores->first()?->status }}"
                                             >{{ $employee->name }}</option>
                                     @endforeach
 
