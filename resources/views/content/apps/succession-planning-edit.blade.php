@@ -33,18 +33,25 @@
                         <form action="{{ route('succession-planning.update', ['id' => $successor->id]) }}" method="POST">
                             @csrf
                             @method('PUT')
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="" class="form-lab">Employee</label>
                                 <select name="employee" id="select-employee" class="form-select" required>
-                                    <option value="{{ $successor->employee->id }}">{{ $successor->employee->name }}</option>
+                                    <option value="{{ $successor->employee->id }}"
+                                        data-position="{{ $successor->employee->jobPosition->title }}"
+                                        data-department="{{ $successor->employee->department }}"
+                                        data-skills="{{ collect($successor->employee->skills)->map(fn($skill) => $skill['title'])->join(', ') }}"
+                                        data-score="{{ $successor->employee->applicantScores->first()?->score }}"
+                                        data-status="{{ $successor->employee->applicantScores->first()?->status }}">
+                                        {{ $successor->employee->name }}
+                                    </option>
                                     @foreach ($employees as $employee)
                                         <option value="{{ $employee->id }}"
                                             data-position="{{ $employee->jobPosition->title }}"
                                             data-department="{{ $employee->department }}"
                                             data-skills="{{ collect($employee->skills)->map(fn($skill) => $skill['title'])->join(', ') }}"
                                             data-score="{{ $employee->applicantScores->first()?->score }}"
-                                            data-status="{{ $employee->applicantScores->first()?->status }}"
-                                            >{{ $employee->name }}</option>
+                                            data-status="{{ $employee->applicantScores->first()?->status }}">
+                                            {{ $employee->name }}</option>
                                     @endforeach
 
                                     @if ($errors->has('employee'))
@@ -55,23 +62,23 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mt-3" id="current-position-container">
+                            <div class="col-md-12 mt-3" id="current-position-container">
                                 <label for="" class="form-label">Current Position</label>
                                 <input type="text" name="current_position" id="current_position" class="form-control"
                                     value="{{ $successor->current_position }}" readonly />
                             </div>
 
 
-                            <div class="col-md-6 mt-3" id="current-department-container">
+                            <div class="col-md-12 mt-3" id="current-department-container">
                                 <label for="" class="form-label">Department</label>
                                 <input type="text" name="department" id="department" class="form-control"
                                     value="{{ $successor->department }}" readonly />
                             </div>
 
-                            <div class="col-md-6 mt-3">
+                            <div class="col-md-12 mt-3">
                                 <label for="" class="form-label">Promote To:</label>
-                                <select name="promoted_to" id="promoted_to" class="form-select" value="{{ old('promoted_to') }}"
-                                    required>
+                                <select name="promoted_to" id="promoted_to" class="form-select"
+                                    value="{{ old('promoted_to') }}" required>
                                     <option value="{{ $successor->promoted_to }}" selected>{{ $successor->promoted_to }}
                                     </option>
                                     @foreach ($jobPositions as $jobPosition)
@@ -86,9 +93,10 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mt-3">
+                            <div class="col-md-12 mt-3">
                                 <label for="" class="form-label">Status</label>
-                                <select name="status" id="status" class="form-select" value="{{ old('status') }}" required>
+                                <select name="status" id="status" class="form-select" value="{{ old('status') }}"
+                                    required>
                                     <option value="{{ $successor->status }}" selected>
                                         {{ $successor->status ?? 'Select an option' }}
                                     </option>
@@ -135,26 +143,30 @@
     </div>
 
     <script>
-        document.getElementById('select-employee').addEventListener('change', function () {
-            let selectedOption = this.options[this.selectedIndex];
-            let position = selectedOption.getAttribute('data-position') || '';
-            let department = selectedOption.getAttribute('data-department') || '';
-            let positionField = document.getElementById('current_position');
-            let departmentField = document.getElementById('department');
+        function populateEmployeeDetails(selectedOption) {
+            const position = selectedOption.getAttribute('data-position') || '';
+            const department = selectedOption.getAttribute('data-department') || '';
+            const score = selectedOption.getAttribute('data-score') || '';
+            const status = selectedOption.getAttribute('data-status') || '';
+            const skills = selectedOption.getAttribute('data-skills') || '';
 
-            let score = selectedOption.getAttribute('data-score') || '';
-            let status = selectedOption.getAttribute('data-status') || '';
-            let scoreField = document.getElementById('score');
-            let statusField = document.getElementById('scoreStatus');
+            document.getElementById('current_position').value = position;
+            document.getElementById('department').value = department;
+            document.getElementById('score').textContent = score;
+            document.getElementById('scoreStatus').textContent = status;
+            document.getElementById('skills').textContent = skills;
+        }
 
-            let skills = selectedOption.getAttribute('data-skills') || '';
-            let skillsField = document.getElementById('skills');
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('select-employee');
 
-            positionField.value = position;
-            departmentField.value = department;
-            scoreField.textContent = score;
-            statusField.textContent = status;
-            skillsField.textContent = skills;
+            // Populate on page load
+            populateEmployeeDetails(select.options[select.selectedIndex]);
+
+            // Also populate on change
+            select.addEventListener('change', function () {
+                populateEmployeeDetails(this.options[this.selectedIndex]);
+            });
         });
     </script>
 @endsection
