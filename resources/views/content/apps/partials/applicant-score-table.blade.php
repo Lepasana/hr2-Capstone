@@ -5,7 +5,7 @@
                 value="{{ $applicantScore->id }}" />
         </td>
         <td class="text-center">{{ $applicantScore->id }}</td>
-        <td class="text-start">{{ $applicantScore->applicant->name }}</td>
+        <td class="text-start">{{ $applicantScore->applicant_id !== null ? $applicantScore->applicant->name : $applicantScore->employee->name }}</td>
         <td class="text-start">{{ $applicantScore->examination?->title }}</td>
         <td class="text-center">{{ $applicantScore->score }}</td>
         <td class="text-center">
